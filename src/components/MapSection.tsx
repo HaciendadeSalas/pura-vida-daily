@@ -208,7 +208,7 @@ export default function MapSection() {
         {/* Facts bar */}
         <div
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 divide-x"
-          style={{ background: "var(--bg-cream)", borderTop: `3px solid ${region.color}`, divideColor: "var(--border-aged)" }}
+          style={{ background: "var(--bg-cream)", borderTop: `3px solid ${region.color}` }}
         >
           {region.facts.map((f) => (
             <div key={f.label} className="px-4 py-3 text-center" style={{ borderRight: "1px solid var(--border-aged)" }}>
