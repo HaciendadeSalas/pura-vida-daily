@@ -1,45 +1,63 @@
 "use client";
 
-const cards = [
-  {
-    icon: "🌦",
-    label: "Weather",
-    sublabel: "San José (SJO)",
-    main: "26°C / 79°F",
-    detail: "Partly Cloudy",
-    extra: "Humidity 72% · Wind 12 km/h NE",
-    color: "var(--blue-sky)",
-  },
-  {
-    icon: "🌅",
-    label: "Sunrise & Sunset",
-    sublabel: "Costa Rica",
-    main: "5:32 AM · 6:08 PM",
-    detail: "Daylight: 12h 36m",
-    extra: "Golden Hour: 5:08 – 5:35 PM",
-    color: "var(--gold-sun)",
-  },
-  {
-    icon: "🌊",
-    label: "Tides",
-    sublabel: "Guanacaste Pacific",
-    main: "High: 2.4m @ 10:14 AM",
-    detail: "Low: 0.3m @ 4:28 PM",
-    extra: "Next High: 11:02 PM",
-    color: "var(--blue-ocean)",
-  },
-  {
-    icon: "💵",
-    label: "Exchange Rate",
-    sublabel: "USD → CRC",
-    main: "₡ 515.40",
-    detail: "per 1 US Dollar",
-    extra: "Updated: 6:00 AM today",
-    color: "var(--green-jungle)",
-  },
-];
+import { useEffect, useState } from "react";
+import { getSunriseSunset } from "@/lib/sunCalc";
+
+type SunData = { sunrise: string; sunset: string; daylight: string; goldenHour: string } | null;
 
 export default function InfoGrid() {
+  const [rate, setRate] = useState<string | null>(null);
+  const [sun, setSun] = useState<SunData>(null);
+
+  useEffect(() => {
+    setSun(getSunriseSunset(new Date()));
+    fetch("/api/exchange")
+      .then((r) => r.json())
+      .then((d) => setRate(d.rate))
+      .catch(() => setRate(null));
+  }, []);
+
+  const cards = [
+    {
+      icon: "🌦",
+      label: "Weather",
+      sublabel: "Juan Santamaría (SJO)",
+      main: "26°C / 79°F",
+      detail: "Partly Cloudy",
+      extra: "Humidity 72% · Wind 14 km/h NE",
+      color: "var(--blue-sky)",
+      note: "⚙️ Add OpenWeatherMap key to enable live weather",
+    },
+    {
+      icon: "🌅",
+      label: "Sunrise & Sunset",
+      sublabel: "San José, Costa Rica",
+      main: sun ? `${sun.sunrise} · ${sun.sunset}` : "Calculating…",
+      detail: sun ? `Daylight: ${sun.daylight}` : "",
+      extra: sun ? `Golden Hour: ${sun.goldenHour}` : "",
+      color: "var(--gold-sun)",
+    },
+    {
+      icon: "🌊",
+      label: "Tides",
+      sublabel: "Guanacaste Pacific",
+      main: "High: 2.4m @ 10:14 AM",
+      detail: "Low: 0.3m @ 4:28 PM",
+      extra: "Next High: 11:02 PM",
+      color: "var(--blue-ocean)",
+      note: "⚙️ Add WorldTides API key to enable live tides",
+    },
+    {
+      icon: "💵",
+      label: "Exchange Rate",
+      sublabel: "USD → CRC",
+      main: rate ? `₡ ${Number(rate).toLocaleString("en-US", { minimumFractionDigits: 2 })}` : "Loading…",
+      detail: "per 1 US Dollar",
+      extra: rate ? "Live · Frankfurter API" : "Fetching live rate…",
+      color: "var(--green-jungle)",
+    },
+  ];
+
   return (
     <section className="grid grid-cols-2 md:grid-cols-4 gap-0 mb-8 rounded overflow-hidden border" style={{ borderColor: "var(--border-aged)" }}>
       {cards.map((card, i) => (
@@ -73,6 +91,11 @@ export default function InfoGrid() {
           <div className="font-body text-xs mt-1 pt-1" style={{ color: "var(--ink-light)", borderTop: "1px solid var(--border-aged)" }}>
             {card.extra}
           </div>
+          {"note" in card && card.note && (
+            <div className="text-xs mt-1 font-body" style={{ color: "var(--brown-sand)", fontStyle: "italic" }}>
+              {card.note}
+            </div>
+          )}
         </div>
       ))}
     </section>
