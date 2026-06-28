@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --bg-parchment: #f5f0e8;
+  --bg-cream: #faf7f0;
+  --ink-dark: #2c1810;
+  --ink-medium: #4a3728;
+  --ink-light: #7a6555;
+  --green-jungle: #2d5a27;
+  --green-leaf: #4a8c3f;
+  --green-light: #7fb069;
+  --brown-coffee: #6b3d2e;
+  --brown-bark: #8b5e3c;
+  --brown-sand: #c4a882;
+  --blue-ocean: #1a5276;
+  --blue-sky: #2e86ab;
+  --blue-light: #a8d8ea;
+  --gold-sun: #d4a017;
+  --gold-light: #f0c040;
+  --red-volcano: #8b1a1a;
+  --border-aged: #c8b89a;
+}
+
+body {
+  background: var(--bg-parchment);
+  color: var(--ink-dark);
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.font-headline {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-editorial {
+  font-family: 'Lora', serif;
+}
+
+.font-body {
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+/* Newspaper rule lines */
+.rule-double {
+  border-top: 3px double var(--ink-dark);
+}
+
+.rule-single {
+  border-top: 1px solid var(--ink-medium);
+}
+
+/* Aged paper texture effect */
+.paper-texture {
+  background-color: var(--bg-cream);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(180, 150, 100, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(180, 150, 100, 0.05) 0%, transparent 40%);
+}
+
+/* Drop cap */
+.drop-cap::first-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 0.8;
+  float: left;
+  margin-right: 6px;
+  margin-top: 4px;
+  color: var(--green-jungle);
+}
