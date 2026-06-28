@@ -242,7 +242,7 @@ export function DrivePhotoGallery() {
   const photo = photos.length > 0 ? photos[dayOfYear % photos.length] : null;
 
   return (
-    <section className="mb-8">
+    <section>
       <SectionHeader label="Your Photos" icon="🖼️" tagline="Your Costa Rica · Google Drive · Updated as you upload" />
 
       <div className="rounded overflow-hidden border" style={{ borderColor: "var(--border-aged)", background: "var(--bg-cream)" }}>
@@ -253,14 +253,14 @@ export function DrivePhotoGallery() {
               target="_blank"
               rel="noopener noreferrer"
               className="block relative overflow-hidden"
-              style={{ minHeight: "480px" }}
+              style={{ height: "208px" }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={photo.src.replace("sz=w600", "sz=w1600")}
                 alt={photo.name}
-                className="w-full object-cover"
-                style={{ minHeight: "480px", display: "block" }}
+                className="w-full h-full object-cover"
+                style={{ display: "block" }}
               />
               <div
                 className="absolute inset-0"
@@ -278,11 +278,11 @@ export function DrivePhotoGallery() {
             </div>
           </>
         ) : status === "loading" ? (
-          <div className="animate-pulse" style={{ minHeight: "480px", background: "var(--border-aged)" }} />
+          <div className="animate-pulse" style={{ height: "208px", background: "var(--border-aged)" }} />
         ) : (
           <div
             className="flex flex-col items-center justify-center gap-3 text-center"
-            style={{ minHeight: "480px", background: "var(--bg-parchment)" }}
+            style={{ minHeight: "208px", background: "var(--bg-parchment)" }}
           >
             <div className="text-5xl">📷</div>
             <p className="font-headline font-bold text-lg" style={{ color: "var(--ink-dark)" }}>Your Costa Rica photos will appear here</p>

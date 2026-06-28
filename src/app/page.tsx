@@ -7,6 +7,8 @@ import MapSection from "@/components/MapSection";
 import PropertyWatch from "@/components/PropertyWatch";
 import Headlines from "@/components/Headlines";
 import BottomColumns, { DrivePhotoGallery } from "@/components/BottomColumns";
+import WhatInSeason from "@/components/WhatInSeason";
+import ChurchOfTheDay from "@/components/ChurchOfTheDay";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -38,8 +40,12 @@ export default function Home() {
         {/* Bottom 4 columns */}
         <BottomColumns />
 
-        {/* Drive photo gallery — full width, after the 4-column section */}
-        <DrivePhotoGallery />
+        {/* Photo cluster: Drive photos · Season · Churches */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8 items-start">
+          <DrivePhotoGallery />
+          <WhatInSeason />
+          <ChurchOfTheDay />
+        </div>
       </main>
 
       <Footer />
