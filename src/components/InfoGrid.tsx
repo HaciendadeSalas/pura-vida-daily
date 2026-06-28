@@ -7,14 +7,18 @@ type SunData = { sunrise: string; sunset: string; daylight: string; goldenHour: 
 
 export default function InfoGrid() {
   const [rate, setRate] = useState<string | null>(null);
+  const [rateError, setRateError] = useState(false);
   const [sun, setSun] = useState<SunData>(null);
 
   useEffect(() => {
     setSun(getSunriseSunset(new Date()));
     fetch("/api/exchange")
       .then((r) => r.json())
-      .then((d) => setRate(d.rate))
-      .catch(() => setRate(null));
+      .then((d) => {
+        if (d.error || !d.rate) setRateError(true);
+        else setRate(d.rate);
+      })
+      .catch(() => setRateError(true));
   }, []);
 
   const cards = [
@@ -51,9 +55,9 @@ export default function InfoGrid() {
       icon: "💵",
       label: "Exchange Rate",
       sublabel: "USD → CRC",
-      main: rate ? `₡ ${Number(rate).toLocaleString("en-US", { minimumFractionDigits: 2 })}` : "Loading…",
+      main: rateError ? "Rate unavailable" : rate ? `₡ ${Number(rate).toLocaleString("en-US", { minimumFractionDigits: 2 })}` : "Loading…",
       detail: "per 1 US Dollar",
-      extra: rate ? "Live · Frankfurter API" : "Fetching live rate…",
+      extra: rateError ? "ExchangeRate-API · check back later" : rate ? "Live · ExchangeRate-API" : "Fetching live rate…",
       color: "var(--green-jungle)",
     },
   ];
