@@ -71,19 +71,18 @@ export default function PhotoOfTheDay() {
   const photo = photos[getDayIndex()];
 
   return (
-    <section className="mb-8">
+    <section>
       <SectionHeader label="Photo of the Day" icon="📸" tagline="The beauty of Costa Rica, captured" />
 
       <div className="rounded overflow-hidden border" style={{ borderColor: "var(--border-aged)" }}>
         {/* Hero image */}
-        <div className="relative min-h-80 overflow-hidden">
+        <div className="relative min-h-52 overflow-hidden">
           <Image
             src={photo.photo}
             alt={photo.title}
             fill
             className="object-cover"
-            sizes="100vw"
-            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)" }} />
 

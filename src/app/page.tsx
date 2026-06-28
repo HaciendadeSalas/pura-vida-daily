@@ -17,14 +17,14 @@ export default function Home() {
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-8 space-y-0">
         <InfoGrid />
 
-        {/* Two-column layout: Volcano + Animal side by side */}
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
-          <VolcanoWatch />
+        {/* Left col: Volcano + Photo stacked. Right col: Animal. */}
+        <div className="grid md:grid-cols-2 gap-8 mb-8 items-start">
+          <div className="flex flex-col gap-8">
+            <VolcanoWatch />
+            <PhotoOfTheDay />
+          </div>
           <AnimalOfTheDay />
         </div>
-
-        {/* Photo of the Day full width */}
-        <PhotoOfTheDay />
 
         {/* Map + something side by side */}
         <MapSection />
