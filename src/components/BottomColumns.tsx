@@ -168,25 +168,6 @@ function Countdown() {
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-  const [photos, setPhotos] = useState<DrivePhoto[]>([]);
-  const [photoStatus, setPhotoStatus] = useState<"loading" | "ready" | "unconfigured" | "error">("loading");
-
-  useEffect(() => {
-    fetch("/api/drive-photos")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.error === "Drive API not configured") {
-          setPhotoStatus("unconfigured");
-        } else if (data.photos?.length > 0) {
-          setPhotos(data.photos.slice(0, 6));
-          setPhotoStatus("ready");
-        } else {
-          setPhotoStatus("error");
-        }
-      })
-      .catch(() => setPhotoStatus("error"));
-  }, []);
-
   const milestones = [
     { label: "Guanacaste Sunsets", done: false },
     { label: "Coffee on the Patio", done: false },
@@ -219,72 +200,6 @@ function Countdown() {
         </div>
       </div>
 
-      {/* Photo grid */}
-      <div className="flex items-center justify-between">
-        <div className="text-xs font-body uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>
-          Your Photos
-        </div>
-        <div className="text-xs font-body" style={{ color: "var(--ink-light)" }}>📁 Google Drive</div>
-      </div>
-
-      {photoStatus === "ready" && (
-        <div className="grid grid-cols-3 gap-1.5">
-          {photos.map((p) => (
-            <a
-              key={p.id}
-              href={p.fullSrc}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="aspect-square rounded overflow-hidden block"
-              style={{ border: "1px solid var(--border-aged)" }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={p.src}
-                alt={p.name}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </a>
-          ))}
-        </div>
-      )}
-
-      {photoStatus === "loading" && (
-        <div className="grid grid-cols-3 gap-1.5">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="aspect-square rounded animate-pulse"
-              style={{ background: "var(--border-aged)" }}
-            />
-          ))}
-        </div>
-      )}
-
-      {(photoStatus === "unconfigured" || photoStatus === "error") && (
-        <div className="grid grid-cols-3 gap-1.5">
-          {["🏖️", "🌋", "🦜", "☕", "🌿", "🌅"].map((emoji, i) => (
-            <div
-              key={i}
-              className="aspect-square rounded flex items-center justify-center text-2xl"
-              style={{ background: "var(--bg-parchment)", border: "1px dashed var(--border-aged)" }}
-            >
-              {emoji}
-            </div>
-          ))}
-        </div>
-      )}
-
-      <p className="font-body text-xs text-center" style={{ color: "var(--ink-light)" }}>
-        {photoStatus === "ready"
-          ? `${photos.length} photos from your Drive folder`
-          : photoStatus === "unconfigured"
-          ? "⚙️ Add GOOGLE_DRIVE_API_KEY to enable"
-          : photoStatus === "loading"
-          ? "Loading your photos…"
-          : "Your Drive photos will appear here"}
-      </p>
-
       {/* Bucket list */}
       <div className="text-xs font-body uppercase tracking-widest mb-1" style={{ color: "var(--ink-light)" }}>Costa Rica Bucket List</div>
       <div className="space-y-1">
@@ -296,6 +211,90 @@ function Countdown() {
         ))}
       </div>
     </div>
+  );
+}
+
+// ─── Drive Photo Gallery ──────────────────────────────────────────
+export function DrivePhotoGallery() {
+  const [photos, setPhotos] = useState<DrivePhoto[]>([]);
+  const [status, setStatus] = useState<"loading" | "ready" | "unconfigured" | "error">("loading");
+
+  useEffect(() => {
+    fetch("/api/drive-photos")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.error === "Drive API not configured") {
+          setStatus("unconfigured");
+        } else if (data.photos?.length > 0) {
+          setPhotos(data.photos);
+          setStatus("ready");
+        } else {
+          setStatus("error");
+        }
+      })
+      .catch(() => setStatus("error"));
+  }, []);
+
+  // Pick today's photo by day-of-year, same pattern as Animal of the Day
+  const dayOfYear = Math.floor(
+    (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
+  );
+  const photo = photos.length > 0 ? photos[dayOfYear % photos.length] : null;
+
+  return (
+    <section className="mb-8">
+      <SectionHeader label="Your Photos" icon="🖼️" tagline="Your Costa Rica · Google Drive · Updated as you upload" />
+
+      <div className="rounded overflow-hidden border" style={{ borderColor: "var(--border-aged)", background: "var(--bg-cream)" }}>
+        {status === "ready" && photo ? (
+          <>
+            <a
+              href={photo.fullSrc}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block relative overflow-hidden"
+              style={{ minHeight: "480px" }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photo.src.replace("sz=w600", "sz=w1600")}
+                alt={photo.name}
+                className="w-full object-cover"
+                style={{ minHeight: "480px", display: "block" }}
+              />
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%)" }}
+              />
+              <div className="absolute bottom-0 left-0 p-6">
+                <p className="font-body text-white/50 text-xs uppercase tracking-widest">📁 Google Drive · Click to open</p>
+              </div>
+            </a>
+            <div className="px-5 py-3 flex items-center justify-between" style={{ borderTop: "1px solid var(--border-aged)" }}>
+              <p className="font-editorial italic text-sm" style={{ color: "var(--ink-medium)" }}>
+                Photo {(dayOfYear % photos.length) + 1} of {photos.length} · rotates daily
+              </p>
+              <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>{photo.name}</p>
+            </div>
+          </>
+        ) : status === "loading" ? (
+          <div className="animate-pulse" style={{ minHeight: "480px", background: "var(--border-aged)" }} />
+        ) : (
+          <div
+            className="flex flex-col items-center justify-center gap-3 text-center"
+            style={{ minHeight: "480px", background: "var(--bg-parchment)" }}
+          >
+            <div className="text-5xl">📷</div>
+            <p className="font-headline font-bold text-lg" style={{ color: "var(--ink-dark)" }}>Your Costa Rica photos will appear here</p>
+            <p className="font-body text-sm" style={{ color: "var(--ink-light)" }}>
+              {status === "unconfigured"
+                ? "⚙️ Add GOOGLE_DRIVE_API_KEY to .env.local to enable"
+                : "Add photos to your Google Drive folder to get started"}
+            </p>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
 

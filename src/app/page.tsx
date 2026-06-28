@@ -6,7 +6,7 @@ import PhotoOfTheDay from "@/components/PhotoOfTheDay";
 import MapSection from "@/components/MapSection";
 import PropertyWatch from "@/components/PropertyWatch";
 import Headlines from "@/components/Headlines";
-import BottomColumns from "@/components/BottomColumns";
+import BottomColumns, { DrivePhotoGallery } from "@/components/BottomColumns";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -37,6 +37,9 @@ export default function Home() {
 
         {/* Bottom 4 columns */}
         <BottomColumns />
+
+        {/* Drive photo gallery — full width, after the 4-column section */}
+        <DrivePhotoGallery />
       </main>
 
       <Footer />
