@@ -13,7 +13,7 @@ export async function GET() {
   try {
     const query = encodeURIComponent(`'${folderId}' in parents and mimeType contains 'image/' and trashed = false`);
     const fields = encodeURIComponent("files(id,name,imageMediaMetadata)");
-    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&orderBy=name&pageSize=12&key=${apiKey}`;
+    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&orderBy=name&pageSize=1000&key=${apiKey}`;
 
     const res = await fetch(url, { next: { revalidate: 21600 } });
 
