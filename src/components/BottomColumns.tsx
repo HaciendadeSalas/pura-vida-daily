@@ -243,11 +243,9 @@ export function DrivePhotoGallery() {
       .catch(() => setStatus("error"));
   }, []);
 
-  // Pick today's photo by day-of-year, same pattern as Animal of the Day
-  const dayOfYear = Math.floor(
-    (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
-  );
-  const photo = photos.length > 0 ? photos[dayOfYear % photos.length] : null;
+  // Pick photo by hours-since-epoch so it rotates every hour
+  const hourIndex = Math.floor(Date.now() / 3600000);
+  const photo = photos.length > 0 ? photos[hourIndex % photos.length] : null;
 
   return (
     <section>
@@ -280,7 +278,7 @@ export function DrivePhotoGallery() {
             </a>
             <div className="px-5 py-3 flex items-center justify-between" style={{ borderTop: "1px solid var(--border-aged)" }}>
               <p className="font-editorial italic text-sm" style={{ color: "var(--ink-medium)" }}>
-                Photo {(dayOfYear % photos.length) + 1} of {photos.length} · rotates daily
+                Photo {(hourIndex % photos.length) + 1} of {photos.length} · rotates hourly
               </p>
               <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>{photo.name}</p>
             </div>
