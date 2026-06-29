@@ -58,7 +58,7 @@ export default function Footer() {
         style={{ borderTop: "1px solid var(--border-aged)" }}
       >
         <div className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
-          © 2026 Pura Vida Daily · San José, Costa Rica 🇨🇷
+          © 2026 Pura Vida Daily · Los Ángeles de Grecia, Costa Rica 🇨🇷
         </div>
 
         {/* Toucan mascot */}

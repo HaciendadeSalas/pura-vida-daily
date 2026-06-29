@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { SectionHeader } from "./VolcanoWatch";
 
 interface DrivePhoto {
@@ -14,10 +15,13 @@ interface DrivePhoto {
 function CoffeeCorner() {
   return (
     <div className="flex flex-col gap-3">
-      <div className="text-center py-5 rounded" style={{ background: "linear-gradient(160deg, #6b3d2e, #4a3728)" }}>
-        <div className="text-4xl mb-2">☕</div>
-        <div className="font-headline text-white font-bold text-base">Hacienda Alsacia</div>
-        <div className="font-editorial italic text-white/70 text-xs mt-0.5">Starbucks' Only Farm · La Garita, Alajuela</div>
+      <div className="relative rounded overflow-hidden" style={{ minHeight: "110px" }}>
+        <Image src="https://images.unsplash.com/photo-1612668196612-70262cad2ad7?w=800&q=85&fit=crop" alt="Costa Rica coffee farm" fill className="object-cover" sizes="25vw" />
+        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-3">
+          <div className="font-headline text-white font-bold text-base">Hacienda Alsacia</div>
+          <div className="font-editorial italic text-white/70 text-xs mt-0.5">Starbucks' Only Farm · La Garita, Alajuela</div>
+        </div>
       </div>
 
       <div
@@ -180,8 +184,12 @@ function Countdown() {
   return (
     <div className="flex flex-col gap-3">
       {/* Big countdown */}
-      <div className="rounded overflow-hidden" style={{ background: "linear-gradient(160deg, #2d5a27, #1a5276)" }}>
-        <div className="p-4 text-center">
+      <div className="rounded overflow-hidden relative">
+        <div className="absolute inset-0">
+          <Image src="https://images.unsplash.com/photo-1629221731259-4f0760e3ee89?w=800&q=85&fit=crop" alt="Costa Rica airport" fill className="object-cover" sizes="25vw" />
+        </div>
+        <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(45,90,39,0.82), rgba(26,82,118,0.82))" }} />
+        <div className="relative p-4 text-center">
           <div className="font-body text-white/70 text-xs uppercase tracking-widest mb-1">Arriving in</div>
           <div className="font-headline text-white font-black text-5xl leading-none">{days}</div>
           <div className="font-body text-white/80 text-sm mt-1">
@@ -189,7 +197,7 @@ function Countdown() {
           </div>
           <div className="font-editorial italic text-white/60 text-xs mt-2">October 1, 2026 · ¡Pura Vida! 🇨🇷</div>
         </div>
-        <div className="h-1.5" style={{ background: "rgba(255,255,255,0.15)" }}>
+        <div className="relative h-1.5" style={{ background: "rgba(255,255,255,0.15)" }}>
           <div
             className="h-full transition-all"
             style={{

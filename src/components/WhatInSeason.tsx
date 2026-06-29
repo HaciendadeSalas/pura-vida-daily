@@ -5,7 +5,8 @@ const monthlyProduce = [
   // [0] January
   {
     name: "Cas", spanish: "Psidium friedrichsthalianum", months: "Year-round · Peak Jan–Feb",
-    emoji: "🍈", bgGradient: "linear-gradient(135deg, #4a8c3f, #7fb069)", photo: null as string | null,
+    emoji: "🍈", bgGradient: "linear-gradient(135deg, #4a8c3f, #7fb069)",
+    photo: "https://images.unsplash.com/photo-1758614027662-dfec17b78027?w=800&q=85&fit=crop",
     blurb: "Cousin of the guava, intensely sour and green — a Costa Rican staple. Crushed into refrescos naturales at every soda, tart and refreshing and unlike anything sold abroad.",
     use: "Blend with water, sugar, and ice for cas juice. Also makes an excellent jam.",
   },
@@ -20,7 +21,8 @@ const monthlyProduce = [
   // [2] March
   {
     name: "Marañón", spanish: "Anacardium occidentale · Cashew Apple", months: "February–May",
-    emoji: "🍑", bgGradient: "linear-gradient(135deg, #e8841a, #c0392b)", photo: null as string | null,
+    emoji: "🍑", bgGradient: "linear-gradient(135deg, #e8841a, #c0392b)",
+    photo: "https://images.unsplash.com/photo-1741635914985-256817ecba26?w=800&q=85&fit=crop",
     blurb: "The fleshy pseudofruit attached to the cashew nut. Yellow or red, juicy and astringent — mostly ignored internationally but beloved in Costa Rica, especially in Guanacaste where cashew trees line the roadsides.",
     use: "Drink as agua de marañón or eat fresh. The nut must be roasted before eating.",
   },
@@ -49,21 +51,24 @@ const monthlyProduce = [
   // [6] July
   {
     name: "Guanábana", spanish: "Annona muricata · Soursop", months: "July–October",
-    emoji: "🌵", bgGradient: "linear-gradient(135deg, #4a8c3f, #2d6a27)", photo: null as string | null,
+    emoji: "🌵", bgGradient: "linear-gradient(135deg, #4a8c3f, #2d6a27)",
+    photo: "https://images.unsplash.com/photo-1732881743830-26f6eaf304b3?w=800&q=85&fit=crop",
     blurb: "A large spiky green fruit with white fibrous flesh — both sweet and tart at once. The smell is intoxicating. Guanábana trees grow across low elevations and the fruit is prized for its health properties.",
     use: "Blended into batidos de guanábana with milk and sugar — one of CR's most popular fruit drinks.",
   },
   // [7] August
   {
     name: "Carambola", spanish: "Averrhoa carambola · Starfruit", months: "August–December",
-    emoji: "⭐", bgGradient: "linear-gradient(135deg, #d4a017, #a8881a)", photo: null as string | null,
+    emoji: "⭐", bgGradient: "linear-gradient(135deg, #d4a017, #a8881a)",
+    photo: "https://images.unsplash.com/photo-1605879883262-0cd26b362f54?w=800&q=85&fit=crop",
     blurb: "Sliced crosswise, carambola reveals its perfect star shape. Flavor ranges from tart to mildly sweet. It thrives in Costa Rica's humid lowlands and appears in markets from August through year-end.",
     use: "Eaten fresh or sliced into salads. Makes a beautiful garnish and can be juiced.",
   },
   // [8] September
   {
     name: "Granadilla", spanish: "Passiflora ligularis · Sweet Passion Fruit", months: "September–November",
-    emoji: "🟡", bgGradient: "linear-gradient(135deg, #d4a017, #e8c84a)", photo: null as string | null,
+    emoji: "🟡", bgGradient: "linear-gradient(135deg, #d4a017, #e8c84a)",
+    photo: "https://images.unsplash.com/photo-1616077498072-ccba9b178fa5?w=800&q=85&fit=crop",
     blurb: "A round orange-yellow shell you crack open to find seeds surrounded by clear, sweet, gelatinous pulp. Costa Ricans eat it by the cup, scooping the seeds and all with a spoon.",
     use: "Crack open and eat the seed-pulp directly. Also mixed into yogurt or made into juice.",
   },
@@ -78,7 +83,8 @@ const monthlyProduce = [
   // [10] November
   {
     name: "Anona", spanish: "Annona squamosa · Sugar Apple", months: "October–December",
-    emoji: "💚", bgGradient: "linear-gradient(135deg, #4a8c3f, #3d7a35)", photo: null as string | null,
+    emoji: "💚", bgGradient: "linear-gradient(135deg, #4a8c3f, #3d7a35)",
+    photo: "https://images.unsplash.com/photo-1749313252853-edde3a5f3acb?w=800&q=85&fit=crop",
     blurb: "A cousin of the guanábana — a knobby green fruit that breaks apart into segments of creamy, intensely sweet white flesh. Eaten one sweet lobe at a time, out of hand.",
     use: "Pull apart and eat the sweet segments fresh. Remove the seeds before eating.",
   },

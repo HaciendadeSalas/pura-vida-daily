@@ -93,7 +93,7 @@ export default function Header() {
         className="rule-double px-4 py-1.5 flex items-center justify-between text-xs font-body tracking-widest uppercase"
         style={{ color: "var(--ink-light)", borderBottom: "1px solid var(--border-aged)" }}
       >
-        <span>Est. 2026 · San José, Costa Rica</span>
+        <span>Est. 2026 · Los Ángeles de Grecia, Costa Rica</span>
         <span className="hidden sm:block">
           🌿 Pura Vida · Eco · Elegance · Community
         </span>
