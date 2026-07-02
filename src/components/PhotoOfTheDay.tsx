@@ -1,15 +1,10 @@
 import Image from "next/image";
 import { SectionHeader } from "./VolcanoWatch";
 
+// Photo of the Day: landscapes/culture only, no animals — see Animal of the Day for wildlife.
+// Also avoid reusing images already shown in Volcano Watch (see VolcanoWatch.tsx) so the two
+// sections don't display duplicate photos on the same page.
 const photos = [
-  {
-    title: "Arenal Volcano at Dusk",
-    location: "La Fortuna, Alajuela",
-    caption: "The sleeping giant of Costa Rica glows orange as evening descends over Lake Arenal. For decades Arenal was the most active volcano in the Americas — today its perfect cone stands as a symbol of the country's wild, elemental beauty.",
-    tags: ["Arenal", "Volcano", "Alajuela", "Golden Hour"],
-    photo: "https://images.unsplash.com/photo-1664532869454-53ac5942d959?w=1600&q=85&fit=crop",
-    credit: "Unsplash · Free License",
-  },
   {
     title: "La Fortuna Waterfall",
     location: "Arenal Volcano National Park",
@@ -32,30 +27,6 @@ const photos = [
     caption: "The Pacific coastline of Guanacaste stretches for miles of white sand and warm, gentle surf. Tamarindo's beach has attracted surfers, turtle watchers, and sun-seekers for generations of ticos and travelers alike.",
     tags: ["Guanacaste", "Beach", "Pacific", "Tamarindo"],
     photo: "https://images.unsplash.com/photo-1714319001328-2383617c51d2?w=1600&q=85&fit=crop",
-    credit: "Unsplash · Free License",
-  },
-  {
-    title: "Costa Rica Volcano at Dawn",
-    location: "Central Valley, Costa Rica",
-    caption: "First light catches the crater rim of a Central Valley volcano, where steam mingles with morning mist. Costa Rica sits atop the Pacific Ring of Fire — its volcanic soils are among the most fertile on Earth, producing world-class coffee and vegetables.",
-    tags: ["Volcano", "Dawn", "Central Valley", "Landscape"],
-    photo: "https://images.unsplash.com/photo-1611223156134-07ade11dfe6a?w=1600&q=85&fit=crop",
-    credit: "Unsplash · Free License",
-  },
-  {
-    title: "Scarlet Macaw at Isla Tortuga",
-    location: "Isla Tortuga, Puntarenas",
-    caption: "A wild Scarlet Macaw surveys its tropical kingdom from a branch on Isla Tortuga. Once nearly extinct in Costa Rica due to habitat loss and the illegal pet trade, conservation efforts have restored their populations to thriving numbers on the Pacific coast.",
-    tags: ["Scarlet Macaw", "Wildlife", "Pacific", "Conservation"],
-    photo: "https://images.unsplash.com/photo-1524595974748-074187548e50?w=1600&q=85&fit=crop",
-    credit: "Unsplash · Free License",
-  },
-  {
-    title: "Mountain Valley Vista",
-    location: "Alajuela Province",
-    caption: "A sea of green fills the valley below as clouds drift over the mountain ridges of Alajuela province. This patchwork of coffee farms, cattle pastures, and protected forest corridors represents Costa Rica's balance between agriculture and conservation.",
-    tags: ["Mountains", "Valley", "Alajuela", "Landscape"],
-    photo: "https://images.unsplash.com/photo-1658604872041-172a440e6d78?w=1600&q=85&fit=crop",
     credit: "Unsplash · Free License",
   },
 ];
