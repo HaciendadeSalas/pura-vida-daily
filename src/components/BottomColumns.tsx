@@ -110,19 +110,46 @@ function CultureHistory() {
 }
 
 // ─── Football / Liga Deportiva ────────────────────────────────────
+interface StandingRow {
+  rank: number;
+  team: string;
+  logo: string;
+  points: number;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+}
+
+interface FootballData {
+  standings: StandingRow[];
+  lastUpdated: string | null;
+  error?: string;
+  stale?: boolean;
+}
+
 function FootballSection() {
-  const matches = [
-    { home: "Saprissa", away: "Alajuelense", date: "Jul 5", time: "3:00 PM", venue: "Est. Saprissa" },
-    { home: "Herediano", away: "Pérez Zeledón", date: "Jul 6", time: "1:00 PM", venue: "Est. Fello Meza" },
-    { home: "Cartaginés", away: "Santos FC", date: "Jul 7", time: "5:00 PM", venue: "Est. José Cubero" },
-  ];
-  const standings = [
-    { pos: 1, team: "Saprissa", pts: 42, emoji: "🟣", note: "Morado" },
-    { pos: 2, team: "Alajuelense", pts: 38, emoji: "🔴", note: "Liga" },
-    { pos: 3, team: "Herediano", pts: 35, emoji: "🟡", note: "Team de Provincia" },
-    { pos: 4, team: "Cartaginés", pts: 29, emoji: "🔵", note: "Brumosos" },
-    { pos: 5, team: "Pérez Zeledón", pts: 21, emoji: "⚫", note: "Los Guerreros" },
-  ];
+  const [data, setData] = useState<FootballData | null>(null);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+
+  useEffect(() => {
+    fetch("/api/unafut")
+      .then((r) => r.json())
+      .then((d: FootballData) => {
+        if (d.standings?.length > 0) {
+          setData(d);
+          setStatus("ready");
+        } else {
+          setStatus("error");
+        }
+      })
+      .catch(() => setStatus("error"));
+  }, []);
+
+  const lastUpdatedLabel = data?.lastUpdated
+    ? new Date(data.lastUpdated).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+    : null;
+
   return (
     <div className="flex flex-col gap-3">
       <div
@@ -130,34 +157,38 @@ function FootballSection() {
         style={{ background: "linear-gradient(160deg, #1a5276, #2d5a27)" }}
       >
         <div className="text-3xl mb-1">⚽</div>
-        <div className="font-headline text-white font-bold text-base">UNAFUT · Apertura 2026</div>
+        <div className="font-headline text-white font-bold text-base">UNAFUT · Primera División</div>
         <div className="font-editorial italic text-white/70 text-xs">Primera División de Costa Rica</div>
       </div>
 
-      <div className="text-xs font-body uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>Upcoming Fixtures</div>
-      <div className="space-y-1.5">
-        {matches.map((m) => (
-          <div key={m.home} className="rounded p-2 text-xs" style={{ background: "var(--bg-parchment)", border: "1px solid var(--border-aged)" }}>
-            <div className="font-headline font-bold" style={{ color: "var(--ink-dark)" }}>{m.home} vs {m.away}</div>
-            <div className="mt-0.5" style={{ color: "var(--ink-light)" }}>📅 {m.date} · {m.time} · {m.venue}</div>
-          </div>
-        ))}
-      </div>
-
       <div className="text-xs font-body uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>Standings</div>
-      <div className="space-y-1">
-        {standings.map((s) => (
-          <div key={s.team} className="flex items-center gap-2 text-xs" style={{ borderBottom: "1px solid var(--border-aged)", paddingBottom: "3px" }}>
-            <span className="font-body" style={{ color: "var(--ink-light)", minWidth: 14 }}>{s.pos}.</span>
-            <span>{s.emoji}</span>
-            <span className="font-headline font-bold flex-1" style={{ color: "var(--ink-dark)" }}>{s.team}</span>
-            <span className="font-body font-semibold" style={{ color: "var(--green-jungle)" }}>{s.pts} pts</span>
-          </div>
-        ))}
-      </div>
+
+      {status === "ready" && data ? (
+        <div className="space-y-1">
+          {data.standings.slice(0, 5).map((s) => (
+            <div key={s.team} className="flex items-center gap-2 text-xs" style={{ borderBottom: "1px solid var(--border-aged)", paddingBottom: "3px" }}>
+              <span className="font-body" style={{ color: "var(--ink-light)", minWidth: 14 }}>{s.rank}.</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={s.logo} alt={s.team} className="w-4 h-4 object-contain" />
+              <span className="font-headline font-bold flex-1" style={{ color: "var(--ink-dark)" }}>{s.team}</span>
+              <span className="font-body font-semibold" style={{ color: "var(--green-jungle)" }}>{s.points} pts</span>
+            </div>
+          ))}
+        </div>
+      ) : status === "loading" ? (
+        <div className="space-y-1">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <div key={i} className="animate-pulse rounded" style={{ height: "18px", background: "var(--border-aged)" }} />
+          ))}
+        </div>
+      ) : (
+        <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
+          ⚽ Standings unavailable right now — check back later.
+        </p>
+      )}
 
       <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
-        ⚽ Standings are illustrative. Live data via UNAFUT API coming soon.
+        ⚽ Live standings, updated daily{lastUpdatedLabel ? ` · Last updated ${lastUpdatedLabel}` : ""}.
       </p>
     </div>
   );
