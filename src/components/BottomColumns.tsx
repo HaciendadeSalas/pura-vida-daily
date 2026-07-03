@@ -156,7 +156,6 @@ function FootballSection() {
         <Image src="https://images.unsplash.com/photo-1705593973313-75de7bf95b56?w=800&q=85&fit=crop" alt="Costa Rica football stadium crowd" fill className="object-cover" style={{ objectPosition: "center 78%" }} sizes="25vw" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(26,82,118,0.35), rgba(45,90,39,0.35))" }} />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-3">
-          <div className="text-3xl mb-1">⚽</div>
           <div className="font-headline text-white font-bold text-base">UNAFUT · Primera División</div>
           <div className="font-editorial italic text-white/70 text-xs">Primera División de Costa Rica</div>
         </div>
