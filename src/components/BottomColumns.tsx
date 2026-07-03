@@ -152,14 +152,20 @@ function FootballSection() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div
-        className="rounded p-3 text-center"
-        style={{ background: "linear-gradient(160deg, #1a5276, #2d5a27)" }}
-      >
-        <div className="text-3xl mb-1">⚽</div>
-        <div className="font-headline text-white font-bold text-base">UNAFUT · Primera División</div>
-        <div className="font-editorial italic text-white/70 text-xs">Primera División de Costa Rica</div>
+      <div className="relative rounded overflow-hidden" style={{ minHeight: "110px" }}>
+        <Image src="https://images.unsplash.com/photo-1705593973313-75de7bf95b56?w=800&q=85&fit=crop" alt="Costa Rica football stadium crowd" fill className="object-cover" sizes="25vw" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(26,82,118,0.75), rgba(45,90,39,0.75))" }} />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-3">
+          <div className="text-3xl mb-1">⚽</div>
+          <div className="font-headline text-white font-bold text-base">UNAFUT · Primera División</div>
+          <div className="font-editorial italic text-white/70 text-xs">Primera División de Costa Rica</div>
+        </div>
       </div>
+      <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
+        <a href="https://unsplash.com/@igorvw" target="_blank" rel="noopener noreferrer" className="hover:underline">
+          Photo by Igor Batista on Unsplash
+        </a>
+      </p>
 
       <div className="text-xs font-body uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>Standings</div>
 
