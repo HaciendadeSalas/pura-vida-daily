@@ -12,8 +12,8 @@ import ChurchOfTheDay from "@/components/ChurchOfTheDay";
 import Footer from "@/components/Footer";
 
 // Photo of the Day depends on the current date (Costa Rica timezone) — revalidate
-// hourly so the static page cache doesn't freeze it at build time indefinitely.
-export const revalidate = 3600;
+// daily so the static page cache doesn't freeze it at build time indefinitely.
+export const revalidate = 86400;
 
 export default function Home() {
   return (
