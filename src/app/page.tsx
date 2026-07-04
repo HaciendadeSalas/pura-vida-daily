@@ -11,6 +11,10 @@ import WhatInSeason from "@/components/WhatInSeason";
 import ChurchOfTheDay from "@/components/ChurchOfTheDay";
 import Footer from "@/components/Footer";
 
+// Photo of the Day depends on the current date (Costa Rica timezone) — revalidate
+// hourly so the static page cache doesn't freeze it at build time indefinitely.
+export const revalidate = 3600;
+
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen" style={{ background: "var(--bg-parchment)" }}>

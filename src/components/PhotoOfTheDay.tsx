@@ -463,11 +463,17 @@ const photos = [
   },
 ];
 
+const CR_TIMEZONE = "America/Costa_Rica";
+
 function getDayIndex() {
   const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now.getTime() - start.getTime();
-  return Math.floor(diff / 86400000) % photos.length;
+  const [year, month, day] = now
+    .toLocaleDateString("en-CA", { timeZone: CR_TIMEZONE })
+    .split("-")
+    .map(Number);
+  const start = Date.UTC(year, 0, 0);
+  const current = Date.UTC(year, month - 1, day);
+  return Math.floor((current - start) / 86400000) % photos.length;
 }
 
 export default function PhotoOfTheDay() {
