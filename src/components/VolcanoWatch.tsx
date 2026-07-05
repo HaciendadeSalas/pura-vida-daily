@@ -109,25 +109,61 @@ export default function VolcanoWatch() {
         </div>
 
         {/* Tabs */}
-        <div className="grid grid-cols-6" style={{ background: "var(--bg-cream)", borderTop: "1px solid var(--border-aged)" }}>
-          {volcanos.map((vol, i) => (
-            <button
-              key={vol.name}
-              onClick={() => setActive(i)}
-              className="py-3 px-1 text-center transition-colors"
-              style={{
-                borderRight: i < 5 ? `1px solid var(--border-aged)` : undefined,
-                background: i === active ? "var(--ink-dark)" : undefined,
-                color: i === active ? "white" : "var(--ink-medium)",
-              }}
-            >
-              <div className="text-base">{vol.emoji}</div>
-              <div className="font-headline text-xs font-bold leading-tight mt-0.5">{vol.name}</div>
-            </button>
-          ))}
-        </div>
+        <TabStrip
+          items={volcanos.map((vol) => ({ key: vol.name, icon: vol.emoji, label: vol.name }))}
+          active={active}
+          onSelect={setActive}
+        />
       </div>
     </section>
+  );
+}
+
+// Shared clickable tab-switcher strip — the Volcano Watch pattern, reused by any slide carousel.
+export interface TabStripItem {
+  key: string;
+  icon: string;
+  label?: string;
+}
+
+export function TabStrip({
+  items,
+  active,
+  onSelect,
+  compact = false,
+}: {
+  items: TabStripItem[];
+  active: number;
+  onSelect: (i: number) => void;
+  compact?: boolean;
+}) {
+  return (
+    <div
+      className="grid"
+      style={{
+        gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))`,
+        background: "var(--bg-cream)",
+        borderTop: "1px solid var(--border-aged)",
+      }}
+    >
+      {items.map((item, i) => (
+        <button
+          key={item.key}
+          onClick={() => onSelect(i)}
+          className={`text-center transition-colors ${compact ? "py-1.5 px-0.5" : "py-3 px-1"}`}
+          style={{
+            borderRight: i < items.length - 1 ? `1px solid var(--border-aged)` : undefined,
+            background: i === active ? "var(--ink-dark)" : undefined,
+            color: i === active ? "white" : "var(--ink-medium)",
+          }}
+        >
+          <div className={compact ? "text-sm leading-none" : "text-base"}>{item.icon}</div>
+          {item.label && (
+            <div className="font-headline text-xs font-bold leading-tight mt-0.5">{item.label}</div>
+          )}
+        </button>
+      ))}
+    </div>
   );
 }
 

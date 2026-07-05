@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { SectionHeader } from "./VolcanoWatch";
+import { SectionHeader, TabStrip } from "./VolcanoWatch";
 
 interface DrivePhoto {
   id: string;
@@ -11,102 +11,291 @@ interface DrivePhoto {
   fullSrc: string;
 }
 
-// ─── Coffee Corner ────────────────────────────────────────────────
-function CoffeeCorner() {
+// ─── Shared slide-carousel card (Volcano Watch tab-switcher, compact variant) ──
+interface CarouselSlide {
+  key: string;
+  icon: string;
+  title: string;
+  subtitle: string;
+  photo: string | null; // null = no real photo yet, render placeholder gradient
+  gradient: string; // used for placeholder background
+  paragraph: string;
+  stats: { label: string; value: string }[];
+}
+
+function PlaceholderPhoto({ icon, gradient }: { icon: string; gradient: string }) {
   return (
-    <div className="flex flex-col gap-3">
-      <div className="relative rounded overflow-hidden" style={{ minHeight: "110px" }}>
-        <Image src="https://images.unsplash.com/photo-1612668196612-70262cad2ad7?w=800&q=85&fit=crop" alt="Costa Rica coffee farm" fill className="object-cover" sizes="25vw" />
-        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-3">
-          <div className="font-headline text-white font-bold text-base">Hacienda Alsacia</div>
-          <div className="font-editorial italic text-white/70 text-xs mt-0.5">Starbucks' Only Farm · La Garita, Alajuela</div>
-        </div>
-      </div>
-
-      <div
-        className="rounded p-3 text-sm font-editorial italic leading-relaxed"
-        style={{ background: "var(--bg-parchment)", color: "var(--ink-medium)", borderLeft: "3px solid var(--brown-coffee)" }}
+    <div className="absolute inset-0 flex items-center justify-center" style={{ background: gradient }}>
+      <span className="text-3xl opacity-80">{icon}</span>
+      <span
+        className="absolute bottom-1 right-1.5 font-body text-[9px] uppercase tracking-widest px-1 rounded"
+        style={{ background: "rgba(0,0,0,0.35)", color: "rgba(255,255,255,0.7)" }}
       >
-        In 2013, Starbucks purchased Hacienda Alsacia — the only coffee farm the company owns in the world. Located in La Garita, Alajuela, it serves as both a working farm and a living laboratory for sustainable coffee growing.
-      </div>
-
-      <div className="space-y-1.5">
-        {[
-          { label: "Farm Size", value: "240 hectares" },
-          { label: "Altitude", value: "1,200–1,500 masl" },
-          { label: "Varietals", value: "Caturra, Catuaí, Gesha" },
-          { label: "Founded", value: "1994 (acquired 2013)" },
-          { label: "Tours", value: "Open to visitors year-round" },
-        ].map((item) => (
-          <div key={item.label} className="flex justify-between text-xs" style={{ borderBottom: "1px solid var(--border-aged)", paddingBottom: "3px" }}>
-            <span className="font-body uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>{item.label}</span>
-            <span className="font-headline font-bold" style={{ color: "var(--brown-coffee)" }}>{item.value}</span>
-          </div>
-        ))}
-      </div>
-
-      <div
-        className="rounded p-3 text-xs font-editorial italic leading-relaxed"
-        style={{ background: "var(--bg-parchment)", color: "var(--ink-medium)", borderLeft: "3px solid var(--gold-sun)" }}
-      >
-        ✨ <strong>Café Britt</strong>, founded in Heredia in 1985, was the first company to roast and export gourmet CR coffee for international tourists — transforming how the world saw Costa Rican beans.
-      </div>
-
-      <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
-        🌱 CR law (since 1988) mandates all exported coffee be 100% pure Arabica — no robusta blends allowed. A cup of Tarrazú is one of the world's finest.
-      </p>
+        photo pending
+      </span>
     </div>
   );
 }
 
-// ─── Culture & History ────────────────────────────────────────────
-function CultureHistory() {
+function SlideCarousel({ slides, accent }: { slides: CarouselSlide[]; accent: string }) {
+  const [active, setActive] = useState(0);
+  const s = slides[active];
+
   return (
-    <div className="flex flex-col gap-3">
-      <div
-        className="rounded p-4 text-center"
-        style={{ background: "linear-gradient(160deg, #4a3728, #2c1810)" }}
-      >
-        <div className="text-4xl mb-1">🎭</div>
-        <div className="font-headline text-white font-bold text-base">Teatro Nacional</div>
-        <div className="font-editorial italic text-white/70 text-xs mt-0.5">San José · Built 1897 · Financed by Coffee</div>
+    <div className="flex flex-col gap-2 flex-1">
+      <div className="relative rounded overflow-hidden" style={{ height: "88px" }}>
+        {s.photo ? (
+          <>
+            <Image src={s.photo} alt={s.title} fill className="object-cover" sizes="25vw" />
+            <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
+          </>
+        ) : (
+          <PlaceholderPhoto icon={s.icon} gradient={s.gradient} />
+        )}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2">
+          <div className="font-headline text-white font-bold text-sm leading-tight">{s.title}</div>
+          <div className="font-editorial italic text-white/70 text-[10px] mt-0.5 leading-tight">{s.subtitle}</div>
+        </div>
       </div>
 
-      <div
-        className="rounded p-3 text-sm font-editorial italic leading-relaxed"
-        style={{ background: "var(--bg-parchment)", color: "var(--ink-medium)", borderLeft: "3px solid var(--brown-bark)" }}
+      <p
+        className="font-editorial italic leading-snug"
+        style={{ color: "var(--ink-medium)", fontSize: "11.5px", display: "-webkit-box", WebkitLineClamp: 5, WebkitBoxOrient: "vertical", overflow: "hidden" }}
       >
-        In 1890, Costa Rican coffee barons taxed themselves to fund a world-class opera house after the touring company of Adelina Patti refused to stop in San José. The Teatro Nacional opened in 1897 — still the most beautiful building in Central America.
-      </div>
+        {s.paragraph}
+      </p>
 
-      <div className="space-y-1.5">
-        {[
-          { label: "Built", value: "1891–1897" },
-          { label: "Funded by", value: "Coffee export tax" },
-          { label: "Style", value: "Neo-Renaissance" },
-          { label: "Famous for", value: "Allegory of Coffee mural" },
-          { label: "Location", value: "Plaza de la Cultura, SJO" },
-        ].map((item) => (
-          <div key={item.label} className="flex justify-between text-xs" style={{ borderBottom: "1px solid var(--border-aged)", paddingBottom: "3px" }}>
-            <span className="font-body uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>{item.label}</span>
-            <span className="font-headline font-bold" style={{ color: "var(--ink-dark)" }}>{item.value}</span>
-          </div>
+      <div className="flex flex-wrap gap-x-2 gap-y-0.5" style={{ borderTop: "1px solid var(--border-aged)", paddingTop: "4px" }}>
+        {s.stats.map((stat) => (
+          <span key={stat.label} className="font-body text-[10px]" style={{ color: "var(--ink-light)" }}>
+            <span className="uppercase tracking-wide">{stat.label}:</span>{" "}
+            <span className="font-headline font-bold" style={{ color: accent }}>{stat.value}</span>
+          </span>
         ))}
       </div>
 
-      <div
-        className="rounded p-3 text-xs font-editorial italic leading-relaxed"
-        style={{ background: "var(--bg-parchment)", color: "var(--ink-medium)", borderLeft: "3px solid var(--green-jungle)" }}
-      >
-        🛺 The <strong>Ox Cart (Carreta)</strong> of Sarchí is UNESCO Intangible Heritage — each cart hand-painted with unique geometric mandalas. The tradition began in the 1800s when oxen carried coffee to Puntarenas.
+      <div className="mt-auto rounded overflow-hidden" style={{ border: "1px solid var(--border-aged)" }}>
+        <TabStrip
+          compact
+          items={slides.map((slide) => ({ key: slide.key, icon: slide.icon }))}
+          active={active}
+          onSelect={setActive}
+        />
       </div>
-
-      <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
-        🏛️ Costa Rica abolished its army in 1948 — redirecting military spending to education and healthcare. CR now has one of the highest literacy rates in Latin America.
-      </p>
     </div>
   );
+}
+
+// ─── Coffee Corner ────────────────────────────────────────────────
+const coffeeSlides: CarouselSlide[] = [
+  {
+    key: "hacienda-alsacia",
+    icon: "☕",
+    title: "Hacienda Alsacia",
+    subtitle: "Starbucks' Only Farm · La Garita, Alajuela",
+    photo: "https://images.unsplash.com/photo-1612668196612-70262cad2ad7?w=800&q=85&fit=crop",
+    gradient: "linear-gradient(160deg, var(--brown-coffee), var(--ink-dark))",
+    paragraph: "In 2013, Starbucks purchased Hacienda Alsacia — the only coffee farm the company owns in the world. Located in La Garita, Alajuela, it serves as both a working farm and a living laboratory for sustainable coffee growing.",
+    stats: [
+      { label: "Founded", value: "1994 (acquired 2013)" },
+      { label: "Altitude", value: "1,200–1,500 masl" },
+      { label: "Farm Size", value: "240 hectares" },
+    ],
+  },
+  {
+    key: "cafe-britt",
+    icon: "✨",
+    title: "Café Britt",
+    subtitle: "Heredia · Founded 1985",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--gold-sun), var(--brown-bark))",
+    paragraph: "Café Britt, founded in Heredia in 1985, was the first company to roast and export gourmet CR coffee for international tourists — transforming how the world saw Costa Rican beans.",
+    stats: [
+      { label: "Founded", value: "1985" },
+      { label: "Location", value: "Heredia" },
+      { label: "First to", value: "Export gourmet CR coffee" },
+    ],
+  },
+  {
+    key: "arabica-law",
+    icon: "⚖️",
+    title: "The Arabica Law",
+    subtitle: "National Coffee Policy",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--green-jungle), var(--ink-dark))",
+    paragraph: "In 1989, Costa Rica banned growing Robusta coffee anywhere in the country, betting the industry on quality over yield. A 2018 exception opened a few lowland zones unsuited to Arabica, but nearly everything grown here is still 100% Arabica.",
+    stats: [
+      { label: "Passed", value: "1989" },
+      { label: "Eased", value: "2018" },
+      { label: "Today", value: "Still 90%+ Arabica" },
+    ],
+  },
+  {
+    key: "tarrazu-shb",
+    icon: "⛰️",
+    title: "Tarrazú & the SHB Grade",
+    subtitle: "Top Grade Region",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--brown-bark), var(--brown-sand))",
+    paragraph: "Costa Rica's most prized coffee region sits above 1,200 meters south of San José, where cooler air slows the cherries down and concentrates flavor. Beans grown at that altitude earn the \"Strictly Hard Bean\" grade, the country's top classification.",
+    stats: [
+      { label: "Region", value: "Tarrazú" },
+      { label: "Altitude", value: "1,200–1,700m" },
+      { label: "Grade", value: "SHB" },
+    ],
+  },
+  {
+    key: "honey-process",
+    icon: "🍯",
+    title: "The Honey Process",
+    subtitle: "Invented 2006",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--gold-light), var(--gold-sun))",
+    paragraph: "In 2006, Costa Rican producer Juan Ramón Alvarado won the national coffee competition with a method that leaves sticky fruit pulp on the bean while it dries instead of washing it off. Now called \"honey processed,\" it has since spread worldwide.",
+    stats: [
+      { label: "Invented", value: "2006" },
+      { label: "Origin", value: "Costa Rica" },
+      { label: "Now", value: "Used worldwide" },
+    ],
+  },
+  {
+    key: "chorreador",
+    icon: "🫖",
+    title: "The Chorreador",
+    subtitle: "Traditional Manual Brewer",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--ink-medium), var(--brown-coffee))",
+    paragraph: "Long before espresso machines and pour-over kits, Costa Ricans brewed coffee with a chorreador — a wooden stand holding a cloth sock filter that hot water is poured through by hand. It's older, slower, and still found in kitchens across the country today.",
+    stats: [
+      { label: "Type", value: "Manual brewer" },
+      { label: "Method", value: "Cloth filter" },
+      { label: "Still common", value: "Yes" },
+    ],
+  },
+  {
+    key: "grano-de-oro",
+    icon: "👑",
+    title: "The Grano de Oro Era",
+    subtitle: "Late 1800s · \"Golden Bean\"",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--gold-sun), var(--ink-dark))",
+    paragraph: "In the 19th century, coffee exports made a small group of Costa Rican growers rich enough to be called the \"coffee barons.\" Their wealth literally built the country's most famous landmark: the Teatro Nacional.",
+    stats: [
+      { label: "Era", value: "Late 1800s" },
+      { label: "Nickname", value: "Grano de Oro" },
+      { label: "Funded", value: "Teatro Nacional" },
+    ],
+  },
+];
+
+function CoffeeCorner() {
+  return <SlideCarousel slides={coffeeSlides} accent="var(--brown-coffee)" />;
+}
+
+// ─── Culture & History ────────────────────────────────────────────
+const cultureSlides: CarouselSlide[] = [
+  {
+    key: "teatro-nacional",
+    icon: "🎭",
+    title: "Teatro Nacional",
+    subtitle: "San José · Built 1897",
+    photo: null,
+    gradient: "linear-gradient(160deg, #4a3728, #2c1810)",
+    paragraph: "In 1890, Costa Rican coffee barons taxed themselves to fund a world-class opera house after the touring company of Adelina Patti refused to stop in San José. The Teatro Nacional opened in 1897 — still the most beautiful building in Central America.",
+    stats: [
+      { label: "Built", value: "1891–1897" },
+      { label: "Funded by", value: "Coffee export tax" },
+      { label: "Style", value: "Neo-Renaissance" },
+    ],
+  },
+  {
+    key: "sarchi-oxcarts",
+    icon: "🛺",
+    title: "Painted Oxcarts of Sarchí",
+    subtitle: "UNESCO Heritage · 2005",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--red-volcano), var(--gold-sun))",
+    paragraph: "Each carreta is hand-painted with intricate geometric mandalas, and no two workshops use quite the same pattern. What began as a practical way to mark ownership on rural roads became a folk-art tradition, recognized by UNESCO in 2005.",
+    stats: [
+      { label: "Town", value: "Sarchí" },
+      { label: "UNESCO", value: "2005" },
+      { label: "Style", value: "Hand-painted mandalas" },
+    ],
+  },
+  {
+    key: "guanacaste-bullriding",
+    icon: "🐂",
+    title: "Guanacaste Bull-Riding",
+    subtitle: "Fiestas Patronales",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--brown-sand), var(--brown-bark))",
+    paragraph: "During Guanacaste's patron saint festivals, \"topes\" and improvised bullrings (redondeles) draw crowds to watch local riders attempt to stay on for a few wild seconds — no professional rodeo circuit, just small-town courage and a good excuse for a party.",
+    stats: [
+      { label: "Region", value: "Guanacaste" },
+      { label: "Setting", value: "Fiestas patronales" },
+      { label: "Style", value: "Amateur, community-run" },
+    ],
+  },
+  {
+    key: "figueres",
+    icon: "🕊️",
+    title: "José Figueres Ferrer",
+    subtitle: "Army Abolished 1948",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--blue-ocean), var(--green-jungle))",
+    paragraph: "After leading the winning side of Costa Rica's 1948 civil war, Figueres abolished the army entirely, by choice — redirecting military spending toward education and healthcare, a decision that still defines Costa Rica today.",
+    stats: [
+      { label: "Civil War", value: "1948" },
+      { label: "Army abolished", value: "1948" },
+      { label: "Later", value: "3x President" },
+    ],
+  },
+  {
+    key: "gold-artifacts",
+    icon: "🪙",
+    title: "Gold Artifacts of the Early Inhabitants",
+    subtitle: "Pre-Columbian Era",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--gold-sun), var(--ink-medium))",
+    paragraph: "Long before Spanish colonization, skilled goldsmiths in what is now Costa Rica crafted intricate pendants and ornaments using techniques advanced enough to rival much larger civilizations. Many pieces are now housed in San José's Museo del Oro.",
+    stats: [
+      { label: "Era", value: "Pre-Columbian" },
+      { label: "Materials", value: "Gold, tumbaga" },
+      { label: "Displayed", value: "Museo del Oro" },
+    ],
+  },
+  {
+    key: "machete-peon",
+    icon: "🔪",
+    title: "The Machete-Wielding Peon",
+    subtitle: "Rural Workforce",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--green-leaf), var(--brown-bark))",
+    paragraph: "For generations, the machete was the defining tool of Costa Rica's rural workforce — clearing land, harvesting coffee and sugarcane, and building the country's agricultural economy. It remains a practical, everyday tool on farms across Costa Rica.",
+    stats: [
+      { label: "Era", value: "Early 1900s+" },
+      { label: "Primary use", value: "Agriculture" },
+      { label: "Status", value: "Still everyday use" },
+    ],
+  },
+  {
+    key: "gallo-pinto",
+    icon: "🍚",
+    title: "Gallo Pinto",
+    subtitle: "The National Breakfast",
+    photo: null,
+    gradient: "linear-gradient(160deg, var(--green-light), var(--gold-light))",
+    paragraph: "Costa Rica's national breakfast: rice and beans cooked together with onion, pepper, and cilantro, plated alongside eggs, fresh fruit, and bread with natilla (a thick, tangy Costa Rican sour cream). It's the meal most Ticos grow up starting the day with.",
+    stats: [
+      { label: "Meal", value: "Breakfast" },
+      { label: "Core", value: "Rice & beans" },
+      { label: "Sides", value: "Eggs, fruit, pan con natilla" },
+    ],
+  },
+];
+
+function CultureHistory() {
+  return <SlideCarousel slides={cultureSlides} accent="var(--ink-dark)" />;
 }
 
 // ─── Football / Liga Deportiva ────────────────────────────────────
