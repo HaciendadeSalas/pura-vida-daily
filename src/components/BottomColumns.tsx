@@ -398,12 +398,16 @@ function Countdown() {
   const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
   const milestones = [
-    { label: "Guanacaste Sunsets", done: false },
-    { label: "Coffee on the Patio", done: false },
-    { label: "Swim in the Pacific", done: false },
-    { label: "First Pura Vida Said", done: false },
-    { label: "Volcano Hike", done: false },
-    { label: "Fresh Ceviche", done: false },
+    { label: "Take a finance-related course at UCR", icon: "🎓", done: false },
+    { label: "Visit Hacienda Alsacia", icon: "☕", done: false },
+    { label: "Explore the Osa Peninsula", icon: "🌴", done: false },
+    { label: "See Rincón de la Vieja Volcano", icon: "🌋", done: false },
+    { label: "Network with Costa Ricans in the Central Valley", icon: "🤝", done: false },
+    { label: "Build fences and do farm work with Jafet", icon: "🚜", done: false },
+    { label: "Join a local soccer team and play lots of fútbol", icon: "⚽", done: false },
+    { label: "Be part of a local church", icon: "⛪", done: false },
+    { label: "Attend a Liga Deportiva Alajuelense match", icon: "🏟️", done: false },
+    { label: "Shadow Tío Wilmar doing construction work", icon: "🔨", done: false },
   ];
 
   return (
@@ -437,9 +441,10 @@ function Countdown() {
       <div className="text-xs font-body uppercase tracking-widest mb-1" style={{ color: "var(--ink-light)" }}>Costa Rica Bucket List</div>
       <div className="space-y-1">
         {milestones.map((m) => (
-          <div key={m.label} className="flex items-center gap-2 text-xs font-body" style={{ color: "var(--ink-medium)" }}>
-            <span>{m.done ? "✅" : "⬜"}</span>
-            <span>{m.label}</span>
+          <div key={m.label} className="flex items-center gap-2 text-xs font-body" style={{ color: "var(--ink-medium)", opacity: m.done ? 0.5 : 1 }}>
+            <span>{m.icon}</span>
+            <span className={m.done ? "line-through" : undefined}>{m.label}</span>
+            {m.done && <span>✅</span>}
           </div>
         ))}
       </div>
