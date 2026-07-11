@@ -18,7 +18,7 @@ interface CarouselSlide {
   title: string;
   subtitle: string;
   photo: string | null; // null = no real photo yet, render placeholder gradient
-  photoFit?: "cover" | "contain-blur"; // "contain-blur" letterboxes portrait photos over a blurred copy instead of cropping them
+  imagePosition?: string; // CSS object-position value, defaults to center
   gradient: string; // used for placeholder background
   paragraph: string;
   stats: { label: string; value: string }[];
@@ -41,49 +41,29 @@ function PlaceholderPhoto({ icon, gradient }: { icon: string; gradient: string }
 function SlideCarousel({ slides, accent }: { slides: CarouselSlide[]; accent: string }) {
   const [active, setActive] = useState(0);
   const s = slides[active];
-  const isContainBlur = !!s.photo && s.photoFit === "contain-blur";
 
   return (
     <div className="flex flex-col gap-2 flex-1">
-      <div className="rounded overflow-hidden flex flex-col" style={{ height: "88px" }}>
-        {isContainBlur ? (
+      <div className="relative rounded overflow-hidden" style={{ height: "88px" }}>
+        {s.photo ? (
           <>
-            {/* Image area is flex-1 so it only ever occupies the space left over after the
-                text band below claims its (content-sized) height — the photo can never sit
-                behind or under the band. */}
-            <div className="relative flex-1 min-h-0">
-              <Image
-                src={s.photo as string}
-                alt=""
-                aria-hidden
-                fill
-                className="object-cover scale-110 blur-xl brightness-50"
-                sizes="25vw"
-              />
-              <Image src={s.photo as string} alt={s.title} fill className="object-contain" sizes="25vw" />
-              <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.15)" }} />
-            </div>
-            <div className="shrink-0 text-center px-2 py-1" style={{ background: "rgba(0,0,0,0.75)" }}>
-              <div className="font-headline text-white font-bold text-[10px] leading-tight truncate">{s.title}</div>
-              <div className="font-editorial italic text-white/70 text-[8px] leading-tight truncate">{s.subtitle}</div>
-            </div>
+            <Image
+              src={s.photo}
+              alt={s.title}
+              fill
+              className="object-cover"
+              style={s.imagePosition ? { objectPosition: s.imagePosition } : undefined}
+              sizes="25vw"
+            />
+            <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
           </>
         ) : (
-          <div className="relative flex-1">
-            {s.photo ? (
-              <>
-                <Image src={s.photo} alt={s.title} fill className="object-cover" sizes="25vw" />
-                <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
-              </>
-            ) : (
-              <PlaceholderPhoto icon={s.icon} gradient={s.gradient} />
-            )}
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2">
-              <div className="font-headline text-white font-bold text-sm leading-tight">{s.title}</div>
-              <div className="font-editorial italic text-white/70 text-[10px] mt-0.5 leading-tight">{s.subtitle}</div>
-            </div>
-          </div>
+          <PlaceholderPhoto icon={s.icon} gradient={s.gradient} />
         )}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2">
+          <div className="font-headline text-white font-bold text-sm leading-tight">{s.title}</div>
+          <div className="font-editorial italic text-white/70 text-[10px] mt-0.5 leading-tight">{s.subtitle}</div>
+        </div>
       </div>
 
       <p
@@ -270,7 +250,7 @@ const cultureSlides: CarouselSlide[] = [
     title: "José Figueres Ferrer",
     subtitle: "Army Abolished 1948",
     photo: "/images/culture/jose-figueres.jpg",
-    photoFit: "contain-blur",
+    imagePosition: "top",
     gradient: "linear-gradient(160deg, var(--blue-ocean), var(--green-jungle))",
     paragraph: "After leading the winning side of Costa Rica's 1948 civil war, Figueres abolished the army entirely, by choice — redirecting military spending toward education and healthcare, a decision that still defines Costa Rica today.",
     stats: [
@@ -285,7 +265,6 @@ const cultureSlides: CarouselSlide[] = [
     title: "Gold Artifacts of the Early Inhabitants",
     subtitle: "Pre-Columbian Era",
     photo: "/images/culture/gold-artifacts.jpg",
-    photoFit: "contain-blur",
     gradient: "linear-gradient(160deg, var(--gold-sun), var(--ink-medium))",
     paragraph: "Long before Spanish colonization, skilled goldsmiths in what is now Costa Rica crafted intricate pendants and ornaments using techniques advanced enough to rival much larger civilizations. Many pieces are now housed in San José's Museo del Oro.",
     stats: [
