@@ -490,44 +490,36 @@ export function DrivePhotoGallery() {
     <section>
       <SectionHeader label="Your Photos" icon="🖼️" tagline="Your Costa Rica · Google Drive · Updated as you upload" />
 
-      <div className="rounded overflow-hidden border" style={{ borderColor: "var(--border-aged)", background: "var(--bg-cream)" }}>
+      <div className="rounded overflow-hidden border flex flex-col" style={{ borderColor: "var(--border-aged)", background: "var(--bg-cream)" }}>
         {status === "ready" && photo ? (
-          <>
-            <a
-              href={photo.fullSrc}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block relative overflow-hidden"
-              style={{ height: "208px" }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={photo.src.replace("sz=w600", "sz=w1600")}
-                alt={photo.name}
-                className="w-full h-full object-cover"
-                style={{ display: "block" }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%)" }}
-              />
-              <div className="absolute bottom-0 left-0 p-6">
-                <p className="font-body text-white/50 text-xs uppercase tracking-widest">📁 Google Drive · Click to open</p>
-              </div>
-            </a>
-            <div className="px-5 py-3 flex items-center justify-between" style={{ borderTop: "1px solid var(--border-aged)" }}>
-              <p className="font-editorial italic text-sm" style={{ color: "var(--ink-medium)" }}>
-                Photo {(hourIndex % photos.length) + 1} of {photos.length} · rotates hourly
-              </p>
-              <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>{photo.name}</p>
+          <a
+            href={photo.fullSrc}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block relative overflow-hidden"
+            style={{ height: "208px" }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={photo.src.replace("sz=w600", "sz=w1600")}
+              alt={photo.name}
+              className="w-full h-full object-cover"
+              style={{ display: "block" }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{ background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%)" }}
+            />
+            <div className="absolute bottom-0 left-0 p-6">
+              <p className="font-body text-white/50 text-xs uppercase tracking-widest">📁 Google Drive · Click to open</p>
             </div>
-          </>
+          </a>
         ) : status === "loading" ? (
           <div className="animate-pulse" style={{ height: "208px", background: "var(--border-aged)" }} />
         ) : (
           <div
             className="flex flex-col items-center justify-center gap-3 text-center"
-            style={{ minHeight: "208px", background: "var(--bg-parchment)" }}
+            style={{ height: "208px", background: "var(--bg-parchment)" }}
           >
             <div className="text-5xl">📷</div>
             <p className="font-headline font-bold text-lg" style={{ color: "var(--ink-dark)" }}>Your Costa Rica photos will appear here</p>
@@ -538,6 +530,12 @@ export function DrivePhotoGallery() {
             </p>
           </div>
         )}
+
+        <div className="p-5 flex items-center justify-center" style={{ minHeight: "110px", borderTop: "1px solid var(--border-aged)" }}>
+          <p className="font-editorial italic text-xs text-center leading-relaxed" style={{ color: "var(--ink-medium)" }}>
+            To see the world, to stand where the mountains meet the clouds, to cross rivers, surf oceans, and walk beneath the rainforest canopy; to draw closer, to find each other, and to feel deeply. That is the purpose of life. That is pura vida.
+          </p>
+        </div>
       </div>
     </section>
   );
