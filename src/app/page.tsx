@@ -4,7 +4,6 @@ import VolcanoWatch from "@/components/VolcanoWatch";
 import AnimalOfTheDay from "@/components/AnimalOfTheDay";
 import PhotoOfTheDay from "@/components/PhotoOfTheDay";
 import MapSection from "@/components/MapSection";
-import PropertyWatch from "@/components/PropertyWatch";
 import Headlines from "@/components/Headlines";
 import BottomColumns, { DrivePhotoGallery } from "@/components/BottomColumns";
 import WhatInSeason from "@/components/WhatInSeason";
@@ -34,9 +33,6 @@ export default function Home() {
 
         {/* Map + something side by side */}
         <MapSection />
-
-        {/* Property Watch */}
-        <PropertyWatch />
 
         {/* Headlines */}
         <Headlines />
