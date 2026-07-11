@@ -250,7 +250,7 @@ const cultureSlides: CarouselSlide[] = [
     title: "José Figueres Ferrer",
     subtitle: "Army Abolished 1948",
     photo: "/images/culture/jose-figueres.jpg",
-    imagePosition: "top",
+    imagePosition: "center 5%",
     gradient: "linear-gradient(160deg, var(--blue-ocean), var(--green-jungle))",
     paragraph: "After leading the winning side of Costa Rica's 1948 civil war, Figueres abolished the army entirely, by choice — redirecting military spending toward education and healthcare, a decision that still defines Costa Rica today.",
     stats: [
