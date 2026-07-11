@@ -80,7 +80,7 @@ export default function InfoGrid() {
               <div className="font-headline text-xs font-bold uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>
                 {card.label}
               </div>
-              <div className="text-xs font-body" style={{ color: "var(--ink-light)", opacity: 0.7 }}>
+              <div className="text-sm font-body" style={{ color: "var(--ink-light)", opacity: 0.7 }}>
                 {card.sublabel}
               </div>
             </div>
@@ -92,11 +92,11 @@ export default function InfoGrid() {
           <div className="font-editorial italic text-sm" style={{ color: "var(--ink-medium)" }}>
             {card.detail}
           </div>
-          <div className="font-body text-xs mt-1 pt-1" style={{ color: "var(--ink-light)", borderTop: "1px solid var(--border-aged)" }}>
+          <div className="font-body text-sm mt-1 pt-1" style={{ color: "var(--ink-light)", borderTop: "1px solid var(--border-aged)" }}>
             {card.extra}
           </div>
           {"note" in card && card.note && (
-            <div className="text-xs mt-1 font-body" style={{ color: "var(--brown-sand)", fontStyle: "italic" }}>
+            <div className="text-sm mt-1 font-body" style={{ color: "var(--brown-sand)", fontStyle: "italic" }}>
               {card.note}
             </div>
           )}

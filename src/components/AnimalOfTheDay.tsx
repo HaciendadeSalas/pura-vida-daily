@@ -324,11 +324,11 @@ export default function AnimalOfTheDay() {
           {/* Info */}
           <div className="p-5 flex flex-col gap-3">
             <p className="font-editorial italic text-sm" style={{ color: "var(--ink-light)" }}>{animal.habitat}</p>
-            <p className="font-body text-sm leading-relaxed" style={{ color: "var(--ink-medium)" }}>{animal.description}</p>
+            <p className="font-body text-base leading-relaxed" style={{ color: "var(--ink-medium)" }}>{animal.description}</p>
 
             <div className="grid grid-cols-2 gap-2">
               {animal.facts.map((f) => (
-                <div key={f.label} className="text-xs" style={{ borderLeft: "2px solid var(--green-leaf)", paddingLeft: "8px" }}>
+                <div key={f.label} className="text-sm" style={{ borderLeft: "2px solid var(--green-leaf)", paddingLeft: "8px" }}>
                   <div className="font-body uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>{f.label}</div>
                   <div className="font-headline font-bold" style={{ color: "var(--ink-dark)" }}>{f.value}</div>
                 </div>
@@ -336,7 +336,7 @@ export default function AnimalOfTheDay() {
             </div>
 
             <div
-              className="rounded p-3 text-sm font-editorial italic leading-relaxed mt-auto"
+              className="rounded p-3 text-base font-editorial italic leading-relaxed mt-auto"
               style={{ background: "var(--bg-parchment)", color: "var(--ink-medium)", borderLeft: "3px solid var(--green-jungle)" }}
             >
               🌿 <strong>Did you know?</strong> {animal.funFact}

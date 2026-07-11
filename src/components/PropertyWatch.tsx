@@ -90,16 +90,16 @@ export default function PropertyWatch() {
             <div className="p-4 flex flex-col gap-2 flex-1">
               <div>
                 <h3 className="font-headline font-bold text-base leading-tight" style={{ color: "var(--ink-dark)" }}>{p.title}</h3>
-                <p className="font-body text-xs mt-0.5" style={{ color: "var(--ink-light)" }}>📍 {p.location}</p>
+                <p className="font-body text-sm mt-0.5" style={{ color: "var(--ink-light)" }}>📍 {p.location}</p>
               </div>
 
-              <div className="flex gap-3 text-xs font-body" style={{ color: "var(--ink-medium)" }}>
+              <div className="flex gap-3 text-sm font-body" style={{ color: "var(--ink-medium)" }}>
                 <span>🛏 {p.beds} bed</span>
                 <span>🚿 {p.baths} bath</span>
                 <span>📐 {p.sqm} m²</span>
               </div>
 
-              <p className="font-editorial italic text-xs leading-relaxed" style={{ color: "var(--ink-medium)" }}>{p.desc}</p>
+              <p className="font-editorial italic text-base leading-relaxed" style={{ color: "var(--ink-medium)" }}>{p.desc}</p>
 
               <div className="flex flex-wrap gap-1 mt-auto">
                 {p.tags.map((tag) => (
@@ -110,7 +110,7 @@ export default function PropertyWatch() {
               </div>
 
               <div className="flex items-center justify-between mt-2 pt-2" style={{ borderTop: "1px solid var(--border-aged)" }}>
-                <span className="text-xs font-body" style={{ color: "var(--ink-light)" }}>🚗 {p.distFrom}</span>
+                <span className="text-sm font-body" style={{ color: "var(--ink-light)" }}>🚗 {p.distFrom}</span>
                 <a
                   href={p.url}
                   target="_blank"

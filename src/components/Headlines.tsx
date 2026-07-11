@@ -109,7 +109,7 @@ export default async function Headlines() {
                   {item.headline}
                 </h3>
 
-                <p className="font-editorial italic text-sm leading-relaxed" style={{ color: "var(--ink-medium)" }}>
+                <p className="font-editorial italic text-base leading-relaxed" style={{ color: "var(--ink-medium)" }}>
                   {item.summary}
                 </p>
               </div>

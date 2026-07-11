@@ -109,13 +109,13 @@ export default function WhatInSeason() {
           )}
           <div className="absolute bottom-3 left-3 right-3">
             <div className="font-headline text-white font-bold text-xl leading-tight drop-shadow">{item.name}</div>
-            <div className="font-editorial italic text-white/70 text-xs mt-0.5">{item.months}</div>
+            <div className="font-editorial italic text-white/70 text-sm mt-0.5">{item.months}</div>
           </div>
         </div>
 
-        <div className="p-5 flex flex-col gap-2 justify-center" style={{ minHeight: "110px", borderTop: "1px solid var(--border-aged)" }}>
-          <p className="font-editorial italic text-xs" style={{ color: "var(--ink-light)" }}>{item.spanish}</p>
-          <p className="font-body text-sm leading-relaxed" style={{ color: "var(--ink-medium)" }}>{item.blurb}</p>
+        <div className="p-5 flex flex-col gap-2 justify-center" style={{ minHeight: "171px", borderTop: "1px solid var(--border-aged)" }}>
+          <p className="font-editorial italic text-sm" style={{ color: "var(--ink-light)" }}>{item.spanish}</p>
+          <p className="font-body text-base leading-relaxed" style={{ color: "var(--ink-medium)" }}>{item.blurb}</p>
         </div>
       </div>
     </section>

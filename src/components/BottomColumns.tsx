@@ -44,7 +44,7 @@ function SlideCarousel({ slides, accent }: { slides: CarouselSlide[]; accent: st
 
   return (
     <div className="flex flex-col gap-2 flex-1">
-      <div className="relative rounded overflow-hidden" style={{ height: "88px" }}>
+      <div className="relative rounded overflow-hidden" style={{ height: "100px" }}>
         {s.photo ? (
           <>
             <Image
@@ -62,20 +62,20 @@ function SlideCarousel({ slides, accent }: { slides: CarouselSlide[]; accent: st
         )}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2">
           <div className="font-headline text-white font-bold text-sm leading-tight">{s.title}</div>
-          <div className="font-editorial italic text-white/70 text-[10px] mt-0.5 leading-tight">{s.subtitle}</div>
+          <div className="font-editorial italic text-white/70 text-sm mt-0.5 leading-tight">{s.subtitle}</div>
         </div>
       </div>
 
       <p
-        className="font-editorial italic leading-snug"
-        style={{ color: "var(--ink-medium)", fontSize: "11.5px", display: "-webkit-box", WebkitLineClamp: 5, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+        className="font-editorial italic text-base leading-snug"
+        style={{ color: "var(--ink-medium)" }}
       >
         {s.paragraph}
       </p>
 
       <div className="flex flex-wrap gap-x-2 gap-y-0.5" style={{ borderTop: "1px solid var(--border-aged)", paddingTop: "4px" }}>
         {s.stats.map((stat) => (
-          <span key={stat.label} className="font-body text-[10px]" style={{ color: "var(--ink-light)" }}>
+          <span key={stat.label} className="font-body text-sm" style={{ color: "var(--ink-light)" }}>
             <span className="uppercase tracking-wide">{stat.label}:</span>{" "}
             <span className="font-headline font-bold" style={{ color: accent }}>{stat.value}</span>
           </span>
@@ -355,7 +355,7 @@ function FootballSection() {
         <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(26,82,118,0.35), rgba(45,90,39,0.35))" }} />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-3">
           <div className="font-headline text-white font-bold text-base">UNAFUT · Primera División</div>
-          <div className="font-editorial italic text-white/70 text-xs">Primera División de Costa Rica</div>
+          <div className="font-editorial italic text-white/70 text-sm">Primera División de Costa Rica</div>
         </div>
       </div>
       <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
@@ -364,12 +364,12 @@ function FootballSection() {
         </a>
       </p>
 
-      <div className="text-xs font-body uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>Standings</div>
+      <div className="text-sm font-body uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>Standings</div>
 
       {status === "ready" && data ? (
         <div className="space-y-1">
           {data.standings.slice(0, 5).map((s) => (
-            <div key={s.team} className="flex items-center gap-2 text-xs" style={{ borderBottom: "1px solid var(--border-aged)", paddingBottom: "3px" }}>
+            <div key={s.team} className="flex items-center gap-2 text-sm" style={{ borderBottom: "1px solid var(--border-aged)", paddingBottom: "3px" }}>
               <span className="font-body" style={{ color: "var(--ink-light)", minWidth: 14 }}>{s.rank}.</span>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={s.logo} alt={s.team} className="w-4 h-4 object-contain" />
@@ -385,12 +385,12 @@ function FootballSection() {
           ))}
         </div>
       ) : (
-        <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
+        <p className="font-body text-sm" style={{ color: "var(--ink-light)" }}>
           ⚽ Standings unavailable right now — check back later.
         </p>
       )}
 
-      <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
+      <p className="font-body text-sm" style={{ color: "var(--ink-light)" }}>
         ⚽ Live standings, updated daily{lastUpdatedLabel ? ` · Last updated ${lastUpdatedLabel}` : ""}.
       </p>
     </div>
@@ -428,12 +428,12 @@ function Countdown() {
         </div>
         <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(45,90,39,0.82), rgba(26,82,118,0.82))" }} />
         <div className="relative p-4 text-center">
-          <div className="font-body text-white/70 text-xs uppercase tracking-widest mb-1">Arriving in</div>
+          <div className="font-body text-white/70 text-sm uppercase tracking-widest mb-1">Arriving in</div>
           <div className="font-headline text-white font-black text-5xl leading-none">{days}</div>
           <div className="font-body text-white/80 text-sm mt-1">
             days · {hours}h · {mins}m
           </div>
-          <div className="font-editorial italic text-white/60 text-xs mt-2">October 1, 2026 · ¡Pura Vida! 🇨🇷</div>
+          <div className="font-editorial italic text-white/60 text-sm mt-2">October 1, 2026 · ¡Pura Vida! 🇨🇷</div>
         </div>
         <div className="relative h-1.5" style={{ background: "rgba(255,255,255,0.15)" }}>
           <div
@@ -447,10 +447,10 @@ function Countdown() {
       </div>
 
       {/* Bucket list */}
-      <div className="text-xs font-body uppercase tracking-widest mb-1" style={{ color: "var(--ink-light)" }}>Costa Rica Bucket List</div>
+      <div className="text-sm font-body uppercase tracking-widest mb-1" style={{ color: "var(--ink-light)" }}>Costa Rica Bucket List</div>
       <div className="space-y-1">
         {milestones.map((m) => (
-          <div key={m.label} className="flex items-center gap-2 text-xs font-body" style={{ color: "var(--ink-medium)", opacity: m.done ? 0.5 : 1 }}>
+          <div key={m.label} className="flex items-center gap-2 text-sm font-body" style={{ color: "var(--ink-medium)", opacity: m.done ? 0.5 : 1 }}>
             <span>{m.icon}</span>
             <span className={m.done ? "line-through" : undefined}>{m.label}</span>
             {m.done && <span>✅</span>}
@@ -532,7 +532,7 @@ export function DrivePhotoGallery() {
         )}
 
         <div className="p-5 flex items-center justify-center" style={{ minHeight: "110px", borderTop: "1px solid var(--border-aged)" }}>
-          <p className="font-editorial italic text-xs text-center leading-relaxed" style={{ color: "var(--ink-medium)" }}>
+          <p className="font-editorial italic text-base text-center leading-relaxed" style={{ color: "var(--ink-medium)" }}>
             To see the world, to stand where the mountains meet the clouds, to cross rivers, surf oceans, and walk beneath the rainforest canopy; to draw closer, to find each other, and to feel deeply. That is the purpose of life. That is pura vida.
           </p>
         </div>

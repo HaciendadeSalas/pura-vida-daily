@@ -103,12 +103,12 @@ export default function ChurchOfTheDay() {
           )}
           <div className="absolute bottom-3 left-3 right-3">
             <div className="font-headline text-white font-bold text-xl leading-tight drop-shadow">{church.name}</div>
-            <div className="font-editorial italic text-white/70 text-xs mt-0.5">📍 {church.location}</div>
+            <div className="font-editorial italic text-white/70 text-sm mt-0.5">📍 {church.location}</div>
           </div>
         </div>
 
-        <div className="p-5 flex items-center" style={{ minHeight: "110px", borderTop: "1px solid var(--border-aged)" }}>
-          <p className="font-editorial italic text-sm leading-relaxed" style={{ color: "var(--ink-medium)" }}>
+        <div className="p-5 flex items-center" style={{ minHeight: "171px", borderTop: "1px solid var(--border-aged)" }}>
+          <p className="font-editorial italic text-base leading-relaxed" style={{ color: "var(--ink-medium)" }}>
             {church.caption}
           </p>
         </div>

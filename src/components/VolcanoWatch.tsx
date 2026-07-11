@@ -104,7 +104,7 @@ export default function VolcanoWatch() {
           <div className="absolute bottom-0 left-0 right-0 p-4">
             <h3 className="font-headline text-4xl font-black text-white leading-none">{v.name}</h3>
             <p className="text-white/70 text-sm font-body mt-0.5">{v.region} · {v.elevation}</p>
-            <p className="font-editorial italic text-sm mt-2 text-white/85 max-w-lg leading-snug">"{v.fact}"</p>
+            <p className="font-editorial italic text-base mt-2 text-white/85 max-w-lg leading-snug">"{v.fact}"</p>
           </div>
         </div>
 

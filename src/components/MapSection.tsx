@@ -140,7 +140,7 @@ export default function MapSection() {
             />
             <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)" }} />
             <div className="absolute bottom-0 left-0 p-6">
-              <div className="font-body text-white/60 text-xs uppercase tracking-widest mb-1">Region of the Day</div>
+              <div className="font-body text-white/60 text-sm uppercase tracking-widest mb-1">Region of the Day</div>
               <h3 className="font-headline text-3xl font-bold text-white leading-tight">{region.name}</h3>
               <p className="font-editorial italic text-white/75 text-sm mt-1">{region.subtitle}</p>
               <p className="font-body text-white/50 text-xs mt-2">📸 {region.photoCredit}</p>
@@ -156,7 +156,7 @@ export default function MapSection() {
         >
           {region.facts.map((f) => (
             <div key={f.label} className="px-4 py-3 text-center" style={{ borderRight: "1px solid var(--border-aged)" }}>
-              <div className="font-body text-xs uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>{f.label}</div>
+              <div className="font-body text-sm uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>{f.label}</div>
               <div className="font-headline font-bold text-sm mt-0.5" style={{ color: "var(--ink-dark)" }}>{f.value}</div>
             </div>
           ))}
@@ -164,7 +164,7 @@ export default function MapSection() {
 
         {/* Quote */}
         <div className="px-5 py-4" style={{ background: "var(--bg-parchment)", borderTop: "1px solid var(--border-aged)" }}>
-          <p className="font-editorial italic text-sm" style={{ color: "var(--ink-medium)" }}>
+          <p className="font-editorial italic text-base" style={{ color: "var(--ink-medium)" }}>
             {region.quoteIcon} {region.quote}
           </p>
         </div>
