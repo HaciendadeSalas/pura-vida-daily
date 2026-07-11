@@ -18,6 +18,7 @@ interface CarouselSlide {
   title: string;
   subtitle: string;
   photo: string | null; // null = no real photo yet, render placeholder gradient
+  photoFit?: "cover" | "contain-blur"; // "contain-blur" letterboxes portrait photos over a blurred copy instead of cropping them
   gradient: string; // used for placeholder background
   paragraph: string;
   stats: { label: string; value: string }[];
@@ -40,22 +41,49 @@ function PlaceholderPhoto({ icon, gradient }: { icon: string; gradient: string }
 function SlideCarousel({ slides, accent }: { slides: CarouselSlide[]; accent: string }) {
   const [active, setActive] = useState(0);
   const s = slides[active];
+  const isContainBlur = !!s.photo && s.photoFit === "contain-blur";
 
   return (
     <div className="flex flex-col gap-2 flex-1">
-      <div className="relative rounded overflow-hidden" style={{ height: "88px" }}>
-        {s.photo ? (
+      <div className="rounded overflow-hidden flex flex-col" style={{ height: "88px" }}>
+        {isContainBlur ? (
           <>
-            <Image src={s.photo} alt={s.title} fill className="object-cover" sizes="25vw" />
-            <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
+            {/* Image area is flex-1 so it only ever occupies the space left over after the
+                text band below claims its (content-sized) height — the photo can never sit
+                behind or under the band. */}
+            <div className="relative flex-1 min-h-0">
+              <Image
+                src={s.photo as string}
+                alt=""
+                aria-hidden
+                fill
+                className="object-cover scale-110 blur-xl brightness-50"
+                sizes="25vw"
+              />
+              <Image src={s.photo as string} alt={s.title} fill className="object-contain" sizes="25vw" />
+              <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.15)" }} />
+            </div>
+            <div className="shrink-0 text-center px-2 py-1" style={{ background: "rgba(0,0,0,0.75)" }}>
+              <div className="font-headline text-white font-bold text-[10px] leading-tight truncate">{s.title}</div>
+              <div className="font-editorial italic text-white/70 text-[8px] leading-tight truncate">{s.subtitle}</div>
+            </div>
           </>
         ) : (
-          <PlaceholderPhoto icon={s.icon} gradient={s.gradient} />
+          <div className="relative flex-1">
+            {s.photo ? (
+              <>
+                <Image src={s.photo} alt={s.title} fill className="object-cover" sizes="25vw" />
+                <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
+              </>
+            ) : (
+              <PlaceholderPhoto icon={s.icon} gradient={s.gradient} />
+            )}
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2">
+              <div className="font-headline text-white font-bold text-sm leading-tight">{s.title}</div>
+              <div className="font-editorial italic text-white/70 text-[10px] mt-0.5 leading-tight">{s.subtitle}</div>
+            </div>
+          </div>
         )}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2">
-          <div className="font-headline text-white font-bold text-sm leading-tight">{s.title}</div>
-          <div className="font-editorial italic text-white/70 text-[10px] mt-0.5 leading-tight">{s.subtitle}</div>
-        </div>
       </div>
 
       <p
@@ -107,7 +135,7 @@ const coffeeSlides: CarouselSlide[] = [
     icon: "✨",
     title: "Café Britt",
     subtitle: "Heredia · Founded 1985",
-    photo: null,
+    photo: "/images/coffee/cafe-britt.png",
     gradient: "linear-gradient(160deg, var(--gold-sun), var(--brown-bark))",
     paragraph: "Café Britt, founded in Heredia in 1985, was the first company to roast and export gourmet CR coffee for international tourists — transforming how the world saw Costa Rican beans.",
     stats: [
@@ -121,7 +149,7 @@ const coffeeSlides: CarouselSlide[] = [
     icon: "⚖️",
     title: "The Arabica Law",
     subtitle: "National Coffee Policy",
-    photo: null,
+    photo: "/images/coffee/arabica-law.png",
     gradient: "linear-gradient(160deg, var(--green-jungle), var(--ink-dark))",
     paragraph: "In 1989, Costa Rica banned growing Robusta coffee anywhere in the country, betting the industry on quality over yield. A 2018 exception opened a few lowland zones unsuited to Arabica, but nearly everything grown here is still 100% Arabica.",
     stats: [
@@ -135,7 +163,7 @@ const coffeeSlides: CarouselSlide[] = [
     icon: "⛰️",
     title: "Tarrazú & the SHB Grade",
     subtitle: "Top Grade Region",
-    photo: null,
+    photo: "/images/coffee/tarrazu-shb.png",
     gradient: "linear-gradient(160deg, var(--brown-bark), var(--brown-sand))",
     paragraph: "Costa Rica's most prized coffee region sits above 1,200 meters south of San José, where cooler air slows the cherries down and concentrates flavor. Beans grown at that altitude earn the \"Strictly Hard Bean\" grade, the country's top classification.",
     stats: [
@@ -149,7 +177,7 @@ const coffeeSlides: CarouselSlide[] = [
     icon: "🍯",
     title: "The Honey Process",
     subtitle: "Invented 2006",
-    photo: null,
+    photo: "/images/coffee/honey-process.png",
     gradient: "linear-gradient(160deg, var(--gold-light), var(--gold-sun))",
     paragraph: "In 2006, Costa Rican producer Juan Ramón Alvarado won the national coffee competition with a method that leaves sticky fruit pulp on the bean while it dries instead of washing it off. Now called \"honey processed,\" it has since spread worldwide.",
     stats: [
@@ -163,7 +191,7 @@ const coffeeSlides: CarouselSlide[] = [
     icon: "🫖",
     title: "The Chorreador",
     subtitle: "Traditional Manual Brewer",
-    photo: null,
+    photo: "/images/coffee/chorreador.jpg",
     gradient: "linear-gradient(160deg, var(--ink-medium), var(--brown-coffee))",
     paragraph: "Long before espresso machines and pour-over kits, Costa Ricans brewed coffee with a chorreador — a wooden stand holding a cloth sock filter that hot water is poured through by hand. It's older, slower, and still found in kitchens across the country today.",
     stats: [
@@ -177,7 +205,7 @@ const coffeeSlides: CarouselSlide[] = [
     icon: "👑",
     title: "The Grano de Oro Era",
     subtitle: "Late 1800s · \"Golden Bean\"",
-    photo: null,
+    photo: "/images/coffee/grano-de-oro.jpg",
     gradient: "linear-gradient(160deg, var(--gold-sun), var(--ink-dark))",
     paragraph: "In the 19th century, coffee exports made a small group of Costa Rican growers rich enough to be called the \"coffee barons.\" Their wealth literally built the country's most famous landmark: the Teatro Nacional.",
     stats: [
@@ -199,7 +227,7 @@ const cultureSlides: CarouselSlide[] = [
     icon: "🎭",
     title: "Teatro Nacional",
     subtitle: "San José · Built 1897",
-    photo: null,
+    photo: "/images/culture/teatro-nacional.png",
     gradient: "linear-gradient(160deg, #4a3728, #2c1810)",
     paragraph: "In 1890, Costa Rican coffee barons taxed themselves to fund a world-class opera house after the touring company of Adelina Patti refused to stop in San José. The Teatro Nacional opened in 1897 — still the most beautiful building in Central America.",
     stats: [
@@ -213,7 +241,7 @@ const cultureSlides: CarouselSlide[] = [
     icon: "🛺",
     title: "Painted Oxcarts of Sarchí",
     subtitle: "UNESCO Heritage · 2005",
-    photo: null,
+    photo: "/images/culture/sarchi-oxcart.jpg",
     gradient: "linear-gradient(160deg, var(--red-volcano), var(--gold-sun))",
     paragraph: "Each carreta is hand-painted with intricate geometric mandalas, and no two workshops use quite the same pattern. What began as a practical way to mark ownership on rural roads became a folk-art tradition, recognized by UNESCO in 2005.",
     stats: [
@@ -225,9 +253,9 @@ const cultureSlides: CarouselSlide[] = [
   {
     key: "guanacaste-bullriding",
     icon: "🐂",
-    title: "Guanacaste Bull-Riding",
+    title: "Guanacaste Cattle Country",
     subtitle: "Fiestas Patronales",
-    photo: null,
+    photo: "/images/culture/guanacaste-cattle.png",
     gradient: "linear-gradient(160deg, var(--brown-sand), var(--brown-bark))",
     paragraph: "During Guanacaste's patron saint festivals, \"topes\" and improvised bullrings (redondeles) draw crowds to watch local riders attempt to stay on for a few wild seconds — no professional rodeo circuit, just small-town courage and a good excuse for a party.",
     stats: [
@@ -241,7 +269,8 @@ const cultureSlides: CarouselSlide[] = [
     icon: "🕊️",
     title: "José Figueres Ferrer",
     subtitle: "Army Abolished 1948",
-    photo: null,
+    photo: "/images/culture/jose-figueres.jpg",
+    photoFit: "contain-blur",
     gradient: "linear-gradient(160deg, var(--blue-ocean), var(--green-jungle))",
     paragraph: "After leading the winning side of Costa Rica's 1948 civil war, Figueres abolished the army entirely, by choice — redirecting military spending toward education and healthcare, a decision that still defines Costa Rica today.",
     stats: [
@@ -255,7 +284,8 @@ const cultureSlides: CarouselSlide[] = [
     icon: "🪙",
     title: "Gold Artifacts of the Early Inhabitants",
     subtitle: "Pre-Columbian Era",
-    photo: null,
+    photo: "/images/culture/gold-artifacts.jpg",
+    photoFit: "contain-blur",
     gradient: "linear-gradient(160deg, var(--gold-sun), var(--ink-medium))",
     paragraph: "Long before Spanish colonization, skilled goldsmiths in what is now Costa Rica crafted intricate pendants and ornaments using techniques advanced enough to rival much larger civilizations. Many pieces are now housed in San José's Museo del Oro.",
     stats: [
@@ -269,7 +299,7 @@ const cultureSlides: CarouselSlide[] = [
     icon: "🔪",
     title: "The Machete-Wielding Peon",
     subtitle: "Rural Workforce",
-    photo: null,
+    photo: "/images/culture/machete-peon.png",
     gradient: "linear-gradient(160deg, var(--green-leaf), var(--brown-bark))",
     paragraph: "For generations, the machete was the defining tool of Costa Rica's rural workforce — clearing land, harvesting coffee and sugarcane, and building the country's agricultural economy. It remains a practical, everyday tool on farms across Costa Rica.",
     stats: [
@@ -283,7 +313,7 @@ const cultureSlides: CarouselSlide[] = [
     icon: "🍚",
     title: "Gallo Pinto",
     subtitle: "The National Breakfast",
-    photo: null,
+    photo: "/images/culture/gallo-pinto.jpg",
     gradient: "linear-gradient(160deg, var(--green-light), var(--gold-light))",
     paragraph: "Costa Rica's national breakfast: rice and beans cooked together with onion, pepper, and cilantro, plated alongside eggs, fresh fruit, and bread with natilla (a thick, tangy Costa Rican sour cream). It's the meal most Ticos grow up starting the day with.",
     stats: [
