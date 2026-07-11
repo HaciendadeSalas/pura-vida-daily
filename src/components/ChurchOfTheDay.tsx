@@ -72,7 +72,7 @@ const churches = [
     emoji: "⛪",
     bgGradient: "linear-gradient(135deg, #1a5276, #2e86ab)",
   },
-] as const;
+];
 
 function getDayOfWeek() {
   const now = new Date();
