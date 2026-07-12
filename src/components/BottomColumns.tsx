@@ -44,7 +44,7 @@ function SlideCarousel({ slides, accent }: { slides: CarouselSlide[]; accent: st
 
   return (
     <div className="flex flex-col gap-2 flex-1">
-      <div className="relative rounded overflow-hidden" style={{ height: "100px" }}>
+      <div className="relative rounded overflow-hidden" style={{ aspectRatio: "1.7 / 1" }}>
         {s.photo ? (
           <>
             <Image
@@ -76,7 +76,7 @@ function SlideCarousel({ slides, accent }: { slides: CarouselSlide[]; accent: st
       <div className="flex flex-wrap gap-x-2 gap-y-0.5" style={{ borderTop: "1px solid var(--border-aged)", paddingTop: "4px" }}>
         {s.stats.map((stat) => (
           <span key={stat.label} className="font-body text-sm" style={{ color: "var(--ink-light)" }}>
-            <span className="uppercase tracking-wide">{stat.label}:</span>{" "}
+            <span className="uppercase tracking-widest">{stat.label}:</span>{" "}
             <span className="font-headline font-bold" style={{ color: accent }}>{stat.value}</span>
           </span>
         ))}
@@ -236,6 +236,7 @@ const cultureSlides: CarouselSlide[] = [
     title: "Guanacaste Cattle Country",
     subtitle: "Fiestas Patronales",
     photo: "/images/culture/guanacaste-cattle.png",
+    imagePosition: "center 40%",
     gradient: "linear-gradient(160deg, var(--brown-sand), var(--brown-bark))",
     paragraph: "During Guanacaste's patron saint festivals, \"topes\" and improvised bullrings (redondeles) draw crowds to watch local riders attempt to stay on for a few wild seconds — no professional rodeo circuit, just small-town courage and a good excuse for a party.",
     stats: [
@@ -279,6 +280,7 @@ const cultureSlides: CarouselSlide[] = [
     title: "The Machete-Wielding Peon",
     subtitle: "Rural Workforce",
     photo: "/images/culture/machete-peon.png",
+    imagePosition: "center 40%",
     gradient: "linear-gradient(160deg, var(--green-leaf), var(--brown-bark))",
     paragraph: "For generations, the machete was the defining tool of Costa Rica's rural workforce — clearing land, harvesting coffee and sugarcane, and building the country's agricultural economy. It remains a practical, everyday tool on farms across Costa Rica.",
     stats: [
@@ -350,11 +352,11 @@ function FootballSection() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="relative rounded overflow-hidden" style={{ minHeight: "110px" }}>
+      <div className="relative rounded overflow-hidden" style={{ aspectRatio: "1.7 / 1" }}>
         <Image src="https://images.unsplash.com/photo-1705593973313-75de7bf95b56?w=800&q=85&fit=crop" alt="Costa Rica football stadium crowd" fill className="object-cover" style={{ objectPosition: "center 78%" }} sizes="25vw" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(26,82,118,0.35), rgba(45,90,39,0.35))" }} />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-3">
-          <div className="font-headline text-white font-bold text-base">UNAFUT · Primera División</div>
+          <div className="font-headline text-white font-bold text-sm">UNAFUT · Primera División</div>
           <div className="font-editorial italic text-white/70 text-sm">Primera División de Costa Rica</div>
         </div>
       </div>
@@ -409,9 +411,6 @@ function Countdown() {
   const milestones = [
     { label: "Take a finance-related course at UCR", icon: "🎓", done: false },
     { label: "Visit Hacienda Alsacia", icon: "☕", done: false },
-    { label: "Explore the Osa Peninsula", icon: "🌴", done: false },
-    { label: "See Rincón de la Vieja Volcano", icon: "🌋", done: false },
-    { label: "Network with Costa Ricans in the Central Valley", icon: "🤝", done: false },
     { label: "Build fences and do farm work with Jafet", icon: "🚜", done: false },
     { label: "Join a local soccer team and play lots of fútbol", icon: "⚽", done: false },
     { label: "Be part of a local church", icon: "⛪", done: false },
