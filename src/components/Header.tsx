@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const CR_TIMEZONE = "America/Costa_Rica";
 
@@ -28,7 +29,7 @@ function getGreeting(hour: number): GreetingConfig {
   }
 }
 
-function formatCRDate(date: Date): { dayOfWeek: string; dateStr: string; edition: string } {
+function formatCRDate(date: Date): { dayOfWeek: string; dateStr: string } {
   const dayOfWeek = date.toLocaleDateString("en-US", {
     timeZone: CR_TIMEZONE,
     weekday: "long",
@@ -39,10 +40,7 @@ function formatCRDate(date: Date): { dayOfWeek: string; dateStr: string; edition
     day: "numeric",
     year: "numeric",
   });
-  // Edition number: days since launch (Jan 1 2026)
-  const launch = new Date("2026-01-01T00:00:00-06:00");
-  const edition = Math.floor((date.getTime() - launch.getTime()) / 86400000) + 1;
-  return { dayOfWeek, dateStr, edition: String(Math.max(1, edition)).padStart(3, "0") };
+  return { dayOfWeek, dateStr };
 }
 
 function formatCRTime(date: Date): string {
@@ -81,7 +79,7 @@ export default function Header() {
     );
   }
 
-  const { dayOfWeek, dateStr, edition } = formatCRDate(now);
+  const { dayOfWeek, dateStr } = formatCRDate(now);
   const timeStr = formatCRTime(now);
   const hour = getCRHour(now);
   const greeting = getGreeting(hour);
@@ -93,24 +91,15 @@ export default function Header() {
         className="rule-double px-4 py-1.5 flex items-center justify-between text-xs font-body tracking-widest uppercase"
         style={{ color: "var(--ink-light)", borderBottom: "1px solid var(--border-aged)" }}
       >
-        <span>Est. 2026 · Los Ángeles de Grecia, Costa Rica</span>
+        <span>Est. 2026 · Santa Ana, Costa Rica</span>
         <span className="hidden sm:block">
-          🌿 Pura Vida · Eco · Elegance · Community
+          🌿 Pura Vida · Aventura · Elegance · Community
         </span>
         <span>{timeStr} (CR Time)</span>
       </div>
 
       {/* Main masthead */}
       <div className="max-w-7xl mx-auto px-4 pt-6 pb-4 text-center">
-        {/* Decorative rule */}
-        <div className="flex items-center gap-3 mb-3">
-          <div className="flex-1 h-px" style={{ background: "var(--ink-medium)" }} />
-          <span className="text-xs tracking-widest font-body uppercase" style={{ color: "var(--ink-light)" }}>
-            ✦ The Finest Costa Rica Morning Read ✦
-          </span>
-          <div className="flex-1 h-px" style={{ background: "var(--ink-medium)" }} />
-        </div>
-
         {/* Newspaper name */}
         <h1
           className="font-headline text-6xl sm:text-7xl md:text-8xl font-black leading-none tracking-tight mb-1"
@@ -127,28 +116,67 @@ export default function Header() {
           "La Vida Es Bella" — Your Morning Window to Paradise
         </p>
 
-        {/* Lower rule */}
-        <div className="flex items-center gap-3 mb-4">
-          <div className="flex-1" style={{ borderTop: "3px double var(--ink-dark)" }} />
-          <div className="flex-1" style={{ borderTop: "3px double var(--ink-dark)" }} />
-        </div>
-
-        {/* Date / Edition / Greeting row */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-sm">
-          <div className="font-body" style={{ color: "var(--ink-medium)" }}>
+        {/* Date / Greeting / Language row */}
+        <div
+          className="flex flex-wrap items-center justify-center sm:justify-between gap-x-3 gap-y-2 sm:gap-4 py-3"
+          style={{ borderTop: "1px solid var(--border-aged)", borderBottom: "1px solid var(--border-aged)" }}
+        >
+          {/* Date — left */}
+          <div
+            className="font-body text-xs sm:text-sm sm:flex-1 text-center sm:text-left whitespace-nowrap"
+            style={{ color: "var(--ink-medium)" }}
+          >
             <span className="font-semibold">{dayOfWeek}</span>, {dateStr}
           </div>
 
           {/* Greeting — center */}
           <div
-            className="font-headline text-xl sm:text-2xl font-bold px-6 py-1 rounded"
+            className="font-headline text-xl sm:text-2xl font-bold px-6 py-1 rounded flex-shrink-0 max-w-[260px] sm:max-w-none sm:whitespace-nowrap text-center"
             style={{ color: "var(--green-jungle)", letterSpacing: "0.01em" }}
           >
             {greeting.emoji} {greeting.spanish}, Danny!
           </div>
 
-          <div className="font-body text-xs tracking-widest uppercase" style={{ color: "var(--ink-light)" }}>
-            Vol. I · Edition No. {edition}
+          {/* Language toggle — right */}
+          <div className="flex sm:flex-1 justify-center sm:justify-end">
+            <button
+              type="button"
+              onClick={() => console.log("Language toggle placeholder — not yet wired up")}
+              className="flex items-center gap-1.5 sm:gap-2 cursor-pointer opacity-90 hover:opacity-100 transition-opacity"
+              aria-label="Toca aquí para cambiar a español"
+            >
+              <span className="h-9 w-9 sm:h-12 sm:w-12 flex items-center justify-center flex-shrink-0">
+                <Image
+                  src="/images/mascot/cuzuco-full.png"
+                  alt="Cuzuco"
+                  width={48}
+                  height={48}
+                  className="h-full w-full object-contain"
+                />
+              </span>
+              <span className="flex flex-col items-end gap-1">
+                <span
+                  className="hidden lg:inline font-body text-[11px] tracking-wide uppercase whitespace-nowrap"
+                  style={{ color: "var(--ink-light)" }}
+                >
+                  Toca aquí para cambiar a español
+                </span>
+                <span
+                  className="flex items-center rounded-full overflow-hidden text-[9px] font-bold tracking-wide leading-none flex-shrink-0"
+                  style={{ border: "1px solid var(--ink-light)" }}
+                >
+                  <span
+                    className="px-2 py-1 rounded-full"
+                    style={{ background: "var(--green-jungle)", color: "var(--paper-cream, #fdf6e9)" }}
+                  >
+                    EN
+                  </span>
+                  <span className="px-2 py-1" style={{ color: "var(--ink-light)" }}>
+                    ES
+                  </span>
+                </span>
+              </span>
+            </button>
           </div>
         </div>
       </div>
