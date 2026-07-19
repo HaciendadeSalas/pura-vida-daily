@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { useTranslation } from "@/lib/i18n/translations";
 
 const CR_TIMEZONE = "America/Costa_Rica";
 
@@ -63,6 +65,8 @@ function getCRHour(date: Date): number {
 
 export default function Header() {
   const [now, setNow] = useState<Date | null>(null);
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setNow(new Date());
@@ -83,6 +87,7 @@ export default function Header() {
   const timeStr = formatCRTime(now);
   const hour = getCRHour(now);
   const greeting = getGreeting(hour);
+  const greetingText = language === "en" ? greeting.english : greeting.spanish;
 
   return (
     <header className="paper-texture" style={{ borderBottom: "4px double var(--ink-dark)" }}>
@@ -91,10 +96,8 @@ export default function Header() {
         className="rule-double px-4 py-1.5 flex items-center justify-between text-xs font-body tracking-widest uppercase"
         style={{ color: "var(--ink-light)", borderBottom: "1px solid var(--border-aged)" }}
       >
-        <span>Est. 2026 · Santa Ana, Costa Rica</span>
-        <span className="hidden sm:block">
-          🌿 Pura Vida · Aventura · Elegance · Community
-        </span>
+        <span>{t("header.estBar")}</span>
+        <span className="hidden sm:block">{t("header.tagline")}</span>
         <span>{timeStr} (CR Time)</span>
       </div>
 
@@ -134,23 +137,27 @@ export default function Header() {
             className="font-headline text-xl sm:text-2xl font-bold px-6 py-1 rounded flex-shrink-0 max-w-[260px] sm:max-w-none sm:whitespace-nowrap text-center"
             style={{ color: "var(--green-jungle)", letterSpacing: "0.01em" }}
           >
-            {greeting.emoji} {greeting.spanish}, Danny!
+            {greeting.emoji} {greetingText}, Danny!
           </div>
 
           {/* Language toggle — right */}
           <div className="flex sm:flex-1 justify-center sm:justify-end">
             <button
               type="button"
-              onClick={() => console.log("Language toggle placeholder — not yet wired up")}
+              onClick={() => setLanguage(language === "en" ? "es" : "en")}
               className="flex items-center gap-1.5 sm:gap-2 cursor-pointer opacity-90 hover:opacity-100 transition-opacity"
-              aria-label="Toca aquí para cambiar a español"
+              aria-label={
+                language === "en"
+                  ? "Toca aquí para cambiar a español"
+                  : "Tap here to switch to English"
+              }
             >
-              <span className="h-9 w-9 sm:h-12 sm:w-12 flex items-center justify-center flex-shrink-0">
+              <span className="h-[72px] w-[72px] sm:h-24 sm:w-24 flex items-center justify-center flex-shrink-0">
                 <Image
                   src="/images/mascot/cuzuco-full.png"
                   alt="Cuzuco"
-                  width={48}
-                  height={48}
+                  width={192}
+                  height={192}
                   className="h-full w-full object-contain"
                 />
               </span>
@@ -159,19 +166,30 @@ export default function Header() {
                   className="hidden lg:inline font-body text-[11px] tracking-wide uppercase whitespace-nowrap"
                   style={{ color: "var(--ink-light)" }}
                 >
-                  Toca aquí para cambiar a español
+                  {language === "en"
+                    ? "Toca aquí para cambiar a español"
+                    : "Tap here to switch to English"}
                 </span>
                 <span
-                  className="flex items-center rounded-full overflow-hidden text-[9px] font-bold tracking-wide leading-none flex-shrink-0"
-                  style={{ border: "1px solid var(--ink-light)" }}
+                  className="flex items-center rounded-full overflow-hidden text-[18px] font-bold tracking-wide leading-none flex-shrink-0"
+                  style={{ border: "2px solid var(--ink-light)" }}
                 >
                   <span
-                    className="px-2 py-1 rounded-full"
-                    style={{ background: "var(--green-jungle)", color: "var(--paper-cream, #fdf6e9)" }}
+                    className="px-4 py-2 rounded-full"
+                    style={{
+                      background: language === "en" ? "var(--green-jungle)" : "transparent",
+                      color: language === "en" ? "var(--paper-cream, #fdf6e9)" : "var(--ink-light)",
+                    }}
                   >
                     EN
                   </span>
-                  <span className="px-2 py-1" style={{ color: "var(--ink-light)" }}>
+                  <span
+                    className="px-4 py-2 rounded-full"
+                    style={{
+                      background: language === "es" ? "var(--green-jungle)" : "transparent",
+                      color: language === "es" ? "var(--paper-cream, #fdf6e9)" : "var(--ink-light)",
+                    }}
+                  >
                     ES
                   </span>
                 </span>
