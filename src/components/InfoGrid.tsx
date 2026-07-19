@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getSunriseSunset } from "@/lib/sunCalc";
+import { useTranslation } from "@/lib/i18n/translations";
 
 type SunData = { sunrise: string; sunset: string; daylight: string; goldenHour: string } | null;
 
@@ -9,6 +10,7 @@ export default function InfoGrid() {
   const [rate, setRate] = useState<string | null>(null);
   const [rateError, setRateError] = useState(false);
   const [sun, setSun] = useState<SunData>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setSun(getSunriseSunset(new Date()));
@@ -23,9 +25,10 @@ export default function InfoGrid() {
 
   const cards = [
     {
+      id: "weather",
       icon: "🌦",
-      label: "Weather",
-      sublabel: "Juan Santamaría (SJO)",
+      label: t("infoGrid.weather.label"),
+      sublabel: t("infoGrid.weather.sublabel"),
       main: "26°C / 79°F",
       detail: "Partly Cloudy",
       extra: "Humidity 72% · Wind 14 km/h NE",
@@ -33,18 +36,20 @@ export default function InfoGrid() {
       note: "⚙️ Add OpenWeatherMap key to enable live weather",
     },
     {
+      id: "sunrise",
       icon: "🌅",
-      label: "Sunrise & Sunset",
-      sublabel: "San José, Costa Rica",
-      main: sun ? `${sun.sunrise} · ${sun.sunset}` : "Calculating…",
-      detail: sun ? `Daylight: ${sun.daylight}` : "",
-      extra: sun ? `Golden Hour: ${sun.goldenHour}` : "",
+      label: t("infoGrid.sunrise.label"),
+      sublabel: t("infoGrid.sunrise.sublabel"),
+      main: sun ? `${sun.sunrise} · ${sun.sunset}` : t("infoGrid.calculating"),
+      detail: sun ? `${t("infoGrid.daylightPrefix")}${sun.daylight}` : "",
+      extra: sun ? `${t("infoGrid.goldenHourPrefix")}${sun.goldenHour}` : "",
       color: "var(--gold-sun)",
     },
     {
+      id: "tides",
       icon: "🌊",
-      label: "Tides",
-      sublabel: "Guanacaste Pacific",
+      label: t("infoGrid.tides.label"),
+      sublabel: t("infoGrid.tides.sublabel"),
       main: "High: 2.4m @ 10:14 AM",
       detail: "Low: 0.3m @ 4:28 PM",
       extra: "Next High: 11:02 PM",
@@ -52,11 +57,12 @@ export default function InfoGrid() {
       note: "⚙️ Add WorldTides API key to enable live tides",
     },
     {
+      id: "exchange",
       icon: "💵",
-      label: "Exchange Rate",
-      sublabel: "USD → CRC",
+      label: t("infoGrid.exchange.label"),
+      sublabel: t("infoGrid.exchange.sublabel"),
       main: rateError ? "Rate unavailable" : rate ? `₡ ${Number(rate).toLocaleString("en-US", { minimumFractionDigits: 2 })}` : "Loading…",
-      detail: "per 1 US Dollar",
+      detail: t("infoGrid.perDollar"),
       extra: rateError ? "ExchangeRate-API · check back later" : rate ? "Live · ExchangeRate-API" : "Fetching live rate…",
       color: "var(--green-jungle)",
     },
@@ -66,7 +72,7 @@ export default function InfoGrid() {
     <section className="grid grid-cols-2 md:grid-cols-4 gap-0 mb-8 rounded overflow-hidden border" style={{ borderColor: "var(--border-aged)" }}>
       {cards.map((card, i) => (
         <div
-          key={card.label}
+          key={card.id}
           className="p-4 flex flex-col gap-1"
           style={{
             background: "var(--bg-cream)",
