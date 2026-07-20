@@ -128,6 +128,12 @@ export const translations = {
     en: "The beauty of Costa Rica, captured",
     es: "La belleza de Costa Rica, capturada",
   },
+  "animalOfTheDay.title": { en: "Animal of the Day", es: "Animal del Día" },
+  "animalOfTheDay.tagline": {
+    en: "Costa Rica's extraordinary biodiversity, one creature at a time",
+    es: "La extraordinaria biodiversidad de Costa Rica, una criatura a la vez",
+  },
+  "animalOfTheDay.didYouKnow": { en: "Did you know?", es: "¿Sabías que?" },
   "driveGallery.missionStatement": {
     en: "To see the world, to stand where the mountains meet the clouds, to cross rivers, surf oceans, and walk beneath the rainforest canopy; to draw closer, to find each other, and to feel deeply. That is the purpose of life. That is pura vida.",
     es: "Ver el mundo, pararse donde las montañas se encuentran con las nubes, cruzar ríos, surfear océanos y caminar bajo el dosel de la selva; acercarse, encontrarse unos a otros, y sentir profundamente. Ese es el propósito de la vida. Eso es pura vida.",
