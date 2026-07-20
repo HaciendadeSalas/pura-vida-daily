@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { SectionHeader } from "./VolcanoWatch";
+import { useTranslation } from "@/lib/i18n/translations";
 
 // Photo of the Day: landscapes/culture only, no animals — see Animal of the Day for wildlife.
 // Also avoid reusing images already shown in Volcano Watch (see VolcanoWatch.tsx) so the two
@@ -7,32 +10,44 @@ import { SectionHeader } from "./VolcanoWatch";
 const photos = [
   {
     title: "La Fortuna Waterfall",
+    titleEs: "Catarata La Fortuna",
     location: "Arenal Volcano National Park",
+    locationEs: "Parque Nacional Volcán Arenal",
     caption: "La Fortuna Waterfall plunges 70 meters into a turquoise jungle pool — reached by a steep hike down 530 steps.",
+    captionEs: "La Catarata La Fortuna cae 70 metros hasta una poza turquesa en plena selva — se llega tras una empinada caminata de 530 escalones.",
     tags: ["Waterfall", "Arenal", "Nature", "Swimming"],
     photo: "https://images.unsplash.com/photo-1580259679654-9276b39fd2d5?w=1600&q=85&fit=crop",
     credit: "Unsplash · Free License",
   },
   {
     title: "Jungle Canopy Bridge",
+    titleEs: "Puente Colgante en la Selva",
     location: "Monteverde Cloud Forest",
+    locationEs: "Bosque Nuboso de Monteverde",
     caption: "Hanging bridges suspended between ancient trees offer a rare view into Monteverde's cloud forest canopy, one of Earth's most biodiverse ecosystems.",
+    captionEs: "Puentes colgantes suspendidos entre árboles centenarios ofrecen una vista poco común del dosel del bosque nuboso de Monteverde, uno de los ecosistemas más biodiversos de la Tierra.",
     tags: ["Monteverde", "Cloud Forest", "Canopy", "Adventure"],
     photo: "https://images.unsplash.com/photo-1611223157314-18a252c20228?w=1600&q=85&fit=crop",
     credit: "Unsplash · Free License",
   },
   {
     title: "Guanacaste Pacific Coastline",
+    titleEs: "Costa Pacífica de Guanacaste",
     location: "Playa Tamarindo, Guanacaste",
+    locationEs: "Playa Tamarindo, Guanacaste",
     caption: "Guanacaste's Pacific coastline stretches for miles of white sand and warm surf — Tamarindo has drawn surfers and sun-seekers for generations.",
+    captionEs: "La costa pacífica de Guanacaste se extiende por kilómetros de arena blanca y olas cálidas — Tamarindo ha atraído a surfistas y amantes del sol por generaciones.",
     tags: ["Guanacaste", "Beach", "Pacific", "Tamarindo"],
     photo: "https://images.unsplash.com/photo-1714319001328-2383617c51d2?w=1600&q=85&fit=crop",
     credit: "Unsplash · Free License",
   },
   {
     title: "Hacienda Belén",
+    titleEs: "Hacienda Belén",
     location: "Belén, Alajuela Province",
+    locationEs: "Belén, Provincia de Alajuela",
     caption: "Rolling green pasture meets misty mountains at this Central Valley hacienda, a reminder that coffee country begins minutes from San José.",
+    captionEs: "Pastizales verdes ondulados se encuentran con montañas neblinosas en esta hacienda del Valle Central, un recordatorio de que la tierra cafetalera empieza a minutos de San José.",
     tags: ["Hacienda", "Alajuela", "Countryside", "Central Valley"],
     photo: "https://images.unsplash.com/photo-1629337451443-3a43721f196b?w=1600&q=85&fit=crop",
     credit: "Photo by Eelco Böhtlingk · Unsplash",
@@ -40,8 +55,11 @@ const photos = [
   },
   {
     title: "Coffee Plantation Oxcart",
+    titleEs: "Carreta de la Finca Cafetalera",
     location: "Historic Coffee Hacienda, Central Valley",
+    locationEs: "Hacienda Cafetalera Histórica, Valle Central",
     caption: "A traditional oxcart rests beside a conserved 19th-century hacienda house, once used to haul the coffee harvest down from the highlands.",
+    captionEs: "Una carreta tradicional descansa junto a una casa de hacienda del siglo XIX conservada, antaño usada para bajar la cosecha de café desde las tierras altas.",
     tags: ["Oxcart", "Carreta", "Coffee", "Heritage"],
     photo: "https://images.unsplash.com/photo-1593216452146-1c47e42b2461?w=1600&q=85&fit=crop",
     credit: "Photo by Esteban León · Unsplash",
@@ -49,8 +67,11 @@ const photos = [
   },
   {
     title: "Manuel Antonio Beach",
+    titleEs: "Playa de Manuel Antonio",
     location: "Manuel Antonio National Park, Puntarenas",
+    locationEs: "Parque Nacional Manuel Antonio, Puntarenas",
     caption: "Rainforest tumbles straight down to black volcanic rock and blue Pacific water — one of the few places where jungle meets shoreline this abruptly.",
+    captionEs: "La selva cae directamente sobre roca volcánica negra y las aguas azules del Pacífico — uno de los pocos lugares donde la jungla se encuentra con la costa de forma tan abrupta.",
     tags: ["Manuel Antonio", "Beach", "Pacific", "National Park"],
     photo: "https://images.unsplash.com/photo-1580676875879-f20086f1e729?w=1600&q=85&fit=crop",
     credit: "Photo by Etienne Delorieux · Unsplash",
@@ -58,8 +79,11 @@ const photos = [
   },
   {
     title: "Montezuma Shoreline",
+    titleEs: "Costa de Montezuma",
     location: "Montezuma, Nicoya Peninsula",
+    locationEs: "Montezuma, Península de Nicoya",
     caption: "Palm trees lean over the sand at Montezuma, a laid-back Nicoya Peninsula village long favored by surfers and sunset-chasers.",
+    captionEs: "Palmeras se inclinan sobre la arena en Montezuma, un pueblo relajado de la Península de Nicoya, favorito desde hace tiempo de surfistas y cazadores de atardeceres.",
     tags: ["Montezuma", "Nicoya", "Beach", "Sunset"],
     photo: "https://images.unsplash.com/photo-1674170206059-5f7acdaa4a5a?w=1600&q=85&fit=crop",
     credit: "Photo by Frames For Your Heart · Unsplash",
@@ -67,8 +91,11 @@ const photos = [
   },
   {
     title: "Playa Blanca Through the Almonds",
+    titleEs: "Playa Blanca Entre los Almendros",
     location: "Playa Blanca, Puntarenas",
+    locationEs: "Playa Blanca, Puntarenas",
     caption: "The Pacific glimmers through almond tree branches at Playa Blanca, a quieter stretch of the Puntarenas coast.",
+    captionEs: "El Pacífico destella entre las ramas de los almendros en Playa Blanca, un tramo más tranquilo de la costa de Puntarenas.",
     tags: ["Puntarenas", "Beach", "Pacific", "Playa Blanca"],
     photo: "https://images.unsplash.com/photo-1736524972348-85c310d7815b?w=1600&q=85&fit=crop",
     credit: "Photo by Low Tide Travels · Unsplash",
@@ -76,8 +103,11 @@ const photos = [
   },
   {
     title: "Nosara at Sunset",
+    titleEs: "Nosara al Atardecer",
     location: "Nosara, Guanacaste",
+    locationEs: "Nosara, Guanacaste",
     caption: "Waves crash against the rocks as the sky over Nosara turns brilliant orange — this Guanacaste coastline is prized for its unhurried pace.",
+    captionEs: "Las olas rompen contra las rocas mientras el cielo sobre Nosara se torna de un naranja brillante — esta costa de Guanacaste es apreciada por su ritmo pausado.",
     tags: ["Nosara", "Guanacaste", "Sunset", "Beach"],
     photo: "https://images.unsplash.com/photo-1681845047615-28696dec3756?w=1600&q=85&fit=crop",
     credit: "Photo by César Badilla Miranda · Unsplash",
@@ -85,8 +115,11 @@ const photos = [
   },
   {
     title: "San Juanillo Sunset",
+    titleEs: "Atardecer en San Juanillo",
     location: "San Juanillo, Guanacaste",
+    locationEs: "San Juanillo, Guanacaste",
     caption: "The sun drops into the Pacific off San Juanillo, a small fishing beach on the Guanacaste coast still well off the resort circuit.",
+    captionEs: "El sol se hunde en el Pacífico frente a San Juanillo, una pequeña playa de pescadores en la costa de Guanacaste todavía alejada del circuito de resorts.",
     tags: ["San Juanillo", "Guanacaste", "Sunset", "Pacific"],
     photo: "https://images.unsplash.com/photo-1680003604948-130d4a26ae2a?w=1600&q=85&fit=crop",
     credit: "Photo by Frank Eiffert · Unsplash",
@@ -94,8 +127,11 @@ const photos = [
   },
   {
     title: "Puerto Viejo Coastline",
+    titleEs: "Costa de Puerto Viejo",
     location: "Cocles, Puerto Viejo de Talamanca",
+    locationEs: "Cocles, Puerto Viejo de Talamanca",
     caption: "Caribbean surf rolls into the palm-lined shore at Cocles beach, just south of Puerto Viejo — the heart of Costa Rica's Afro-Caribbean coast.",
+    captionEs: "El oleaje caribeño rompe en la costa bordeada de palmeras de Playa Cocles, justo al sur de Puerto Viejo — el corazón de la costa afrocaribeña de Costa Rica.",
     tags: ["Puerto Viejo", "Caribbean", "Cocles", "Beach"],
     photo: "https://images.unsplash.com/photo-1643400811908-ed46db6c8066?w=1600&q=85&fit=crop",
     credit: "Photo by Luis Diego Aguilar · Unsplash",
@@ -103,8 +139,11 @@ const photos = [
   },
   {
     title: "Manzanillo Palms",
+    titleEs: "Palmeras de Manzanillo",
     location: "Manzanillo, Limón Province",
+    locationEs: "Manzanillo, Provincia de Limón",
     caption: "Palm trees crowd the waterline at Manzanillo, the southernmost Caribbean beach town and gateway to the Gandoca-Manzanillo Wildlife Refuge.",
+    captionEs: "Las palmeras se agolpan junto al agua en Manzanillo, el pueblo playero caribeño más al sur y puerta de entrada al Refugio de Vida Silvestre Gandoca-Manzanillo.",
     tags: ["Manzanillo", "Caribbean", "Limón", "Beach"],
     photo: "https://images.unsplash.com/photo-1553391098-1080b545818e?w=1600&q=85&fit=crop",
     credit: "Photo by Juliana Barquero · Unsplash",
@@ -112,8 +151,11 @@ const photos = [
   },
   {
     title: "Tortuguero Beach",
+    titleEs: "Playa de Tortuguero",
     location: "Tortuguero National Park, Limón",
+    locationEs: "Parque Nacional Tortuguero, Limón",
     caption: "Green trees crowd the shoreline at Tortuguero — 'the place of turtles' — home to one of the largest sea turtle nesting grounds around.",
+    captionEs: "Árboles verdes se agolpan en la costa de Tortuguero — 'el lugar de las tortugas' — hogar de uno de los mayores sitios de anidación de tortugas marinas de la región.",
     tags: ["Tortuguero", "Caribbean", "Beach", "National Park"],
     photo: "https://images.unsplash.com/photo-1580182019383-46b50120b9ff?w=1600&q=85&fit=crop",
     credit: "Photo by Etienne Delorieux · Unsplash",
@@ -121,8 +163,11 @@ const photos = [
   },
   {
     title: "Caribbean Coast, Costa Rica",
+    titleEs: "Costa Caribe, Costa Rica",
     location: "Limón Province",
+    locationEs: "Provincia de Limón",
     caption: "Dense green forest meets calm Caribbean water along Costa Rica's less-traveled eastern shore — a quieter counterpart to the busier Pacific beach towns.",
+    captionEs: "Un denso bosque verde se encuentra con las aguas tranquilas del Caribe a lo largo de la costa este, menos transitada, de Costa Rica — una contraparte más silenciosa a los concurridos pueblos playeros del Pacífico.",
     tags: ["Caribbean", "Limón", "Coastline", "Beach"],
     photo: "https://images.unsplash.com/photo-1589566577030-0a37f8775715?w=1600&q=85&fit=crop",
     credit: "Photo by ronald salazar · Unsplash",
@@ -130,8 +175,11 @@ const photos = [
   },
   {
     title: "Punta Mona Golden Beach",
+    titleEs: "Playa Dorada de Punta Mona",
     location: "Punta Mona, Limón Province",
+    locationEs: "Punta Mona, Provincia de Limón",
     caption: "A secluded stretch of golden sand at Punta Mona, near the Panama border — one of the most remote beaches on Costa Rica's Caribbean coast.",
+    captionEs: "Un tramo apartado de arena dorada en Punta Mona, cerca de la frontera con Panamá — una de las playas más remotas de la costa caribeña de Costa Rica.",
     tags: ["Punta Mona", "Caribbean", "Beach", "Remote"],
     photo: "https://images.unsplash.com/photo-1572817430227-b94a4f9e5f1e?w=1600&q=85&fit=crop",
     credit: "Photo by Chalo Garcia · Unsplash",
@@ -139,8 +187,11 @@ const photos = [
   },
   {
     title: "Costa Rican Rain Forest",
+    titleEs: "Selva Tropical de Costa Rica",
     location: "Lowland Rainforest",
+    locationEs: "Selva Tropical de Tierras Bajas",
     caption: "Layer upon layer of green canopy stretches to the horizon — the dense, humid lowland rainforest covering roughly a quarter of Costa Rica.",
+    captionEs: "Capa tras capa de dosel verde se extiende hasta el horizonte — la densa y húmeda selva tropical de tierras bajas que cubre aproximadamente una cuarta parte de Costa Rica.",
     tags: ["Rainforest", "Jungle", "Biodiversity", "Canopy"],
     photo: "https://images.unsplash.com/photo-1687304527563-74c180d8ced7?w=1600&q=85&fit=crop",
     credit: "Photo by Elianna Gill · Unsplash",
@@ -148,8 +199,11 @@ const photos = [
   },
   {
     title: "Lush Rainforest Canopy",
+    titleEs: "Exuberante Dosel de la Selva",
     location: "Costa Rican Rainforest",
+    locationEs: "Selva Tropical de Costa Rica",
     caption: "Unbroken jungle canopy rolls across the hills — a reminder that Costa Rica, just 0.03% of the planet's landmass, holds nearly 6% of its biodiversity.",
+    captionEs: "Un dosel de selva ininterrumpido se extiende sobre las colinas — un recordatorio de que Costa Rica, apenas el 0.03% de la superficie terrestre del planeta, alberga casi el 6% de su biodiversidad.",
     tags: ["Rainforest", "Canopy", "Jungle", "Nature"],
     photo: "https://images.unsplash.com/photo-1698871741610-11e817f934e3?w=1600&q=85&fit=crop",
     credit: "Photo by Outward Bound Costa Rica · Unsplash",
@@ -157,8 +211,11 @@ const photos = [
   },
   {
     title: "Highland Rainforest in the Mist",
+    titleEs: "Selva de Altura entre la Neblina",
     location: "Central Highlands",
+    locationEs: "Tierras Altas Centrales",
     caption: "Clouds and fog drift down from the mountains over emerald treetops — the highland rainforest at its most atmospheric, somewhere between jungle and cloud forest.",
+    captionEs: "Nubes y neblina descienden de las montañas sobre copas de árboles color esmeralda — la selva de altura en su forma más atmosférica, a medio camino entre jungla y bosque nuboso.",
     tags: ["Rainforest", "Highlands", "Fog", "Jungle"],
     photo: "https://images.unsplash.com/photo-1629494939320-e36ef741dc36?w=1600&q=85&fit=crop",
     credit: "Photo by Christina Victoria Craft · Unsplash",
@@ -166,8 +223,11 @@ const photos = [
   },
   {
     title: "Looking Up Into the Jungle",
+    titleEs: "Mirando Hacia el Dosel de la Selva",
     location: "Costa Rican Jungle",
+    locationEs: "Selva de Costa Rica",
     caption: "Looking straight up into the canopy of a jungle tree — a view that captures just how many stories tall a healthy rainforest can grow.",
+    captionEs: "Una vista directa hacia el dosel de un árbol de la selva — una imagen que capta cuántos pisos de altura puede alcanzar una selva tropical saludable.",
     tags: ["Jungle", "Canopy", "Trees", "Rainforest"],
     photo: "https://images.unsplash.com/photo-1710028267931-012caa55e456?w=1600&q=85&fit=crop",
     credit: "Photo by Madeline Hogan · Unsplash",
@@ -175,8 +235,11 @@ const photos = [
   },
   {
     title: "Manuel Antonio Jungle Edge",
+    titleEs: "Borde de la Selva en Manuel Antonio",
     location: "Manuel Antonio, Puntarenas",
+    locationEs: "Manuel Antonio, Puntarenas",
     caption: "Where jungle meets water at Manuel Antonio — one of Costa Rica's smallest national parks, and among the most biodiverse per square mile anywhere.",
+    captionEs: "Donde la selva se encuentra con el agua en Manuel Antonio — uno de los parques nacionales más pequeños de Costa Rica, y de los más biodiversos por milla cuadrada en cualquier lugar.",
     tags: ["Manuel Antonio", "Jungle", "Rainforest", "Puntarenas"],
     photo: "https://images.unsplash.com/photo-1592501171458-4e131613f542?w=1600&q=85&fit=crop",
     credit: "Photo by Christina Victoria Craft · Unsplash",
@@ -184,8 +247,11 @@ const photos = [
   },
   {
     title: "Monteverde at Dusk",
+    titleEs: "Monteverde al Anochecer",
     location: "Monteverde Cloud Forest Reserve",
+    locationEs: "Reserva del Bosque Nuboso de Monteverde",
     caption: "Cloud forest trees silhouette against a fading sky in Monteverde, a reserve so biodiverse that Quaker settlers protected it decades before ecotourism made it famous.",
+    captionEs: "Los árboles del bosque nuboso se recortan contra un cielo que se apaga en Monteverde, una reserva tan biodiversa que colonos cuáqueros la protegieron décadas antes de que el ecoturismo la hiciera famosa.",
     tags: ["Monteverde", "Cloud Forest", "Dusk", "Reserve"],
     photo: "https://images.unsplash.com/photo-1580495024618-3fb7d34affbd?w=1600&q=85&fit=crop",
     credit: "Photo by James Ting · Unsplash",
@@ -193,8 +259,11 @@ const photos = [
   },
   {
     title: "Monteverde Lookout",
+    titleEs: "Mirador de Monteverde",
     location: "Monteverde, Puntarenas",
+    locationEs: "Monteverde, Puntarenas",
     caption: "A wooden viewing platform offers a rare open sightline through Monteverde's dense cloud forest canopy, where mist rolls through the trees nearly year-round.",
+    captionEs: "Una plataforma de madera ofrece una vista abierta poco común a través del denso dosel del bosque nuboso de Monteverde, donde la niebla se filtra entre los árboles casi todo el año.",
     tags: ["Monteverde", "Cloud Forest", "Lookout", "Mist"],
     photo: "https://images.unsplash.com/photo-1701111361992-083d91062fda?w=1600&q=85&fit=crop",
     credit: "Photo by Dulce Wilson · Unsplash",
@@ -202,8 +271,11 @@ const photos = [
   },
   {
     title: "Monteverde Forest Pathway",
+    titleEs: "Sendero del Bosque de Monteverde",
     location: "Monteverde Cloud Forest",
+    locationEs: "Bosque Nuboso de Monteverde",
     caption: "A quiet trail winds between moss-covered trunks in Monteverde — one of Central America's most-visited cloud forests, yet still capable of feeling untouched.",
+    captionEs: "Un sendero tranquilo serpentea entre troncos cubiertos de musgo en Monteverde — uno de los bosques nubosos más visitados de Centroamérica, y aun así capaz de sentirse virgen.",
     tags: ["Monteverde", "Cloud Forest", "Trail", "Nature"],
     photo: "https://images.unsplash.com/photo-1601922251755-60d88239608b?w=1600&q=85&fit=crop",
     credit: "Photo by Jan Weber · Unsplash",
@@ -211,8 +283,11 @@ const photos = [
   },
   {
     title: "Costa Rica Waterfall",
+    titleEs: "Catarata de Costa Rica",
     location: "Costa Rican Rainforest",
+    locationEs: "Selva Tropical de Costa Rica",
     caption: "Water finds its way through dense jungle on its way downhill — one of thousands of unnamed cascades hidden across Costa Rica's rainforest-covered mountains.",
+    captionEs: "El agua se abre camino entre la densa selva en su descenso — una de miles de cascadas sin nombre escondidas en las montañas cubiertas de selva de Costa Rica.",
     tags: ["Waterfall", "Rainforest", "Jungle", "Nature"],
     photo: "https://images.unsplash.com/photo-1611223157162-e4cb1419a7d6?w=1600&q=85&fit=crop",
     credit: "Photo by Fabio Fistarol · Unsplash",
@@ -220,8 +295,11 @@ const photos = [
   },
   {
     title: "San Luis Waterfall",
+    titleEs: "Catarata de San Luis",
     location: "San Luis Valley, Monteverde",
+    locationEs: "Valle de San Luis, Monteverde",
     caption: "The San Luis Waterfall drops through the forest below Monteverde — quieter and far less visited than its famous neighbor at La Fortuna.",
+    captionEs: "La Catarata de San Luis cae a través del bosque debajo de Monteverde — más tranquila y mucho menos visitada que su famosa vecina en La Fortuna.",
     tags: ["San Luis", "Waterfall", "Monteverde", "Nature"],
     photo: "https://images.unsplash.com/photo-1701113584390-e47a2cd52492?w=1600&q=85&fit=crop",
     credit: "Photo by Dulce Wilson · Unsplash",
@@ -229,8 +307,11 @@ const photos = [
   },
   {
     title: "La Paz Waterfall",
+    titleEs: "Catarata La Paz",
     location: "La Paz Waterfall Gardens, Alajuela",
+    locationEs: "Jardines de Catarata La Paz, Alajuela",
     caption: "One of five major cascades along the La Paz River, this waterfall plunges through cloud forest on the slopes of Poás.",
+    captionEs: "Una de las cinco cascadas principales a lo largo del Río La Paz, esta catarata cae a través del bosque nuboso en las laderas del Poás.",
     tags: ["La Paz", "Waterfall", "Alajuela", "Cloud Forest"],
     photo: "https://images.unsplash.com/photo-1586298591765-ac63f1103ead?w=1600&q=85&fit=crop",
     credit: "Photo by David Traña · Unsplash",
@@ -238,8 +319,11 @@ const photos = [
   },
   {
     title: "Llanos de Cortez Waterfall",
+    titleEs: "Catarata Llanos de Cortez",
     location: "Guanacaste Province",
+    locationEs: "Provincia de Guanacaste",
     caption: "A wide curtain of water fans out over volcanic rock at Llanos de Cortez, one of Guanacaste's most swimmable waterfalls.",
+    captionEs: "Una amplia cortina de agua se abre sobre roca volcánica en Llanos de Cortez, una de las cataratas más aptas para nadar de Guanacaste.",
     tags: ["Llanos de Cortez", "Waterfall", "Guanacaste", "Swimming"],
     photo: "https://images.unsplash.com/photo-1581045844154-ffc4f627e5c8?w=1600&q=85&fit=crop",
     credit: "Photo by Courtney Hall · Unsplash",
@@ -247,8 +331,11 @@ const photos = [
   },
   {
     title: "Nauyaca Waterfalls",
+    titleEs: "Cataratas Nauyaca",
     location: "Nauyaca Waterfalls, Pérez Zeledón",
+    locationEs: "Cataratas Nauyaca, Pérez Zeledón",
     caption: "Seen from above, the twin-tiered Nauyaca Waterfalls carve through the jungle of the southern Pacific zone — reachable only by hike or horseback.",
+    captionEs: "Vistas desde arriba, las Cataratas Nauyaca, de doble caída, se abren paso por la selva de la zona sur del Pacífico — accesibles solo a pie o a caballo.",
     tags: ["Nauyaca", "Waterfall", "Pérez Zeledón", "Aerial"],
     photo: "https://images.unsplash.com/photo-1634743601926-2b302bab2636?w=1600&q=85&fit=crop",
     credit: "Photo by Kyle Pearce · Unsplash",
@@ -256,8 +343,11 @@ const photos = [
   },
   {
     title: "The Road to Jacó",
+    titleEs: "El Camino a Jacó",
     location: "Route to Jacó, Puntarenas",
+    locationEs: "Ruta a Jacó, Puntarenas",
     caption: "Green mountains roll past the window on the winding route down to Jacó, one of Costa Rica's most scenic Pacific coast drives.",
+    captionEs: "Montañas verdes pasan por la ventana en la sinuosa ruta hacia Jacó, uno de los recorridos más pintorescos de la costa pacífica de Costa Rica.",
     tags: ["Jacó", "Mountains", "Road Trip", "Puntarenas"],
     photo: "https://images.unsplash.com/photo-1562030757-ba49fec50e2d?w=1600&q=85&fit=crop",
     credit: "Photo by Zach Castillo · Unsplash",
@@ -265,8 +355,11 @@ const photos = [
   },
   {
     title: "San José Framed by Mountains",
+    titleEs: "San José Enmarcada por Montañas",
     location: "San José, Central Valley",
+    locationEs: "San José, Valle Central",
     caption: "Costa Rica's capital sits cradled in the Central Valley, ringed by mountains that give San José its famously mild, spring-like climate.",
+    captionEs: "La capital de Costa Rica descansa arropada en el Valle Central, rodeada de montañas que le dan a San José su famoso clima suave, casi primaveral.",
     tags: ["San José", "Central Valley", "Mountains", "Capital"],
     photo: "https://images.unsplash.com/photo-1687698328566-683e7398996e?w=1600&q=85&fit=crop",
     credit: "Photo by Elianna Gill · Unsplash",
@@ -274,8 +367,11 @@ const photos = [
   },
   {
     title: "Rainforest Mountain Tops",
+    titleEs: "Cumbres de la Selva Tropical",
     location: "Costa Rican Highlands",
+    locationEs: "Tierras Altas de Costa Rica",
     caption: "Clouds settle into the folds of forested hillsides — the kind of layered, mist-wrapped landscape that makes Costa Rica's highlands feel endless from any overlook.",
+    captionEs: "Las nubes se asientan en los pliegues de las laderas boscosas — el tipo de paisaje en capas, envuelto en neblina, que hace sentir infinitas las tierras altas de Costa Rica desde cualquier mirador.",
     tags: ["Mountains", "Highlands", "Rainforest", "Landscape"],
     photo: "https://images.unsplash.com/photo-1698870818723-5e4924d0724f?w=1600&q=85&fit=crop",
     credit: "Photo by Outward Bound Costa Rica · Unsplash",
@@ -283,8 +379,11 @@ const photos = [
   },
   {
     title: "Mountains of Costa Rica",
+    titleEs: "Montañas de Costa Rica",
     location: "Central Highlands",
+    locationEs: "Tierras Altas Centrales",
     caption: "Forested hills stack into the distance under a soft sky — a quiet, unnamed corner of Costa Rica's mountainous interior.",
+    captionEs: "Colinas boscosas se apilan hacia la distancia bajo un cielo suave — un rincón tranquilo y sin nombre del interior montañoso de Costa Rica.",
     tags: ["Mountains", "Highlands", "Landscape", "Nature"],
     photo: "https://images.unsplash.com/photo-1666058376837-2904c3bfeda8?w=1600&q=85&fit=crop",
     credit: "Photo by Juan Davila · Unsplash",
@@ -292,8 +391,11 @@ const photos = [
   },
   {
     title: "Misty Mountain Forest",
+    titleEs: "Bosque Montañoso entre la Niebla",
     location: "Costa Rican Highlands",
+    locationEs: "Tierras Altas de Costa Rica",
     caption: "Fog settles into a forested hillside, blurring the line between mountain and cloud — a common sight in Costa Rica's rain-fed highland terrain.",
+    captionEs: "La niebla se asienta en una ladera boscosa, difuminando la línea entre montaña y nube — una escena común en el terreno alto y lluvioso de Costa Rica.",
     tags: ["Mountains", "Fog", "Highlands", "Forest"],
     photo: "https://images.unsplash.com/photo-1683065480453-3a27752202a9?w=1600&q=85&fit=crop",
     credit: "Photo by Outward Bound Costa Rica · Unsplash",
@@ -301,8 +403,11 @@ const photos = [
   },
   {
     title: "A River in the Rainforest",
+    titleEs: "Un Río en la Selva Tropical",
     location: "Costa Rican Rainforest",
+    locationEs: "Selva Tropical de Costa Rica",
     caption: "A clear stream cuts through dense jungle — one of the countless waterways that keep Costa Rica's rainforest lush through both wet and dry seasons.",
+    captionEs: "Un arroyo cristalino atraviesa la densa selva — una de las innumerables vías de agua que mantienen exuberante la selva tropical de Costa Rica tanto en la época lluviosa como en la seca.",
     tags: ["River", "Rainforest", "Jungle", "Nature"],
     photo: "https://images.unsplash.com/photo-1689829538884-7a7cfabda004?w=1600&q=85&fit=crop",
     credit: "Photo by Elianna Gill · Unsplash",
@@ -310,8 +415,11 @@ const photos = [
   },
   {
     title: "River at Heredia",
+    titleEs: "Río en Heredia",
     location: "Heredia Province",
+    locationEs: "Provincia de Heredia",
     caption: "A quiet river winds beneath green trees in Heredia, the coffee-growing province just north of San José known for its cool climate and colonial towns.",
+    captionEs: "Un río tranquilo serpentea bajo árboles verdes en Heredia, la provincia cafetalera justo al norte de San José, conocida por su clima fresco y sus pueblos coloniales.",
     tags: ["Heredia", "River", "Central Valley", "Nature"],
     photo: "https://images.unsplash.com/photo-1626289838895-d2cb31657f8c?w=1600&q=85&fit=crop",
     credit: "Photo by Marvin Ozz · Unsplash",
@@ -319,8 +427,11 @@ const photos = [
   },
   {
     title: "Lake Arenal Valley",
+    titleEs: "Valle del Lago Arenal",
     location: "Lake Arenal, Alajuela Province",
+    locationEs: "Lago Arenal, Provincia de Alajuela",
     caption: "Costa Rica's largest lake stretches through a lush valley below the clouds — created in the 1970s by a dam that now powers the country.",
+    captionEs: "El lago más grande de Costa Rica se extiende por un exuberante valle bajo las nubes — creado en la década de 1970 por una represa que hoy da energía al país.",
     tags: ["Lake Arenal", "Valley", "Alajuela", "Landscape"],
     photo: "https://images.unsplash.com/photo-1639417589149-144482ab97cc?w=1600&q=85&fit=crop",
     credit: "Photo by Rikin Katyal · Unsplash",
@@ -328,8 +439,11 @@ const photos = [
   },
   {
     title: "Río San Juan Border River",
+    titleEs: "Río San Juan, Río Fronterizo",
     location: "Río San Juan, CR/Nicaragua Border",
+    locationEs: "Río San Juan, Frontera CR/Nicaragua",
     caption: "A lone tree stands in the middle of the Río San Juan, the river forming much of the border between Costa Rica and Nicaragua.",
+    captionEs: "Un árbol solitario se alza en medio del Río San Juan, el río que forma gran parte de la frontera entre Costa Rica y Nicaragua.",
     tags: ["Río San Juan", "River", "Border", "Nature"],
     photo: "https://images.unsplash.com/photo-1649240262324-54efd580ed65?w=1600&q=85&fit=crop",
     credit: "Photo by Rico Meier · Unsplash",
@@ -337,8 +451,11 @@ const photos = [
   },
   {
     title: "Río Celeste from Above",
+    titleEs: "Río Celeste desde el Aire",
     location: "Tenorio Volcano National Park",
+    locationEs: "Parque Nacional Volcán Tenorio",
     caption: "Seen from the air, the Río Celeste winds through dense jungle — its turquoise water comes from a chemical reaction where two clear rivers converge.",
+    captionEs: "Visto desde el aire, el Río Celeste serpentea a través de la densa selva — su agua turquesa proviene de una reacción química donde convergen dos ríos transparentes.",
     tags: ["Río Celeste", "River", "Aerial", "Turquoise"],
     photo: "https://images.unsplash.com/photo-1711882569452-967be6941ddd?w=1600&q=85&fit=crop",
     credit: "Photo by Bernd 📷 Dittrich · Unsplash",
@@ -346,8 +463,11 @@ const photos = [
   },
   {
     title: "Sunset at Marino Ballena",
+    titleEs: "Atardecer en Marino Ballena",
     location: "Marino Ballena National Park, Puntarenas",
+    locationEs: "Parque Nacional Marino Ballena, Puntarenas",
     caption: "The sky burns orange over Marino Ballena, home to the famous 'whale's tail' sandbar and a key nursery for humpback whales migrating from both hemispheres.",
+    captionEs: "El cielo arde en naranja sobre Marino Ballena, hogar del famoso banco de arena en forma de 'cola de ballena' y un vivero clave para las ballenas jorobadas que migran desde ambos hemisferios.",
     tags: ["Marino Ballena", "Sunset", "National Park", "Pacific"],
     photo: "https://images.unsplash.com/photo-1602190629358-31a50de315e4?w=1600&q=85&fit=crop",
     credit: "Photo by Selina Bubendorfer · Unsplash",
@@ -355,8 +475,11 @@ const photos = [
   },
   {
     title: "Costa Rica Sunset",
+    titleEs: "Atardecer en Costa Rica",
     location: "Pacific Coast",
+    locationEs: "Costa del Pacífico",
     caption: "Clouds catch the last light of the day over the treeline — a nightly ritual that draws travelers to Costa Rica's shores every evening.",
+    captionEs: "Las nubes atrapan la última luz del día sobre la línea de árboles — un ritual nocturno que atrae a los viajeros a las costas de Costa Rica cada tarde.",
     tags: ["Sunset", "Pacific", "Landscape", "Golden Hour"],
     photo: "https://images.unsplash.com/photo-1589821886729-e7bb1d862da5?w=1600&q=85&fit=crop",
     credit: "Photo by Robin Canfield · Unsplash",
@@ -364,8 +487,11 @@ const photos = [
   },
   {
     title: "Sunset in Guanacaste",
+    titleEs: "Atardecer en Guanacaste",
     location: "Guanacaste Province",
+    locationEs: "Provincia de Guanacaste",
     caption: "The sky deepens into gold over a quiet road in Guanacaste, Costa Rica's driest, sunniest province and source of its most reliable sunsets.",
+    captionEs: "El cielo se tiñe de dorado sobre un camino tranquilo en Guanacaste, la provincia más seca y soleada de Costa Rica y fuente de sus atardeceres más confiables.",
     tags: ["Guanacaste", "Sunset", "Landscape", "Golden Hour"],
     photo: "https://images.unsplash.com/photo-1590083325365-028dc318281c?w=1600&q=85&fit=crop",
     credit: "Photo by Robin Canfield · Unsplash",
@@ -373,8 +499,11 @@ const photos = [
   },
   {
     title: "Playa Escondida, Manuel Antonio",
+    titleEs: "Playa Escondida, Manuel Antonio",
     location: "Manuel Antonio National Park",
+    locationEs: "Parque Nacional Manuel Antonio",
     caption: "A hidden cove meets the treeline at Playa Escondida, one of several small beaches tucked inside Manuel Antonio National Park's protected coastline.",
+    captionEs: "Una cala escondida se encuentra con la línea de árboles en Playa Escondida, una de varias playas pequeñas resguardadas dentro de la costa protegida del Parque Nacional Manuel Antonio.",
     tags: ["Manuel Antonio", "National Park", "Beach", "Coastline"],
     photo: "https://images.unsplash.com/photo-1536709017021-ce8f99c17e38?w=1600&q=85&fit=crop",
     credit: "Photo by Atanas Malamov · Unsplash",
@@ -382,8 +511,11 @@ const photos = [
   },
   {
     title: "Manuel Antonio Park Road",
+    titleEs: "Camino del Parque Manuel Antonio",
     location: "Manuel Antonio National Park",
+    locationEs: "Parque Nacional Manuel Antonio",
     caption: "A curved road disappears into the greenery of Manuel Antonio, one of Costa Rica's smallest national parks and among its most visited.",
+    captionEs: "Un camino curvo se pierde entre la vegetación de Manuel Antonio, uno de los parques nacionales más pequeños de Costa Rica y de los más visitados.",
     tags: ["Manuel Antonio", "National Park", "Jungle", "Road"],
     photo: "https://images.unsplash.com/photo-1691242559983-db4cb8415ee8?w=1600&q=85&fit=crop",
     credit: "Photo by Elianna Gill · Unsplash",
@@ -391,8 +523,11 @@ const photos = [
   },
   {
     title: "Basílica de los Ángeles",
+    titleEs: "Basílica de los Ángeles",
     location: "Cartago, Costa Rica",
+    locationEs: "Cartago, Costa Rica",
     caption: "The Basílica de los Ángeles in Cartago houses La Negrita, Costa Rica's patron saint — every August, thousands walk here on pilgrimage.",
+    captionEs: "La Basílica de los Ángeles en Cartago alberga a La Negrita, la santa patrona de Costa Rica — cada agosto, miles caminan hasta aquí en peregrinación.",
     tags: ["Basílica", "Cartago", "Colonial", "Pilgrimage"],
     photo: "https://images.unsplash.com/photo-1530993143534-5d23f4a3e78c?w=1600&q=85&fit=crop",
     credit: "Photo by James Ahlberg · Unsplash",
@@ -400,8 +535,11 @@ const photos = [
   },
   {
     title: "Streets of San José",
+    titleEs: "Calles de San José",
     location: "San José, Costa Rica",
+    locationEs: "San José, Costa Rica",
     caption: "Colorful houses line a quiet street in San José — a glimpse of the capital away from its busier commercial avenues.",
+    captionEs: "Casas coloridas bordean una calle tranquila en San José — un vistazo a la capital lejos de sus avenidas comerciales más transitadas.",
     tags: ["San José", "Streets", "Architecture", "Urban"],
     photo: "https://images.unsplash.com/photo-1590268879033-e53b7bcc3338?w=1600&q=85&fit=crop",
     credit: "Photo by Robin Canfield · Unsplash",
@@ -409,8 +547,11 @@ const photos = [
   },
   {
     title: "A Small Costa Rican Surf Town",
+    titleEs: "Un Pequeño Pueblo Surfista de Costa Rica",
     location: "Pacific Coast Surf Town",
+    locationEs: "Pueblo Surfista de la Costa Pacífica",
     caption: "Golden-hour light filters through palm fronds along a busy street in a small Costa Rican surf town, a motorcycle threading past tour signs.",
+    captionEs: "La luz de la hora dorada se filtra entre hojas de palmera a lo largo de una calle concurrida en un pequeño pueblo surfista costarricense, una motocicleta serpentea entre carteles de tours.",
     tags: ["Surf Town", "Pacific Coast", "Street", "Golden Hour"],
     photo: "https://images.unsplash.com/photo-1778874294856-a3e32a698216?w=1600&q=85&fit=crop",
     credit: "Photo by 35MM North · Unsplash",
@@ -418,8 +559,11 @@ const photos = [
   },
   {
     title: "Tabacón Hot Springs Resort",
+    titleEs: "Resort de Aguas Termales Tabacón",
     location: "Tabacón, La Fortuna",
+    locationEs: "Tabacón, La Fortuna",
     caption: "A wooden bridge crosses the thermally heated river at Tabacón, fed by mineral-rich runoff from the Arenal volcanic system.",
+    captionEs: "Un puente de madera cruza el río de aguas termales en Tabacón, alimentado por escorrentía rica en minerales del sistema volcánico del Arenal.",
     tags: ["Tabacón", "Hot Springs", "La Fortuna", "Resort"],
     photo: "https://images.unsplash.com/photo-1590047301995-bba02b030fa5?w=1600&q=85&fit=crop",
     credit: "Photo by Mike Swigunski · Unsplash",
@@ -427,8 +571,11 @@ const photos = [
   },
   {
     title: "La Fortuna Thermal Pool",
+    titleEs: "Poza Termal de La Fortuna",
     location: "La Fortuna, Alajuela Province",
+    locationEs: "La Fortuna, Provincia de Alajuela",
     caption: "A warm mineral pool sits framed by mountains in La Fortuna, the hot springs capital of Costa Rica, heated by Arenal's volcanic activity.",
+    captionEs: "Una cálida poza mineral se enmarca entre montañas en La Fortuna, la capital de las aguas termales de Costa Rica, calentada por la actividad volcánica del Arenal.",
     tags: ["La Fortuna", "Hot Springs", "Thermal", "Alajuela"],
     photo: "https://images.unsplash.com/photo-1693476636761-001418a89d5f?w=1600&q=85&fit=crop",
     credit: "Photo by Hongbin · Unsplash",
@@ -436,8 +583,11 @@ const photos = [
   },
   {
     title: "Hot Springs in La Fortuna",
+    titleEs: "Aguas Termales en La Fortuna",
     location: "La Fortuna, Alajuela Province",
+    locationEs: "La Fortuna, Provincia de Alajuela",
     caption: "A wooden bridge crosses a steaming thermal river in La Fortuna, where dozens of hot spring resorts ring the volcanic aquifer beneath the town.",
+    captionEs: "Un puente de madera cruza un humeante río termal en La Fortuna, donde decenas de resorts de aguas termales rodean el acuífero volcánico bajo el pueblo.",
     tags: ["La Fortuna", "Hot Springs", "Thermal", "Volcanic"],
     photo: "https://images.unsplash.com/photo-1628212093774-726024f24528?w=1600&q=85&fit=crop",
     credit: "Photo by J. Amill Santiago · Unsplash",
@@ -445,8 +595,11 @@ const photos = [
   },
   {
     title: "Hotel Martino Resort & Spa",
+    titleEs: "Hotel Martino Resort & Spa",
     location: "La Fortuna, Alajuela Province",
+    locationEs: "La Fortuna, Provincia de Alajuela",
     caption: "A resort pool framed by tropical greenery near La Fortuna — one of many spa retreats built around the region's naturally heated groundwater.",
+    captionEs: "Una piscina de resort enmarcada por vegetación tropical cerca de La Fortuna — uno de los muchos retiros de spa construidos alrededor del agua subterránea naturalmente caliente de la región.",
     tags: ["La Fortuna", "Resort", "Spa", "Thermal"],
     photo: "https://images.unsplash.com/photo-1609517448522-2e108986b505?w=1600&q=85&fit=crop",
     credit: "Photo by Christian Hess Araya · Unsplash",
@@ -454,8 +607,11 @@ const photos = [
   },
   {
     title: "Sierpe Mangrove Estuary",
+    titleEs: "Estuario de Manglares de Sierpe",
     location: "Sierpe, Puntarenas",
+    locationEs: "Sierpe, Puntarenas",
     caption: "Morning clouds settle over the winding waterways of Sierpe, gateway to Costa Rica's largest mangrove forest and the boat route out to the Osa Peninsula.",
+    captionEs: "Las nubes matutinas se posan sobre los sinuosos canales de Sierpe, puerta de entrada al manglar más grande de Costa Rica y la ruta en bote hacia la Península de Osa.",
     tags: ["Sierpe", "Mangroves", "Estuary", "Puntarenas"],
     photo: "https://images.unsplash.com/photo-1634743600490-1477151f8800?w=1600&q=85&fit=crop",
     credit: "Photo by Kyle Pearce · Unsplash",
@@ -478,10 +634,14 @@ function getDayIndex() {
 
 export default function PhotoOfTheDay() {
   const photo = photos[getDayIndex()];
+  const { t, language } = useTranslation();
+  const title = language === "en" ? photo.title : photo.titleEs;
+  const location = language === "en" ? photo.location : photo.locationEs;
+  const caption = language === "en" ? photo.caption : photo.captionEs;
 
   return (
     <section>
-      <SectionHeader label="Photo of the Day" icon="📸" tagline="The beauty of Costa Rica, captured" />
+      <SectionHeader label={t("photoOfTheDay.title")} icon="📸" tagline={t("photoOfTheDay.tagline")} />
 
       <div className="rounded overflow-hidden border" style={{ borderColor: "var(--border-aged)" }}>
         {/* Hero image */}
@@ -506,15 +666,15 @@ export default function PhotoOfTheDay() {
 
           {/* Title overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-5">
-            <h3 className="font-headline text-3xl font-bold text-white leading-tight">{photo.title}</h3>
-            <p className="font-editorial italic text-white/75 text-sm mt-1">📍 {photo.location}</p>
+            <h3 className="font-headline text-3xl font-bold text-white leading-tight">{title}</h3>
+            <p className="font-editorial italic text-white/75 text-sm mt-1">📍 {location}</p>
           </div>
         </div>
 
         {/* Caption */}
         <div className="p-5 flex flex-col gap-2" style={{ background: "var(--bg-cream)" }}>
           <p className="font-editorial italic leading-relaxed" style={{ color: "var(--ink-medium)" }}>
-            "{photo.caption}"
+            "{caption}"
           </p>
           <p className="font-body text-xs uppercase tracking-widest" style={{ color: "var(--ink-light)" }}>
             📷{" "}
