@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from "crypto";
 
 export const AUTH_COOKIE_NAME = "pv_auth";
-export const AUTH_COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+export const AUTH_COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
 function getSecret(): string {
   const secret = process.env.SITE_PASSWORD;
