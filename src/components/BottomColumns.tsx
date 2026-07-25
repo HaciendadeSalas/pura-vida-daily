@@ -454,7 +454,7 @@ function FootballSection() {
 // ─── Countdown ────────────────────────────────────────────────────
 function Countdown() {
   const { t, language } = useTranslation();
-  const target = new Date("2026-10-01T00:00:00-06:00");
+  const target = new Date("2026-10-05T12:00:00-06:00");
   const now = new Date();
   const diff = Math.max(0, target.getTime() - now.getTime());
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));

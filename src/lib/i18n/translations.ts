@@ -105,8 +105,8 @@ export const translations = {
   "countdown.arrivingIn": { en: "Arriving in", es: "Llegada en" },
   "countdown.daysLabel": { en: "days", es: "días" },
   "countdown.dateCaption": {
-    en: "October 1, 2026 · ¡Pura Vida! 🇨🇷",
-    es: "1 de octubre de 2026 · ¡Pura Vida! 🇨🇷",
+    en: "October 5, 2026 · ¡Pura Vida! 🇨🇷",
+    es: "5 de octubre de 2026 · ¡Pura Vida! 🇨🇷",
   },
   "countdown.bucketListTitle": { en: "Costa Rica Bucket List", es: "Lista de Deseos de Costa Rica" },
   "driveGallery.title": { en: "Your Photos", es: "Tus Fotos" },
