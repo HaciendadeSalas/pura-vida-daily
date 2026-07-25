@@ -20,12 +20,12 @@ export const translations = {
     es: "🌿 Sabiduría Pura Vida",
   },
   "footer.copyright": {
-    en: "© 2026 Pura Vida Daily · Los Ángeles de Grecia, Costa Rica 🇨🇷",
-    es: "© 2026 Pura Vida Daily · Los Ángeles de Grecia, Costa Rica 🇨🇷",
+    en: "© 2026 Pura Vida Daily · Santa Ana, Costa Rica 🇨🇷",
+    es: "© 2026 Pura Vida Daily · Santa Ana, Costa Rica 🇨🇷",
   },
   "footer.volume": {
-    en: "Vol. I · Est. 2026",
-    es: "Vol. I · Fundado en 2026",
+    en: "9°33'26\"N 85°06'41\"W",
+    es: "9°33'26\"N 85°06'41\"W",
   },
   "footer.toucanTitle": {
     en: "Tito the Toucan",
