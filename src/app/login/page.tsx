@@ -65,7 +65,7 @@ export default function LoginPage() {
             className="font-editorial italic text-base sm:text-lg mb-7"
             style={{ color: "var(--brown-coffee)" }}
           >
-            Enter the password to begin your morning ☕
+            Enter the password to step inside ☕
           </p>
 
           <LoginForm />
