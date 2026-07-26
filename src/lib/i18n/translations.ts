@@ -86,6 +86,7 @@ export const translations = {
   "bottomColumns.columnTitle.culture": { en: "Culture & History", es: "Cultura e Historia" },
   "bottomColumns.columnTitle.football": { en: "Liga Deportiva", es: "Liga Deportiva" },
   "bottomColumns.columnTitle.countdown": { en: "Countdown", es: "Cuenta Regresiva" },
+  "bottomColumns.columnTitle.daysInCostaRica": { en: "Days in Costa Rica", es: "Días en Costa Rica" },
   "bottomColumns.photoPending": { en: "photo pending", es: "foto pendiente" },
   "football.title": { en: "UNAFUT · Primera División", es: "UNAFUT · Primera División" },
   "football.subtitle": { en: "Primera División de Costa Rica", es: "Primera División de Costa Rica" },

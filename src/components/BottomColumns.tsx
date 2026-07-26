@@ -452,10 +452,31 @@ function FootballSection() {
 }
 
 // ─── Countdown ────────────────────────────────────────────────────
+// Costa Rica sits at a fixed UTC-6 offset year-round (no DST), so the
+// arrival threshold and the CR calendar date can both be computed with
+// a plain 6-hour shift instead of a timezone library.
+const CR_OFFSET_MS = 6 * 60 * 60 * 1000;
+function crCalendarDayMs(d: Date) {
+  const crWall = new Date(d.getTime() - CR_OFFSET_MS);
+  return Date.UTC(crWall.getUTCFullYear(), crWall.getUTCMonth(), crWall.getUTCDate());
+}
+
+const COUNTDOWN_TARGET = new Date("2026-10-05T12:00:00-06:00");
+function isArrived(now: Date) {
+  return now.getTime() >= COUNTDOWN_TARGET.getTime();
+}
+// Day 1 = the CR calendar date of arrival (Oct 5), even though landing
+// itself happens mid-day — so this counts calendar days, not 24h windows
+// since the noon threshold.
+function calcDayNumber(now: Date) {
+  return Math.floor((crCalendarDayMs(now) - crCalendarDayMs(COUNTDOWN_TARGET)) / (1000 * 60 * 60 * 24)) + 1;
+}
+
 function Countdown() {
   const { t, language } = useTranslation();
-  const target = new Date("2026-10-05T12:00:00-06:00");
+  const target = COUNTDOWN_TARGET;
   const now = new Date();
+  const arrived = isArrived(now);
   const diff = Math.max(0, target.getTime() - now.getTime());
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -475,23 +496,43 @@ function Countdown() {
     <div className="flex flex-col gap-3">
       {/* Big countdown */}
       <div className="rounded overflow-hidden relative">
-        <div className="absolute inset-0">
-          <Image src="https://images.unsplash.com/photo-1629221731259-4f0760e3ee89?w=800&q=85&fit=crop" alt="Costa Rica airport" fill className="object-cover" sizes="25vw" />
-        </div>
-        <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(45,90,39,0.82), rgba(26,82,118,0.82))" }} />
-        <div className="relative p-4 text-center">
-          <div className="font-body text-white/70 text-sm uppercase tracking-widest mb-1">{t("countdown.arrivingIn")}</div>
-          <div className="font-headline text-white font-black text-5xl leading-none">{days}</div>
-          <div className="font-body text-white/80 text-sm mt-1">
-            {t("countdown.daysLabel")} · {hours}h · {mins}m
+        {arrived ? (
+          <video
+            src="/videos/papi.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0">
+            <Image src="https://images.unsplash.com/photo-1629221731259-4f0760e3ee89?w=800&q=85&fit=crop" alt="Costa Rica airport" fill className="object-cover" sizes="25vw" />
           </div>
-          <div className="font-editorial italic text-white/60 text-sm mt-2">{t("countdown.dateCaption")}</div>
-        </div>
+        )}
+        {!arrived && (
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(160deg, rgba(45,90,39,0.82), rgba(26,82,118,0.82))" }}
+          />
+        )}
+        {arrived ? (
+          <div className="relative" style={{ minHeight: "168px" }} />
+        ) : (
+          <div className="relative p-4 text-center" style={{ minHeight: "168px" }}>
+            <div className="font-body text-white/70 text-sm uppercase tracking-widest mb-1">{t("countdown.arrivingIn")}</div>
+            <div className="font-headline text-white font-black text-5xl leading-none">{days}</div>
+            <div className="font-body text-white/80 text-sm mt-1">
+              {t("countdown.daysLabel")} · {hours}h · {mins}m
+            </div>
+            <div className="font-editorial italic text-white/60 text-sm mt-2">{t("countdown.dateCaption")}</div>
+          </div>
+        )}
         <div className="relative h-1.5" style={{ background: "rgba(255,255,255,0.15)" }}>
           <div
             className="h-full transition-all"
             style={{
-              width: `${Math.min(100, Math.max(0, ((365 - days) / 365) * 100))}%`,
+              width: arrived ? "100%" : `${Math.min(100, Math.max(0, ((365 - days) / 365) * 100))}%`,
               background: "linear-gradient(90deg, var(--gold-sun), var(--green-leaf))",
             }}
           />
@@ -597,6 +638,8 @@ export function DrivePhotoGallery() {
 // ─── Main export ──────────────────────────────────────────────────
 export default function BottomColumns() {
   const { t } = useTranslation();
+  const countdownArrived = isArrived(new Date());
+  const countdownDayNumber = countdownArrived ? calcDayNumber(new Date()) : null;
 
   return (
     <section className="mb-8">
@@ -610,7 +653,21 @@ export default function BottomColumns() {
           { id: "coffee", title: t("bottomColumns.columnTitle.coffee"), icon: "☕", component: <CoffeeCorner /> },
           { id: "culture", title: t("bottomColumns.columnTitle.culture"), icon: "🎭", component: <CultureHistory /> },
           { id: "football", title: t("bottomColumns.columnTitle.football"), icon: "⚽", component: <FootballSection /> },
-          { id: "countdown", title: t("bottomColumns.columnTitle.countdown"), icon: "🗓️", component: <Countdown /> },
+          {
+            id: "countdown",
+            title: countdownArrived ? (
+              <>
+                {t("bottomColumns.columnTitle.daysInCostaRica")}:{" "}
+                <span className="text-lg font-black" style={{ color: "var(--green-jungle)" }}>
+                  {countdownDayNumber}
+                </span>
+              </>
+            ) : (
+              t("bottomColumns.columnTitle.countdown")
+            ),
+            icon: "🗓️",
+            component: <Countdown />,
+          },
         ].map((col, i) => (
           <div
             key={col.id}
