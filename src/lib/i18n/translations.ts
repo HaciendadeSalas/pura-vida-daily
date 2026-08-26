@@ -3,6 +3,10 @@
 import { useLanguage } from "./LanguageContext";
 
 export const translations = {
+  "nav.home": { en: "Home", es: "Inicio" },
+  "nav.stories": { en: "Stories", es: "Historias" },
+  "nav.about": { en: "About", es: "Acerca de" },
+  "comingSoon.text": { en: "Coming soon.", es: "Próximamente." },
   "header.estBar": {
     en: "Est. 2026 · Santa Ana, Costa Rica",
     es: "Fundado en 2026 · Santa Ana, Costa Rica",
@@ -79,8 +83,8 @@ export const translations = {
   },
   "bottomColumns.title": { en: "Around the Finca", es: "Alrededor de la Finca" },
   "bottomColumns.tagline": {
-    en: "Coffee · Culture · Fútbol · Your Journey",
-    es: "Café · Cultura · Fútbol · Tu Viaje",
+    en: "Fútbol · Your Journey",
+    es: "Fútbol · Tu Viaje",
   },
   "bottomColumns.columnTitle.coffee": { en: "Coffee Corner", es: "Rincón del Café" },
   "bottomColumns.columnTitle.culture": { en: "Culture & History", es: "Cultura e Historia" },

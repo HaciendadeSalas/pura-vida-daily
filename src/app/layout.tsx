@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
+import TopNav from "@/components/TopNav";
 
 export const metadata: Metadata = {
   title: "Pura Vida Daily",
@@ -23,7 +24,10 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <TopNav />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );
