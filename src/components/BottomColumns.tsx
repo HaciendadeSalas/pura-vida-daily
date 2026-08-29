@@ -235,7 +235,7 @@ function DrivePhotoCard() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="rounded overflow-hidden relative" style={{ aspectRatio: "1 / 1" }}>
+      <div className="rounded overflow-hidden relative" style={{ height: "400px" }}>
         {status === "ready" && photo ? (
           <a href={photo.fullSrc} target="_blank" rel="noopener noreferrer" className="absolute inset-0 block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
