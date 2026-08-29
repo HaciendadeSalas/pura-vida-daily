@@ -92,6 +92,7 @@ export const translations = {
   "bottomColumns.columnTitle.countdown": { en: "Countdown", es: "Cuenta Regresiva" },
   "bottomColumns.columnTitle.daysInCostaRica": { en: "Days in Costa Rica", es: "Días en Costa Rica" },
   "bottomColumns.photoPending": { en: "photo pending", es: "foto pendiente" },
+  "football.tagline": { en: "Fútbol · UNAFUT Standings", es: "Fútbol · Tabla de UNAFUT" },
   "football.title": { en: "UNAFUT · Primera División", es: "UNAFUT · Primera División" },
   "football.subtitle": { en: "Primera División de Costa Rica", es: "Primera División de Costa Rica" },
   "football.standingsLabel": { en: "Standings", es: "Tabla de Posiciones" },

@@ -5,7 +5,7 @@ import AnimalOfTheDay from "@/components/AnimalOfTheDay";
 import PhotoOfTheDay from "@/components/PhotoOfTheDay";
 import MapSection from "@/components/MapSection";
 import Headlines from "@/components/Headlines";
-import BottomColumns, { DrivePhotoGallery } from "@/components/BottomColumns";
+import BottomColumns, { LigaDeportivaSection } from "@/components/BottomColumns";
 import WhatInSeason from "@/components/WhatInSeason";
 import ChurchOfTheDay from "@/components/ChurchOfTheDay";
 import Footer from "@/components/Footer";
@@ -40,9 +40,9 @@ export default function Home() {
         {/* Bottom 4 columns */}
         <BottomColumns />
 
-        {/* Photo cluster: Drive photos · Season · Churches */}
+        {/* Photo cluster: Liga Deportiva · Season · Churches */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8 items-start">
-          <DrivePhotoGallery />
+          <LigaDeportivaSection />
           <WhatInSeason />
           <ChurchOfTheDay />
         </div>
