@@ -174,20 +174,20 @@ function Countdown() {
             <div
               className="absolute top-0 left-0"
               style={{
-                width: "65%",
-                height: "55%",
+                width: "78%",
+                height: "68%",
                 background: "linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.22) 50%, transparent 85%)",
               }}
             />
           )}
           {!arrived && (
-            <div className="absolute top-0 left-0 p-4">
-              <div className="font-body text-white/80 text-sm uppercase tracking-widest mb-1">{t("countdown.arrivingIn")}</div>
-              <div className="font-headline text-white font-black text-5xl leading-none">{days}</div>
-              <div className="font-body text-white/90 text-sm mt-1">
+            <div className="absolute top-0 left-0 pt-7 pl-6">
+              <div className="font-body text-white/80 text-sm uppercase tracking-widest mb-2">{t("countdown.arrivingIn")}</div>
+              <div className="font-headline text-white font-black text-7xl leading-none">{days}</div>
+              <div className="font-body text-white/90 text-base mt-2">
                 {t("countdown.daysLabel")} · {hours}h · {mins}m
               </div>
-              <div className="font-editorial italic text-white/70 font-light text-sm mt-2">{t("countdown.dateCaption")}</div>
+              <div className="font-editorial italic text-white/70 font-light text-sm mt-3">{t("countdown.dateCaption")}</div>
             </div>
           )}
         </div>
