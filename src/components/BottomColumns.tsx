@@ -148,38 +148,49 @@ function Countdown() {
     <div className="flex flex-col gap-3">
       {/* Big countdown */}
       <div className="rounded overflow-hidden relative">
-        {arrived ? (
-          <video
-            src="/videos/papi.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0">
-            <Image src="https://images.unsplash.com/photo-1629221731259-4f0760e3ee89?w=800&q=85&fit=crop" alt="Costa Rica airport" fill className="object-cover" sizes="25vw" />
-          </div>
-        )}
-        {!arrived && (
-          <div
-            className="absolute inset-0"
-            style={{ background: "linear-gradient(160deg, rgba(45,90,39,0.82), rgba(26,82,118,0.82))" }}
-          />
-        )}
-        {arrived ? (
-          <div className="relative" style={{ minHeight: "168px" }} />
-        ) : (
-          <div className="relative p-4 text-center" style={{ minHeight: "168px" }}>
-            <div className="font-body text-white/70 text-sm uppercase tracking-widest mb-1">{t("countdown.arrivingIn")}</div>
-            <div className="font-headline text-white font-black text-5xl leading-none">{days}</div>
-            <div className="font-body text-white/80 text-sm mt-1">
-              {t("countdown.daysLabel")} · {hours}h · {mins}m
+        <div className="relative" style={{ height: "400px" }}>
+          {arrived ? (
+            <video
+              src="/videos/papi.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0">
+              <Image
+                src="/images/Fotos%20del%20Don%20Alvarado/Avion%20SJO_Fotos%20de%20Don%20Alvarado.jpg"
+                alt="Plane taking off over mountains and palm trees in Costa Rica"
+                fill
+                className="object-cover"
+                style={{ objectPosition: "35% 50%" }}
+                sizes="25vw"
+              />
             </div>
-            <div className="font-editorial italic text-white/60 text-sm mt-2">{t("countdown.dateCaption")}</div>
-          </div>
-        )}
+          )}
+          {!arrived && (
+            <div
+              className="absolute top-0 left-0"
+              style={{
+                width: "65%",
+                height: "55%",
+                background: "linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.22) 50%, transparent 85%)",
+              }}
+            />
+          )}
+          {!arrived && (
+            <div className="absolute top-0 left-0 p-4">
+              <div className="font-body text-white/80 text-sm uppercase tracking-widest mb-1">{t("countdown.arrivingIn")}</div>
+              <div className="font-headline text-white font-black text-5xl leading-none">{days}</div>
+              <div className="font-body text-white/90 text-sm mt-1">
+                {t("countdown.daysLabel")} · {hours}h · {mins}m
+              </div>
+              <div className="font-editorial italic text-white/70 font-light text-sm mt-2">{t("countdown.dateCaption")}</div>
+            </div>
+          )}
+        </div>
         <div className="relative h-1.5" style={{ background: "rgba(255,255,255,0.15)" }}>
           <div
             className="h-full transition-all"
