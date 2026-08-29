@@ -81,10 +81,10 @@ export const translations = {
     en: "Costa Rican harvest · rotating daily",
     es: "Cosecha costarricense · rotación diaria",
   },
-  "bottomColumns.title": { en: "Around the Finca", es: "Alrededor de la Finca" },
+  "bottomColumns.title": { en: "Your Journey", es: "Tu Viaje" },
   "bottomColumns.tagline": {
-    en: "Fútbol · Your Journey",
-    es: "Fútbol · Tu Viaje",
+    en: "Personal Photos · Countdown to Arrival",
+    es: "Fotos Personales · Cuenta Regresiva a la Llegada",
   },
   "bottomColumns.columnTitle.coffee": { en: "Coffee Corner", es: "Rincón del Café" },
   "bottomColumns.columnTitle.culture": { en: "Culture & History", es: "Cultura e Historia" },
