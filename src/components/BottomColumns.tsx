@@ -185,7 +185,6 @@ function Countdown() {
               <div className="font-body text-white/90 text-base mt-2">
                 {t("countdown.daysLabel")} · {hours}h · {mins}m
               </div>
-              <div className="font-editorial italic text-white/70 font-light text-sm mt-3">{t("countdown.dateCaption")}</div>
             </div>
           )}
         </div>
