@@ -172,11 +172,9 @@ function Countdown() {
           )}
           {!arrived && (
             <div
-              className="absolute top-0 left-0"
+              className="absolute inset-0"
               style={{
-                width: "78%",
-                height: "68%",
-                background: "linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.22) 50%, transparent 85%)",
+                background: "linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.15) 100%)",
               }}
             />
           )}
@@ -193,9 +191,9 @@ function Countdown() {
         </div>
         <div className="relative h-1.5" style={{ background: "rgba(255,255,255,0.15)" }}>
           <div
-            className="h-full transition-all"
+            className="h-full"
             style={{
-              width: arrived ? "100%" : `${Math.min(100, Math.max(0, ((365 - days) / 365) * 100))}%`,
+              width: "100%",
               background: "linear-gradient(90deg, var(--gold-sun), var(--green-leaf))",
             }}
           />
@@ -246,40 +244,51 @@ function DrivePhotoCard() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="rounded overflow-hidden relative" style={{ height: "400px" }}>
-        {status === "ready" && photo ? (
-          <a href={photo.fullSrc} target="_blank" rel="noopener noreferrer" className="absolute inset-0 block">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={photo.src.replace("sz=w600", "sz=w1600")}
-              alt={photo.name}
-              className="w-full h-full object-cover"
-              style={{ display: "block" }}
-            />
+      <div className="rounded overflow-hidden relative">
+        <div className="relative" style={{ height: "400px" }}>
+          {status === "ready" && photo ? (
+            <a href={photo.fullSrc} target="_blank" rel="noopener noreferrer" className="absolute inset-0 block">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photo.src.replace("sz=w600", "sz=w1600")}
+                alt={photo.name}
+                className="w-full h-full object-cover"
+                style={{ display: "block" }}
+              />
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%)" }}
+              />
+              <div className="absolute bottom-0 left-0 p-3">
+                <p className="font-body text-white/50 text-xs uppercase tracking-widest">{t("driveGallery.clickToOpen")}</p>
+              </div>
+            </a>
+          ) : status === "loading" ? (
+            <div className="absolute inset-0 animate-pulse" style={{ background: "var(--border-aged)" }} />
+          ) : (
             <div
-              className="absolute inset-0"
-              style={{ background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%)" }}
-            />
-            <div className="absolute bottom-0 left-0 p-3">
-              <p className="font-body text-white/50 text-xs uppercase tracking-widest">{t("driveGallery.clickToOpen")}</p>
+              className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center"
+              style={{ background: "var(--bg-parchment)" }}
+            >
+              <div className="text-4xl">📷</div>
+              <p className="font-headline font-bold text-sm" style={{ color: "var(--ink-dark)" }}>{t("driveGallery.placeholderTitle")}</p>
+              <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
+                {status === "unconfigured"
+                  ? "⚙️ Add GOOGLE_DRIVE_API_KEY to .env.local to enable"
+                  : t("driveGallery.addPhotos")}
+              </p>
             </div>
-          </a>
-        ) : status === "loading" ? (
-          <div className="absolute inset-0 animate-pulse" style={{ background: "var(--border-aged)" }} />
-        ) : (
+          )}
+        </div>
+        <div className="relative h-1.5" style={{ background: "rgba(255,255,255,0.15)" }}>
           <div
-            className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center"
-            style={{ background: "var(--bg-parchment)" }}
-          >
-            <div className="text-4xl">📷</div>
-            <p className="font-headline font-bold text-sm" style={{ color: "var(--ink-dark)" }}>{t("driveGallery.placeholderTitle")}</p>
-            <p className="font-body text-xs" style={{ color: "var(--ink-light)" }}>
-              {status === "unconfigured"
-                ? "⚙️ Add GOOGLE_DRIVE_API_KEY to .env.local to enable"
-                : t("driveGallery.addPhotos")}
-            </p>
-          </div>
-        )}
+            className="h-full"
+            style={{
+              width: "100%",
+              background: "linear-gradient(90deg, var(--gold-sun), var(--green-leaf))",
+            }}
+          />
+        </div>
       </div>
 
       <p className="font-editorial italic text-sm leading-relaxed" style={{ color: "var(--ink-medium)" }}>
