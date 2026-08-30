@@ -204,7 +204,7 @@ export default function AboutPage() {
             className="font-editorial italic text-2xl sm:text-3xl leading-snug text-center"
             style={{ color: "var(--green-jungle)" }}
           >
-            &ldquo;Even without having blood from this land, the mountains, beaches, future
+            &ldquo;With Tico blood in my veins, the mountains, beaches, future
             possibilities, and deep purpose of watering human connection call my name.&rdquo;
           </blockquote>
         </section>
