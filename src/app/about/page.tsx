@@ -13,7 +13,7 @@ export const revalidate = 86400;
 
 const signature = Dancing_Script({ subsets: ["latin"], weight: "700" });
 
-const origins = [
+const origins: { src: string; caption: string; objectPosition?: string }[] = [
   {
     src: "/images/about/origins.jpg",
     caption: "Circa the early 1980s. Vilmar Salas (left) with his father, Don Tilo Salas.",
@@ -21,6 +21,8 @@ const origins = [
   {
     src: "/images/about/d_salas_0.jpeg",
     caption: "Circa 2004. Vilmar Salas with grandsons on the motorbike.",
+    // Landscape crop into a square frame otherwise cuts off Vilmar's head.
+    objectPosition: "object-top",
   },
   {
     src: "/images/about/d_salas_1.jpg",
@@ -29,22 +31,94 @@ const origins = [
   {
     src: "/images/about/d_salas_2.jpeg",
     caption: "June 2023. Wilmar Salas (left) pictured with Danny.",
+    // Landscape crop into a square frame otherwise cuts off both men's heads.
+    objectPosition: "object-top",
   },
 ];
 
-const visionItems: { src: string; caption: string | null }[] = [
-  { src: "/images/about/mechanic.jpg", caption: "Built it before I could afford to buy it." },
-  { src: "/images/about/mechanic_II.jpg", caption: "Some things you learn by taking them apart." },
-  { src: "/images/about/old_land_rover.jpg", caption: "Built for the road, not the highway." },
-  { src: "/images/about/oxen.jpg", caption: "Slow is a choice, not a limit." },
-  { src: "/images/about/picking_coffee.jpg", caption: "Grown slow. Enjoyed slower." },
-  { src: "/images/about/surf.jpg", caption: "Keys in the ignition, nowhere to be." },
-  { src: "/images/about/sword_fish.jpg", caption: "Chase something worth chasing." },
-  { src: "/images/about/macaws.jpg", caption: "Loud, colorful, unbothered — the goal." },
-  { src: "/images/about/gallo_pinto.jpg", caption: "Breakfast of a man who's arrived." },
+// Desktop: an asymmetric 12-column "vision board" grid — desktopSpan/desktopAspect
+// are hand-tuned per row group (7+5, 4+4+4, 8+4, 3+3+6) so every row fills exactly
+// with no gaps and no overlap. Mobile: a single column at each photo's own native
+// aspect ratio, so no cropping is needed there at all.
+const visionItems: {
+  src: string;
+  caption: string;
+  desktopSpan: number;
+  desktopAspect: string;
+  mobileAspect: string;
+  objectPosition?: string;
+}[] = [
+  {
+    src: "/images/about/mechanic.jpg",
+    caption: "Built it before I could afford to buy it.",
+    desktopSpan: 7,
+    desktopAspect: "4 / 3",
+    mobileAspect: "1 / 1",
+  },
+  {
+    src: "/images/about/mechanic_II.jpg",
+    caption: "Some things you learn by taking them apart.",
+    desktopSpan: 5,
+    desktopAspect: "3 / 4",
+    mobileAspect: "3 / 4",
+  },
+  {
+    src: "/images/about/old_land_rover.jpg",
+    caption: "Built for the road, not the highway.",
+    desktopSpan: 4,
+    desktopAspect: "3 / 4",
+    mobileAspect: "4 / 5",
+  },
+  {
+    src: "/images/about/oxen.jpg",
+    caption: "Slow is a choice, not a limit.",
+    desktopSpan: 4,
+    desktopAspect: "3 / 4",
+    mobileAspect: "2 / 3",
+  },
+  {
+    src: "/images/about/picking_coffee.jpg",
+    caption: "Grown slow. Enjoyed slower.",
+    desktopSpan: 4,
+    desktopAspect: "3 / 4",
+    mobileAspect: "2 / 3",
+  },
+  {
+    src: "/images/about/surf.jpg",
+    caption: "Keys in the ignition, nowhere to be.",
+    desktopSpan: 8,
+    desktopAspect: "16 / 9",
+    mobileAspect: "3 / 2",
+  },
+  {
+    src: "/images/about/sword_fish.jpg",
+    caption: "Chase something worth chasing.",
+    desktopSpan: 4,
+    desktopAspect: "3 / 4",
+    mobileAspect: "3 / 4",
+  },
+  {
+    src: "/images/about/macaws.jpg",
+    caption: "Loud, colorful, unbothered — the goal.",
+    desktopSpan: 3,
+    desktopAspect: "3 / 4",
+    mobileAspect: "4 / 5",
+  },
+  {
+    src: "/images/about/gallo_pinto.jpg",
+    caption: "Breakfast of a man who's arrived.",
+    desktopSpan: 3,
+    desktopAspect: "1 / 1",
+    mobileAspect: "1 / 1",
+  },
   {
     src: "/images/about/Jesus_Christ_Redeemer.avif",
     caption: "Some things you build toward, you can't take credit for.",
+    desktopSpan: 6,
+    desktopAspect: "16 / 9",
+    mobileAspect: "8 / 5",
+    // Wide crop otherwise cuts off the statue's head and arms.
+    objectPosition: "object-top",
   },
 ];
 
@@ -76,27 +150,32 @@ export default function AboutPage() {
   return (
     <div className="flex flex-col min-h-screen" style={{ background: "var(--bg-parchment)" }}>
       <main className="flex-1 w-full">
-        {/* HERO */}
-        <section className="relative w-full" style={{ height: "72vh", minHeight: "480px" }}>
-          <Image
-            src="/images/about/d_salas_main.jpeg"
-            alt="Danny in Costa Rica"
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
+        {/* HERO — vertical portrait, matching the photo's own 3:4 aspect so it shows in full */}
+        <section className="w-full px-4 pt-10 pb-6 sm:pt-14">
+          <h1
+            className="font-body text-sm uppercase tracking-[0.3em] text-center mb-6"
+            style={{ color: "var(--ink-light)" }}
+          >
+            About
+          </h1>
           <div
-            className="absolute inset-0"
+            className="relative mx-auto overflow-hidden rounded"
             style={{
-              background:
-                "linear-gradient(to top, rgba(44,24,16,0.88) 0%, rgba(44,24,16,0.3) 45%, rgba(44,24,16,0.05) 100%)",
+              width: "100%",
+              maxWidth: "440px",
+              aspectRatio: "3 / 4",
+              border: "1px solid var(--border-aged)",
+              boxShadow: "0 12px 32px rgba(44,24,16,0.18)",
             }}
-          />
-          <div className="absolute bottom-0 left-0 right-0 px-4 pb-8">
-            <div className="max-w-3xl mx-auto">
-              <h1 className="font-body text-white/70 text-sm uppercase tracking-[0.3em]">About</h1>
-            </div>
+          >
+            <Image
+              src="/images/about/d_salas_main.jpeg"
+              alt="Danny in Costa Rica"
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 440px) 100vw, 440px"
+            />
           </div>
         </section>
 
@@ -155,7 +234,13 @@ export default function AboutPage() {
                     boxShadow: "0 0 0 3px var(--bg-cream), 0 0 0 4px var(--border-aged)",
                   }}
                 >
-                  <Image src={o.src} alt={o.caption} fill className="object-cover" sizes="64px" />
+                  <Image
+                    src={o.src}
+                    alt={o.caption}
+                    fill
+                    className={`object-cover ${o.objectPosition ?? ""}`}
+                    sizes="64px"
+                  />
                 </div>
                 <div className="text-sm mt-1.5" aria-hidden="true">
                   📍
@@ -171,39 +256,88 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* VISION SECTION */}
-        <section className="w-full">
-          {visionItems.map((v) => (
-            <div key={v.src} className="relative w-full" style={{ height: "62vh", minHeight: 360 }}>
-              <Image
-                src={v.src}
-                alt={v.caption ?? "Danny in Costa Rica"}
-                fill
-                className="object-cover"
-                sizes="100vw"
-              />
-              <div
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%)" }}
-              />
-              <div className="absolute bottom-0 left-0 p-6 sm:p-10">
-                {v.caption ? (
+        {/* VISION SECTION — mobile: single simple column; md+: asymmetric vision-board grid */}
+        <section className="max-w-6xl mx-auto px-4 py-12">
+          {/* Mobile: one clean column, no scattered sizing */}
+          <div className="flex flex-col gap-10 md:hidden">
+            {visionItems.map((v) => (
+              <figure key={v.src}>
+                <div
+                  className="relative overflow-hidden rounded"
+                  style={{
+                    aspectRatio: v.mobileAspect,
+                    border: "1px solid var(--border-aged)",
+                    boxShadow: "0 6px 16px rgba(44,24,16,0.12)",
+                  }}
+                >
+                  <Image
+                    src={v.src}
+                    alt={v.caption}
+                    fill
+                    className={`object-cover ${v.objectPosition ?? ""}`}
+                    sizes="100vw"
+                  />
+                </div>
+                <figcaption className="mt-3">
                   <p
-                    className="font-headline italic font-black text-3xl sm:text-5xl text-white leading-tight max-w-2xl"
-                    style={{ textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}
+                    className="font-headline italic font-bold text-lg leading-snug"
+                    style={{ color: "var(--ink-dark)" }}
                   >
                     {v.caption}
                   </p>
-                ) : (
-                  <p className="font-editorial italic text-white/70 text-lg">✏️ Caption pending</p>
-                )}
+                  <div
+                    className="h-1 w-10 mt-2"
+                    style={{ background: "linear-gradient(90deg, var(--gold-sun), var(--green-leaf))" }}
+                  />
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          {/* Desktop/tablet: asymmetric "vision board" grid — varied sizes, no overlap */}
+          <div
+            className="hidden md:grid"
+            style={{ gridTemplateColumns: "repeat(12, 1fr)", columnGap: "1.75rem", rowGap: "2.5rem", alignItems: "start" }}
+          >
+            {visionItems.map((v, i) => (
+              <figure
+                key={v.src}
+                style={{
+                  gridColumn: `span ${v.desktopSpan}`,
+                  marginTop: i % 3 === 1 ? "1.5rem" : 0,
+                }}
+              >
                 <div
-                  className="h-1 w-16 mt-3"
-                  style={{ background: "linear-gradient(90deg, var(--gold-sun), var(--green-leaf))" }}
-                />
-              </div>
-            </div>
-          ))}
+                  className="relative overflow-hidden rounded"
+                  style={{
+                    aspectRatio: v.desktopAspect,
+                    border: "1px solid var(--border-aged)",
+                    boxShadow: "0 6px 16px rgba(44,24,16,0.12)",
+                  }}
+                >
+                  <Image
+                    src={v.src}
+                    alt={v.caption}
+                    fill
+                    className={`object-cover ${v.objectPosition ?? ""}`}
+                    sizes={`${Math.round((v.desktopSpan / 12) * 100)}vw`}
+                  />
+                </div>
+                <figcaption className="mt-3">
+                  <p
+                    className="font-headline italic font-bold text-lg leading-snug"
+                    style={{ color: "var(--ink-dark)" }}
+                  >
+                    {v.caption}
+                  </p>
+                  <div
+                    className="h-1 w-10 mt-2"
+                    style={{ background: "linear-gradient(90deg, var(--gold-sun), var(--green-leaf))" }}
+                  />
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </section>
 
         {/* CURRENT CHAPTER STRIP */}
