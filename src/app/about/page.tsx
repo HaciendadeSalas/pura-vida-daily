@@ -50,70 +50,75 @@ const visionItems: {
 }[] = [
   {
     src: "/images/about/mechanic.jpg",
-    caption: "Built it before I could afford to buy it.",
+    caption: "Concentrate on a single goal, a single task, and beat it into submission.",
     desktopSpan: 7,
     desktopAspect: "4 / 3",
     mobileAspect: "1 / 1",
   },
   {
     src: "/images/about/mechanic_II.jpg",
-    caption: "Some things you learn by taking them apart.",
+    caption: "Take the leap. Learn a skill. Life is long.",
     desktopSpan: 5,
     desktopAspect: "3 / 4",
     mobileAspect: "3 / 4",
   },
   {
     src: "/images/about/old_land_rover.jpg",
-    caption: "Built for the road, not the highway.",
+    caption: "Some things do not make you feel rich. They make you feel free.",
     desktopSpan: 4,
     desktopAspect: "3 / 4",
     mobileAspect: "4 / 5",
   },
   {
     src: "/images/about/oxen.jpg",
-    caption: "Slow is a choice, not a limit.",
+    caption:
+      "You must adopt a philosophy of patience and incremental progress, trusting that the daily labor you put in will eventually yield results.",
     desktopSpan: 4,
     desktopAspect: "3 / 4",
     mobileAspect: "2 / 3",
   },
   {
     src: "/images/about/picking_coffee.jpg",
-    caption: "Grown slow. Enjoyed slower.",
+    caption:
+      '"For thou shalt eat the labour of thine hands: happy shalt thou be, and it shall be well with thee." — Psalm 128:2, KJV',
     desktopSpan: 4,
     desktopAspect: "3 / 4",
     mobileAspect: "2 / 3",
   },
   {
     src: "/images/about/surf.jpg",
-    caption: "Keys in the ignition, nowhere to be.",
+    caption: "There is no secret to balance, you just have to feel the waves.",
     desktopSpan: 8,
     desktopAspect: "16 / 9",
     mobileAspect: "3 / 2",
   },
   {
     src: "/images/about/sword_fish.jpg",
-    caption: "Chase something worth chasing.",
+    caption:
+      "There is a particular kind of freedom that begins when the coastline disappears behind you.",
     desktopSpan: 4,
     desktopAspect: "3 / 4",
     mobileAspect: "3 / 4",
   },
   {
     src: "/images/about/macaws.jpg",
-    caption: "Loud, colorful, unbothered — the goal.",
+    caption:
+      "Some people come into your life for a season.... And then there are those who, like macaws, choose you for a lifetime.",
     desktopSpan: 3,
     desktopAspect: "3 / 4",
     mobileAspect: "4 / 5",
   },
   {
     src: "/images/about/gallo_pinto.jpg",
-    caption: "Breakfast of a man who's arrived.",
+    caption: "What nicer thing is there than to have somebody in your life who cooks with love?",
     desktopSpan: 3,
     desktopAspect: "1 / 1",
     mobileAspect: "1 / 1",
   },
   {
     src: "/images/about/Jesus_Christ_Redeemer.avif",
-    caption: "Some things you build toward, you can't take credit for.",
+    caption:
+      '"For I know that my redeemer liveth, and that he shall stand at the latter day upon the earth." — Job 19:25, KJV',
     desktopSpan: 6,
     desktopAspect: "16 / 9",
     mobileAspect: "8 / 5",
