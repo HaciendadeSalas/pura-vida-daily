@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Dancing_Script } from "next/font/google";
 import Footer from "@/components/Footer";
+import CurrentChapter from "@/components/CurrentChapter";
 
 export const metadata: Metadata = {
   title: "About — Pura Vida Daily",
 };
 
-// Photo of the Day / Current Chapter depend on the current date — revalidate
-// daily so the static page cache doesn't freeze the countdown at build time.
+// Photo of the Day depends on the current date — revalidate daily so the
+// static page cache doesn't freeze it at build time. The Current Chapter
+// countdown is rendered client-side (see CurrentChapter) so it isn't
+// affected by this cache.
 export const revalidate = 86400;
 
 const signature = Dancing_Script({ subsets: ["latin"], weight: "700" });
@@ -127,31 +130,7 @@ const visionItems: {
   },
 ];
 
-// Costa Rica sits at a fixed UTC-6 offset year-round (no DST), so the
-// arrival threshold and the CR calendar date can both be computed with
-// a plain 6-hour shift instead of a timezone library. Mirrors the
-// countdown logic used for the homepage's "Your Journey" card.
-const CR_OFFSET_MS = 6 * 60 * 60 * 1000;
-function crCalendarDayMs(d: Date) {
-  const crWall = new Date(d.getTime() - CR_OFFSET_MS);
-  return Date.UTC(crWall.getUTCFullYear(), crWall.getUTCMonth(), crWall.getUTCDate());
-}
-
-const COUNTDOWN_TARGET = new Date("2026-10-05T12:00:00-06:00");
-function isArrived(now: Date) {
-  return now.getTime() >= COUNTDOWN_TARGET.getTime();
-}
-function calcDayNumber(now: Date) {
-  return Math.floor((crCalendarDayMs(now) - crCalendarDayMs(COUNTDOWN_TARGET)) / (1000 * 60 * 60 * 24)) + 1;
-}
-
 export default function AboutPage() {
-  const now = new Date();
-  const arrived = isArrived(now);
-  const diff = Math.max(0, COUNTDOWN_TARGET.getTime() - now.getTime());
-  const daysUntil = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const dayNumber = arrived ? calcDayNumber(now) : null;
-
   return (
     <div className="flex flex-col min-h-screen" style={{ background: "var(--bg-parchment)" }}>
       <main className="flex-1 w-full">
@@ -355,34 +334,7 @@ export default function AboutPage() {
             <div className="flex-1 h-px" style={{ background: "var(--border-aged)" }} />
           </div>
 
-          <div
-            className="rounded overflow-hidden border flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-6 py-5"
-            style={{ borderColor: "var(--border-aged)", background: "var(--bg-cream)" }}
-          >
-            <div
-              className="font-headline font-black leading-none"
-              style={{ fontSize: "4rem", color: "var(--green-jungle)" }}
-            >
-              {arrived ? dayNumber : daysUntil}
-            </div>
-            <div className="text-center sm:text-left">
-              <div
-                className="font-body text-sm uppercase tracking-widest"
-                style={{ color: "var(--ink-light)" }}
-              >
-                {arrived ? "Days in Costa Rica" : "Days Until Arrival"}
-              </div>
-              <p className="font-editorial italic text-base mt-1" style={{ color: "var(--ink-medium)" }}>
-                {arrived
-                  ? "Building the next chapter, one day at a time."
-                  : "The countdown to Costa Rica is on."}
-              </p>
-            </div>
-            <div
-              className="flex-1 hidden sm:block h-1 rounded"
-              style={{ background: "linear-gradient(90deg, var(--gold-sun), var(--green-leaf))" }}
-            />
-          </div>
+          <CurrentChapter />
         </section>
 
         {/* CLOSE */}

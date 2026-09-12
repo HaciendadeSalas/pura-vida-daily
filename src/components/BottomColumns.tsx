@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { SectionHeader } from "./VolcanoWatch";
 import { useTranslation } from "@/lib/i18n/translations";
+import { getCountdown } from "@/lib/countdown";
 
 interface DrivePhoto {
   id: string;
@@ -104,35 +105,9 @@ function FootballSection() {
 }
 
 // ─── Countdown ────────────────────────────────────────────────────
-// Costa Rica sits at a fixed UTC-6 offset year-round (no DST), so the
-// arrival threshold and the CR calendar date can both be computed with
-// a plain 6-hour shift instead of a timezone library.
-const CR_OFFSET_MS = 6 * 60 * 60 * 1000;
-function crCalendarDayMs(d: Date) {
-  const crWall = new Date(d.getTime() - CR_OFFSET_MS);
-  return Date.UTC(crWall.getUTCFullYear(), crWall.getUTCMonth(), crWall.getUTCDate());
-}
-
-const COUNTDOWN_TARGET = new Date("2026-10-05T12:00:00-06:00");
-function isArrived(now: Date) {
-  return now.getTime() >= COUNTDOWN_TARGET.getTime();
-}
-// Day 1 = the CR calendar date of arrival (Oct 5), even though landing
-// itself happens mid-day — so this counts calendar days, not 24h windows
-// since the noon threshold.
-function calcDayNumber(now: Date) {
-  return Math.floor((crCalendarDayMs(now) - crCalendarDayMs(COUNTDOWN_TARGET)) / (1000 * 60 * 60 * 24)) + 1;
-}
-
 function Countdown() {
   const { t, language } = useTranslation();
-  const target = COUNTDOWN_TARGET;
-  const now = new Date();
-  const arrived = isArrived(now);
-  const diff = Math.max(0, target.getTime() - now.getTime());
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const { arrived, days, hours, mins } = getCountdown(new Date());
 
   const milestones = [
     { label: "Take a finance-related course at UCR", labelEs: "Tomar un curso relacionado con finanzas en la UCR", icon: "🎓", done: false },
@@ -318,8 +293,7 @@ export function LigaDeportivaSection() {
 // ─── Main export ──────────────────────────────────────────────────
 export default function BottomColumns() {
   const { t } = useTranslation();
-  const countdownArrived = isArrived(new Date());
-  const countdownDayNumber = countdownArrived ? calcDayNumber(new Date()) : null;
+  const { arrived: countdownArrived, dayNumber: countdownDayNumber } = getCountdown(new Date());
 
   const columns = [
     { id: "photos", title: t("driveGallery.title"), icon: "🖼️", component: <DrivePhotoCard /> },
