@@ -19,11 +19,11 @@ const signature = Dancing_Script({ subsets: ["latin"], weight: "700" });
 const origins: { src: string; caption: string; objectPosition?: string }[] = [
   {
     src: "/images/about/origins.jpg",
-    caption: "Circa the early 1980s. Vilmar Salas (left) with his father, Don Tilo Salas.",
+    caption: "Circa the early 1980s. Vilmar (left) with his father, Don Tilo.",
   },
   {
     src: "/images/about/d_salas_0.jpeg",
-    caption: "Circa 2004. Vilmar Salas with grandsons on the motorbike.",
+    caption: "Circa 2004. Vilmar with grandsons on the motorbike.",
     // Landscape crop into a square frame otherwise cuts off Vilmar's head.
     objectPosition: "object-top",
   },
@@ -33,7 +33,7 @@ const origins: { src: string; caption: string; objectPosition?: string }[] = [
   },
   {
     src: "/images/about/d_salas_2.jpeg",
-    caption: "June 2023. Wilmar Salas (left) pictured with Danny.",
+    caption: "June 2023. Wilmar (left) pictured with Danny.",
     // Landscape crop into a square frame otherwise cuts off both men's heads.
     objectPosition: "object-top",
   },
@@ -170,7 +170,7 @@ export default function AboutPage() {
             style={{ color: "var(--ink-medium)" }}
           >
             Born the grandson of the bravest, most hospitable, and people-loving Costa Rican man to
-            live, Don Vilmar Salas. Split between two worlds, I am blessed to have been raised
+            live, Don Vilmar. Split between two worlds, I am blessed to have been raised
             between the US and Costa Rica. Soy tico de corazón and feel immense pride for Costa
             Rica, with a high aim to do what I can in my power to preserve the beauty and culture
             of the country while sharing love with the people — that their children will remember
